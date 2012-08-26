@@ -30,7 +30,7 @@
     </developers>
 
     <modules>
-      <module>application</module>
+      <module>hotel-application</module>
     </modules>
 
 </project>
