@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+    <groupId>net.mklew.hotelms</groupId>
+    <artifactId>hotelms</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Hotel Management System</name>
+    <inceptionYear>2012</inceptionYear>
+    <description>
+    Hotel Management System was my Bachelor Thesis. Its purpose is to make life easier of people running hotel. It was built using ObjectLedge framework ( http://objectledge.org/ ).
+    </description>
+
+    <developers>
+      <developer>
+        <id>mklew</id>
+        <name>Marek Lewandowski</name>
+        <email>marek[dot]m[dot]lewandowski[at]gmail[dot]com</email>
+        <organization></organization>
+        <organizationUrl></organizationUrl>
+        <timezone>+1</timezone>
+        <roles>
+          <role>developer</role>
+        </roles>
+      </developer>
+    </developers>
+
+    <modules>
+      <module>application</module>
+    </modules>
+
+</project>
