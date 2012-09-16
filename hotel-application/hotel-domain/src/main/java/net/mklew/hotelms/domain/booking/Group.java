@@ -8,4 +8,9 @@ package net.mklew.hotelms.domain.booking;
 public class Group
 {
     public final static Group NO_GROUP = new NoGroup();
+
+    public Id getId()
+    {
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
 }
