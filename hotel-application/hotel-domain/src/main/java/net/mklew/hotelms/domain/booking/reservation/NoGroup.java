@@ -1,4 +1,4 @@
-package net.mklew.hotelms.domain.booking;
+package net.mklew.hotelms.domain.booking.reservation;
 
 /**
  * @author: Marek Lewandowski <marek.m.lewandowski@gmail.com>
