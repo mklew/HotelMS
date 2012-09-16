@@ -15,6 +15,12 @@ public class SingleReservationId extends ReservationId
         this.id = id;
     }
 
+    public SingleReservationId(Long id, NoGroup group)
+    {
+        super(group);
+        this.id = id;
+    }
+
     /**
      * @inheritDoc
      * @return Id of single reservation
