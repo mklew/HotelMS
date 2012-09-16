@@ -16,6 +16,7 @@ import java.util.List;
 public class Reservation
 {
     private Interval stay;
+    private ReservationId reservationId;
 
     public Reservation(Interval stay)
     {
