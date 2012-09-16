@@ -19,4 +19,9 @@ public final class Id
     {
         return id;
     }
+
+    public Id concat(Id id)
+    {
+        return new Id(this.id + '.' + id.getId());
+    }
 }
