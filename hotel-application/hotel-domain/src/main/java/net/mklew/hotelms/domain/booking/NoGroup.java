@@ -2,10 +2,10 @@ package net.mklew.hotelms.domain.booking;
 
 /**
  * @author: Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since: 9/9/12
- * time 8:27 PM
+ * @since: 9/16/12
+ * time 4:38 PM
  */
-public class Group
+public class NoGroup extends Group
 {
-    public final static Group NO_GROUP = new NoGroup();
+
 }
