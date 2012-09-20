@@ -6,7 +6,7 @@ package net.mklew.hotelms.domain.booking;
  * @since: 9/9/12
  * time 8:32 PM
  */
-public final class Id
+public class Id
 {
     private final String id;
 
