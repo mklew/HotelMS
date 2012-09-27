@@ -8,7 +8,7 @@ import org.joda.time.Interval;
  * @since 9/27/12
  *        Time: 11:59 AM
  */
-public class TimePeriod  implements Season
+public class TimePeriod  implements Season, AvailabilityPeriod
 {
     private String name;
     private int sequence;
