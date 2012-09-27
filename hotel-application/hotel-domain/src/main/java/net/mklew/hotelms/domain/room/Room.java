@@ -12,6 +12,9 @@ public class Room
     private RackRate rackRate;
     private HousekeepingStatus status;
     private RoomAvailability availability;
+    private RoomType type;
+    private RoomName name;
+    private Occupancy occupancy;
 
 
 }
