@@ -7,5 +7,5 @@ package net.mklew.hotelms.domain.room;
  */
 public enum HousekeepingStatus
 {
-
+    Dirty, TouchUp, Clean, Repair, Inspect, DNR
 }
