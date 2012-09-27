@@ -11,6 +11,7 @@ public class Room
 {
     private RackRate rackRate;
     private HousekeepingStatus status;
+    private RoomAvailability availability;
 
 
 }
