@@ -10,7 +10,7 @@ import net.mklew.hotelms.domain.booking.reservation.rates.RackRate;
 public class Room
 {
     private RackRate rackRate;
-
+    private HousekeepingStatus status;
 
 
 }
