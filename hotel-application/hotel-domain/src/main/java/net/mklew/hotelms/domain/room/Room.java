@@ -16,5 +16,9 @@ public class Room
     private RoomName name;
     private Occupancy occupancy;
 
+    public boolean isAvailable()
+    {
+        return availability.isAvailable();
+    }
 
 }
