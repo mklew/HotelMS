@@ -8,13 +8,21 @@ import org.joda.time.Interval;
  * @since 9/27/12
  *        Time: 11:59 AM
  */
-public class TimePeriod
+public class TimePeriod  implements Season
 {
     private String name;
+    private int sequence;
     private DateTime from;
     private DateTime to;
     private boolean isActive;
 
+    @Override
+    public Interval getSeason()
+    {
+        return new Interval(from, to);
+    }
+
+    @Override
     public boolean isAvailableIn(DateTime time)
     {
 
@@ -22,8 +30,15 @@ public class TimePeriod
         return interval.contains(time);
     }
 
-    public boolean isAvailableIn()
+    @Override
+    public boolean isAvailableNow()
     {
         return this.isAvailableIn(DateTime.now());
+    }
+
+    @Override
+    public String getSeasonName()
+    {
+        return name;
     }
 }
