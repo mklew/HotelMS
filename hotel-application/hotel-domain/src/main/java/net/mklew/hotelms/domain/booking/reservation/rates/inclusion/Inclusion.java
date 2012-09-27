@@ -1,7 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation.rates.inclusion;
 
 
-import net.mklew.hotelms.domain.money.Money;
+import net.mklew.hotelms.domain.money.*;
 
 /**
  * /**
@@ -29,32 +29,5 @@ public class Inclusion
     private ServedUpon servedUpon;
     private String category;
     private Product product;
-
-    Name
-            Description
-    Price
-    Maximum Discount
-    Calculation Rate:
-        - per person
-    - per adult
-    - per child
-    - per baby
-    - per room
-    ServedUpon:
-        - Everyday
-    - Everyday but Check-in
-    - Everyday but Check-out
-    - Check-in and Check-out
-    - Only on Check-in
-    - Only on Check-out
-    - Once
-    - Everyday but check-in and check-out
-    - Quantity based
-    Category
-    - Food
-    - Drink
-    - Service
-    - ...
-    Product
 
 }
