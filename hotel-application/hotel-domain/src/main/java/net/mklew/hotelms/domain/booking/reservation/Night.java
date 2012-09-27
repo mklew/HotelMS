@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
+import net.mklew.hotelms.domain.money.Discount;
 import net.mklew.hotelms.domain.money.Money;
 import org.joda.time.DateTime;
 
@@ -11,13 +12,15 @@ import org.joda.time.DateTime;
 public class Night
 {
     private final DateTime date;
-    private final boolean isUsed;
-    private final Money price;
+    private boolean isUsed;
+    private Money price;
+    private Discount discount;
 
-    public Night(DateTime date, boolean used, Money price)
+    public Night(DateTime date, boolean used, Money price, Discount discount)
     {
         this.date = date;
         isUsed = used;
         this.price = price;
+        this.discount = discount;
     }
 }
