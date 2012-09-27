@@ -9,7 +9,7 @@ public enum RoomAvailability
 {
     AVAILABLE()
     {
-        boolean isAvailable()
+        public boolean isAvailable()
         {
             return true;
         }
@@ -17,13 +17,20 @@ public enum RoomAvailability
     },
     OCCUPIED()
     {
-        boolean isAvailable()
+        public boolean isAvailable()
+        {
+            return false;
+        }
+    },
+    DNR()
+    {
+        public boolean isAvailable()
         {
             return false;
         }
     };
 
 
-    abstract boolean isAvailable();
+    public abstract boolean isAvailable();
 }
 
