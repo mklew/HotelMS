@@ -4,6 +4,9 @@ package net.mklew.hotelms.domain.room;
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 9/27/12
  *        Time: 11:37 AM
+ *
+ *  Type of the room. It can be for example Cheap room or Luxury room
+ *  or Presidential or some other kind of defined type
  */
 public class RoomType
 {
