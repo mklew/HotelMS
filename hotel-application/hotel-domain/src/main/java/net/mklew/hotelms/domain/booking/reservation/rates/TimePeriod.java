@@ -5,6 +5,6 @@ package net.mklew.hotelms.domain.booking.reservation.rates;
  * @since 9/27/12
  *        Time: 11:59 AM
  */
-public class Season
+public class TimePeriod
 {
 }
