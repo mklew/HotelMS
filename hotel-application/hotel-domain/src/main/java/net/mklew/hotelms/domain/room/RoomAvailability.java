@@ -7,6 +7,23 @@ package net.mklew.hotelms.domain.room;
  */
 public enum RoomAvailability
 {
-    AVAILABLE, OCCUPIED
+    AVAILABLE()
+    {
+        boolean isAvailable()
+        {
+            return true;
+        }
+
+    },
+    OCCUPIED()
+    {
+        boolean isAvailable()
+        {
+            return false;
+        }
+    };
+
+
+    abstract boolean isAvailable();
 }
 
