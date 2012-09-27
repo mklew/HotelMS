@@ -1,6 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
 import net.mklew.hotelms.domain.money.Money;
+import net.mklew.hotelms.domain.room.Room;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -9,6 +10,9 @@ import net.mklew.hotelms.domain.money.Money;
  */
 public class SeasonRate implements Rate
 {
+
+    private Season season;
+    private Room room;
 
     @Override
     public Money standardPrice()
