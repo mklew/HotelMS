@@ -11,4 +11,5 @@ public interface AvailabilityPeriod
 {
     boolean isAvailableIn(DateTime time);
     boolean isAvailableNow();
+
 }
