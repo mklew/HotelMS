@@ -1,6 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -14,5 +15,15 @@ public class TimePeriod
     private DateTime to;
     private boolean isActive;
 
+    public boolean isAvailableIn(DateTime time)
+    {
 
+        Interval interval = new Interval(from, to);
+        return interval.contains(time);
+    }
+
+    public boolean isAvailableIn()
+    {
+        return this.isAvailableIn(DateTime.now());
+    }
 }
