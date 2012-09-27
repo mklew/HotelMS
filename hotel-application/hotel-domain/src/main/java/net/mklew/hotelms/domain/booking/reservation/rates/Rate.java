@@ -9,5 +9,7 @@ import net.mklew.hotelms.domain.money.Money;
  */
 public interface Rate
 {
-    Money price();
+    Money standardPrice();
+    Money upchargeExtraPerson();
+    Money upchargeExtraBed();
 }
