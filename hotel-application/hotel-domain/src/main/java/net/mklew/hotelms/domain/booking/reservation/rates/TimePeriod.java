@@ -10,11 +10,16 @@ import org.joda.time.Interval;
  */
 public class TimePeriod  implements Season, AvailabilityPeriod
 {
+    private long id; // hibernate
+
     private String name;
-    private int sequence;
     private DateTime from;
     private DateTime to;
     private boolean isActive;
+
+    // todo add mapping
+    //private Package package;
+    //private Rate rate;
 
     @Override
     public Interval getSeason()
@@ -40,5 +45,41 @@ public class TimePeriod  implements Season, AvailabilityPeriod
     public String getSeasonName()
     {
         return name;
+    }
+
+    // private for hibernate
+    private long getId()
+    {
+        return id;
+    }
+    // private setters for Hibernate
+    private void setId(long id)
+    {
+        this.id = id;
+    }
+
+    private void setName(String name)
+    {
+        this.name = name;
+    }
+
+    private void setFrom(DateTime from)
+    {
+        this.from = from;
+    }
+
+    private void setTo(DateTime to)
+    {
+        this.to = to;
+    }
+
+    private void setActive(boolean active)
+    {
+        isActive = active;
+    }
+
+    TimePeriod()
+    {
+        // for hibernate
     }
 }
