@@ -1,16 +1,14 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
-/**
- * @author: Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since: 9/9/12
- * time 7:49 PM
- */
 
 import net.mklew.hotelms.domain.booking.Id;
 
 /**
- * Identifies reservation.
+ * Identifies reservation
  *
+ * @author: Marek Lewandowski <marek.m.lewandowski@gmail.com>
+ * @since: 9/9/12
+ * time 7:49 PM
  */
 public abstract class ReservationId
 {
