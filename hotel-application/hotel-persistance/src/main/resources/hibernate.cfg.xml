@@ -20,7 +20,7 @@
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
 
         <!-- Disable the second-level cache  -->
-        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
@@ -28,7 +28,11 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">create</property>
 
+        <!-- Enable autoregistration of Joda Time datatypes -->
+        <property name="jadira.usertype.autoRegisterUserTypes">true</property>
+
         <!--<mapping resource="org/hibernate/tutorial/hbm/Event.hbm.xml"/>-->
+        <mapping resource="rates/TimePeriod.hbm.xml"/>
 
     </session-factory>
 
