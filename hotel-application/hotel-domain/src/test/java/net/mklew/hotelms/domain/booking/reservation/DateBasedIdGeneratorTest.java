@@ -17,7 +17,7 @@ public class DateBasedIdGeneratorTest
         DateTime dateTime = new DateTime(2012, 3, 20, 15, 55);
         IdGenerator dateBasedIdGenerator = new DateBasedIdGenerator(dateTime);
 
-        for(int i = 0 ; i < 99_000_000 ; i++)
+        for(int i = 0 ; i < 99 ; i++)
         {
             Long actual = dateBasedIdGenerator.generateId(i);
             assertThat(actual).isGreaterThanOrEqualTo(10_000_000);
