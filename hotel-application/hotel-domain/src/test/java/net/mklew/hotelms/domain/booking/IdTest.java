@@ -6,8 +6,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
- * @author: Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since: 9/20/12
+ * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
+ * @since 9/20/12
  * time 11:04 PM
  */
 public class IdTest
