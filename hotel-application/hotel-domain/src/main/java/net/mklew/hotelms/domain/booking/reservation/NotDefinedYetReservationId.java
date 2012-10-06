@@ -22,5 +22,6 @@ public class NotDefinedYetReservationId extends ReservationId
     public Id getId()
     {
         throw new IllegalStateException();
+        //todo maybe return special case of Id, NoId ?
     }
 }
