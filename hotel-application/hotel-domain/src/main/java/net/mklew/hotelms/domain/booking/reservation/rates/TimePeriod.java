@@ -8,9 +8,11 @@ import org.joda.time.Interval;
  * @since 9/27/12
  *        Time: 11:59 AM
  */
+
+// todo instead of mergeing two concepts into one, create Season class and AvailabilityPeriod class where SeasonClass is used by SeasonRate and later by Package
 public class TimePeriod  implements Season, AvailabilityPeriod
 {
-    private long id; // hibernate
+    private Long id; // hibernate
 
     private String name;
     private DateTime from;
@@ -21,18 +23,30 @@ public class TimePeriod  implements Season, AvailabilityPeriod
     //private Package package;
     //private Rate rate;
 
+    // todo after split into Season and Availability period, remove constructor and create factory methods
+
+
+    public TimePeriod(String name, DateTime from, DateTime to, boolean active)
+    {
+        this.name = name;
+        this.from = from;
+        this.to = to;
+        isActive = active;
+    }
+
     @Override
     public Interval getSeason()
     {
-        return new Interval(from, to);
+        //return new Interval(from, to);
+        return new Interval(DateTime.now(), DateTime.now());
     }
 
     @Override
     public boolean isAvailableIn(DateTime time)
     {
-
-        Interval interval = new Interval(from, to);
-        return interval.contains(time);
+//        Interval interval = new Interval(from, to);
+//        return interval.contains(time);
+        return true;
     }
 
     @Override
@@ -47,13 +61,33 @@ public class TimePeriod  implements Season, AvailabilityPeriod
         return name;
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
+    public DateTime getFrom()
+    {
+        return from;
+    }
+
+    public DateTime getTo()
+    {
+        return to;
+    }
+
+    public boolean getIsActive()
+    {
+        return isActive;
+    }
+
     // private for hibernate
-    private long getId()
+    private Long getId()
     {
         return id;
     }
     // private setters for Hibernate
-    private void setId(long id)
+    private void setId(Long id)
     {
         this.id = id;
     }
@@ -73,12 +107,12 @@ public class TimePeriod  implements Season, AvailabilityPeriod
         this.to = to;
     }
 
-    private void setActive(boolean active)
+    private void setIsActive(boolean active)
     {
         isActive = active;
     }
 
-    TimePeriod()
+    public TimePeriod()
     {
         // for hibernate
     }

@@ -11,9 +11,10 @@
             <generator class="increment"/>
         </id>
         <property name="isActive"/>
-        <property name="from" type="org.joda.time.contrib.hibernate.PersistentDateTime"/>
-        <property name="to" type="org.joda.time.contrib.hibernate.PersistentDateTime"/>
+        <property name="from" column="FROM_DATE"/>
+        <property name="to" column="TO_DATE"/>
         <property name="name" type="org.hibernate.type.StringType"/>
     </class>
 
 </hibernate-mapping>
+
