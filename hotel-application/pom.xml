@@ -47,6 +47,12 @@
         <version>2.0</version>
     </dependency>
 
+      <dependency>
+          <groupId>org.joda</groupId>
+          <artifactId>joda-money</artifactId>
+          <version>0.6</version>
+      </dependency>
+
       <!-- test dependencies -->
     <dependency>
         <groupId>junit</groupId>
