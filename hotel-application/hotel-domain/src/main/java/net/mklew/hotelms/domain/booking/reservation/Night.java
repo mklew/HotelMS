@@ -1,7 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
 import net.mklew.hotelms.domain.money.Discount;
-import net.mklew.hotelms.domain.money.Money;
+import org.joda.money.Money;
 import org.joda.time.DateTime;
 
 /**

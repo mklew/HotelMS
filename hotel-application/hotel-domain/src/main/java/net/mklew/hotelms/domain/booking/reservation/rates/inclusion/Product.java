@@ -1,6 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation.rates.inclusion;
 
-import net.mklew.hotelms.domain.money.Money;
+import org.joda.money.Money;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>

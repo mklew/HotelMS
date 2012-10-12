@@ -1,7 +1,8 @@
 package net.mklew.hotelms.domain.booking.reservation.rates.inclusion;
 
 
-import net.mklew.hotelms.domain.money.*;
+import net.mklew.hotelms.domain.money.Discount;
+import org.joda.money.Money;
 
 /**
  * /**

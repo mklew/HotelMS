@@ -1,6 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
-import net.mklew.hotelms.domain.money.Money;
+import org.joda.money.Money;
 import net.mklew.hotelms.domain.room.Room;
 
 /**
