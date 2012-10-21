@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<container xmlns="http://objectledge.org/container/1.0">
+
+    <component class="net.mklew.demo.Counter"/>
+
+    <!-- // valves ////////////////////////////////////////////////////////////////////// -->
+
+    <component class="org.objectledge.web.ContentTypeInitializerValve"/>
+    <component class="org.objectledge.context.Context"/>
+    <component class="org.objectledge.web.WebConfigurator"/>
+    <component class="org.objectledge.web.mvc.MVCResultsValve"/>
+    <component class="org.objectledge.web.mvc.MVCInitializerValve"/>
+    <component class="org.objectledge.parameters.RequestParametersLoaderValve"/>
+
+    <component class="org.objectledge.web.mvc.builders.ViewEnclosureManager"/>
+
+    <component class="org.objectledge.web.mvc.security.SecurityHelper"/>
+    <component class="org.objectledge.web.mvc.finders.NameSequenceFactory"/>
+    <container key="org.objectledge.web.mvc.finders.MVCFinder.container"/>
+    <component class="org.objectledge.web.mvc.finders.MVCFinder">
+        <parameter key="org.objectledge.web.mvc.finders.MVCFinder.container"/>
+        <parameter/>
+        <parameter/>
+        <parameter/>
+    </component>
+    <component class="org.objectledge.web.mvc.actions.ActionExecutorValve"/>
+    <component class="org.objectledge.web.mvc.builders.BuilderExecutorValve">
+        <parameter/>
+        <parameter/>
+        <parameter/>
+        <parameter/>
+        <parameter/>
+        <parameter value="4"/>
+        <parameter value="4"/>
+    </component>
+    <component class-key="org.objectledge.templating.Templating"
+               class="org.objectledge.templating.velocity.VelocityTemplating"/>
+    <component class="org.objectledge.templating.TemplatingContextLoaderValve"/>
+    <component class="org.objectledge.templating.tools.ContextToolPopulatorValve"/>
+    <component class="org.objectledge.web.PrintExceptionValve"/>
+    <component class-key="org.objectledge.web.mvc.tools.LinkToolFactory"
+               class="org.objectledge.web.mvc.tools.LinkToolFactoryImpl"/>
+    <component class="org.objectledge.web.mvc.tools.PageToolFactory"/>
+    <component class="org.objectledge.templating.tools.ContextTools">
+        <sequence>
+            <parameter class-key="org.objectledge.web.mvc.tools.LinkToolFactory"/>
+            <parameter class-key="org.objectledge.web.mvc.tools.PageToolFactory"/>
+            <parameter class-key="org.objectledge.web.mvc.builders.ViewEnclosureManager"/>
+        </sequence>
+    </component>
+
+
+    <!-- // pipeline //////////////////////////////////////////////////////////////////////// -->
+
+    <component class="org.objectledge.pipeline.ErrorHandlingPipeline">
+        <parameter class-key="org.jcontainer.dna.Logger"/>
+        <sequence>
+            <parameter class-key="org.objectledge.web.ContentTypeInitializerValve"/>
+            <parameter class-key="org.objectledge.parameters.RequestParametersLoaderValve"/>
+            <parameter class-key="org.objectledge.web.mvc.MVCInitializerValve"/>
+            <parameter class-key="org.objectledge.templating.TemplatingContextLoaderValve"/>
+            <parameter class-key="org.objectledge.templating.tools.ContextToolPopulatorValve"/>
+            <parameter class-key="org.objectledge.web.mvc.actions.ActionExecutorValve"/>
+            <parameter class-key="org.objectledge.web.mvc.builders.BuilderExecutorValve"/>
+        </sequence>
+        <sequence>
+            <parameter class-key="org.objectledge.web.ContentTypeInitializerValve"/>
+            <parameter class-key="org.objectledge.web.PrintExceptionValve"/>
+        </sequence>
+        <sequence>
+            <parameter class-key="org.objectledge.web.mvc.MVCResultsValve"/>
+        </sequence>
+    </component>
+
+
+    <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
+
+    <component class="org.objectledge.web.dispatcher.PipelineHttpDispatcher" key="main">
+        <parameter class-key="org.objectledge.pipeline.ErrorHandlingPipeline"/>
+        <parameter/>
+    </component>
+
+</container>
