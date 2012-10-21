@@ -21,6 +21,7 @@
     <properties>
         <versions.ledge>1.0.15-SNAPSHOT</versions.ledge>
         <versions.jetty>8.1.3.v20120416</versions.jetty>
+        <versions.shiro>1.2.1</versions.shiro>
     </properties>
 
     <dependencyManagement>
@@ -30,6 +31,21 @@
                 <artifactId>ledge-web</artifactId>
                 <classifier>classes</classifier>
                 <version>${versions.ledge}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${versions.shiro}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>${versions.shiro}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-aspectj</artifactId>
+                <version>${versions.shiro}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
