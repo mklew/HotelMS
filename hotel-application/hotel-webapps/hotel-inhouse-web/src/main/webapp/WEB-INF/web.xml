@@ -1,7 +1,51 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
+<!DOCTYPE web-app
+        PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
+        "http://java.sun.com/j2ee/dtds/web-app_2.5.dtd">
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>Objectledge minimal demo</display-name>
+    <listener>
+        <listener-class>org.objectledge.web.LedgeServletContextListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>root</param-name>
+        <param-value>workdir</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>ledge</servlet-name>
+        <servlet-class>org.objectledge.web.LedgeServlet</servlet-class>
+        <init-param>
+            <param-name>dispatcher</param-name>
+            <param-value>main</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ledge</servlet-name>
+        <url-pattern>/ledge/*</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <security-role>
+        <role-name>nobody</role-name>
+    </security-role>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Application data</web-resource-name>
+            <url-pattern>/config/*</url-pattern>
+            <url-pattern>/locale/*</url-pattern>
+            <url-pattern>/logs/*</url-pattern>
+            <url-pattern>/templates/*</url-pattern>
+            <url-pattern>/data/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>nobody</role-name>
+        </auth-constraint>
+    </security-constraint>
 </web-app>
+
+
+
