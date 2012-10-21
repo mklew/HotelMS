@@ -5,3 +5,6 @@
 *.war
 .idea
 *.iml
+*/dijit/
+*/dojo/
+*/dojox/
