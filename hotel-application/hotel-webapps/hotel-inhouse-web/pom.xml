@@ -1,18 +1,43 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>net.mklew.hotelms</groupId>
-    <artifactId>hotel-webapps</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.mklew.hotelms</groupId>
+        <artifactId>hotel-webapps</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-  <artifactId>hotel-inhouse-web</artifactId>
-  <packaging>war</packaging>
-  <name>Inhouse Website for Hotel Management System</name>
+    <artifactId>hotel-inhouse-web</artifactId>
+    <packaging>war</packaging>
+    <name>Inhouse Website for Hotel Management System</name>
 
-  <build>
-    <finalName>hotelms-inhouse</finalName>
-  </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.objectledge</groupId>
+            <artifactId>ledge-web</artifactId>
+            <classifier>classes</classifier>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <version>2.0-m12</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>hotelms-inhouse</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <configuration>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                    </webAppConfig>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
