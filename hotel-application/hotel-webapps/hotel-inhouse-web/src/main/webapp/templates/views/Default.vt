@@ -3,11 +3,49 @@
 	<head>
 		<meta charset="utf-8">
 		<title>$pageTool.title</title>
+		<link rel="stylesheet" href="/content/dojo/dijit/themes/claro/document.css">
+        <link rel="stylesheet" href="/content/dojo/dijit/themes/claro/claro.css">
+		<link rel="stylesheet/less" href="/content/style/style.less">
+        <script src="/content/less.js"></script>
+        <style>
+            #appLayout {
+            	height: 100%;
+        	}
+        	html {
+        		margin: 0px;
+        	}
+        	html, body, #mainDiv {
+            width: 100%; height: 100%;
+            border: 0; padding: 0; margin: 0;
+        	}
+        </style>
+        <script data-dojo-config="async : true , parseOnLoad : true" src="/content/dojo/dojo/dojo.js"></script>
+        <script type="text/javascript">
+               require(["dojo/parser",
+               			"dijit/Dialog",
+                		"dijit/form/Button",
+                		"dijit/layout/BorderContainer",
+                		"dijit/layout/TabContainer",
+                		"dijit/layout/ContentPane",
+                		"dijit/layout/AccordionContainer",
+                		"dijit/layout/AccordionPane",
+                		"dijit/Calendar"
+                		]);
+        </script>
 	</head>
 	<body class="claro">
-    		<div id="page">
+    		<div id="appLayout"  data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design: 'headline'">
+    			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region : 'top'">
+                				<p>Top panel text</p>
+
+                				<!-- TODO Add toolbar, drop down menu with user specific information, some panel with system information like date and time -->
+
+                				<p>more top panel text ... </p>
+                </div>
+
     			$embeddedPlaceholder##
     		</div>
     </body>
 </html>
 $viewEnclosureTool.top()##
+
