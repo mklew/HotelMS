@@ -1,0 +1,160 @@
+
+.tooltip {
+    border-bottom: 1px dotted #0077AA;
+    cursor: help;
+}
+ 
+.tooltip::after {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px 8px 8px 0px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    color: #FFF;
+    content: attr(data-tooltip); /* The main part of the code, determining the content of the pop-up prompt */
+    margin-top: -24px;
+    opacity: 0; /* Our element is transparent... */
+    padding: 3px 7px;
+    position: absolute;
+    visibility: hidden; /* ...and hidden. */
+             
+    transition: all 0.4s ease-in-out; /* To add some smoothness */
+}
+         
+.tooltip:hover::after {
+    opacity: 1; /* Make it visible */
+    visibility: visible;
+}
+
+@checkin-color: #049cdb;
+@checkout-color: #FF6400;
+@inhouse-color: #FFCD00;
+@today-color: #60D5AC;
+@history-color: #808080;
+@reserved-color: #89E894;
+@overbooked-color: #FD885C;
+// TODO do not reserve DNR color
+@test2color: #808080;
+
+
+.today { background-color: @today-color; }
+
+div{
+    &.testit {background-color: @checkin-color; }
+}
+
+div {
+    &.legend {
+        min-width: 20px;
+        text-align: center;
+        padding: 1.3em 1em 1.3em 1em;
+        &.checkin {background-color: @checkin-color; }
+        &.checkout {background-color: @checkout-color; }
+        &.inhouse {background-color: @inhouse-color; }
+        &.history {background-color: @history-color; }
+        &.reserved {background-color: @reserved-color; }
+        &.overbooked {background-color: @overbooked-color; }
+    }
+}
+
+table.reservation-table { 
+    border-spacing:0;
+    border-collapse:collapse;
+    border: 1px solid;
+    table-layout: fixed;
+  /*  empty-cells: show;*/
+    width: 100%;
+    
+    background-color: #ffffff;
+    
+    colgroup col:first-child
+    {
+        width: 20px;
+    }
+
+    th {
+        width: 80px;
+    }
+
+    td {
+    	border: 1px solid;
+        white-space:nowrap;
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 10px;
+        text-align: left;
+       /* overflow: hidden;*/
+        // overflow-x: hidden;
+        width: 80px;
+        &.has-reservation {
+            // border-width: 0px;
+            border-left-width: 0px;
+            border-right-width: 0px;
+        }
+        &.round-corners {
+            .has-reservation;
+            moz-border-radius: 15px;
+            border-radius: 15px; 
+        }
+        // if you change name of this class, you need to update TableCell.js
+        &.round-only-left {
+            .round-corners;
+
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            -moz-border-radius-topright: 0px;
+            -moz-border-radius-bottomright: 0px;
+
+            padding-right: 2px;
+            padding-left: 15px;
+            margin-left: 5px;
+        }
+        // if you change name of this class, you need to update TableCell.js
+        &.round-only-right {
+            .round-corners;
+
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            -moz-border-radius-topleft: 0px;
+            -moz-border-radius-bottomleft: 0px;
+            padding-left: 2px;
+            padding-right: 5px;
+            margin-right: 5px;
+        }  
+        &.checkin { 
+            .has-reservation;
+            background-color: @checkin-color; 
+        }
+        &.checkout { 
+            .has-reservation;
+            background-color: @checkout-color; 
+        }
+        &.inhouse { 
+            .has-reservation;
+            background-color: @inhouse-color; 
+        }
+        &.history { 
+            .has-reservation;
+            background-color: @history-color; 
+        }
+
+        &.reserved {
+            .has-reservation;
+            background-color: @reserved-color;
+        }
+
+        &.overbooked {
+            .has-reservation;
+            background-color: @overbooked-color;
+        }
+
+        // if you change name of this class, you need to update TableCell.js
+        &.single-day {
+            .round-corners;
+             overflow-x: hidden;
+             /* TODO maybe add some tooltip or smth */
+        }
+    }
+    th {
+        border: 1px solid;
+        margin: 0px 0px 0px 0px;
+    }   
+}
+
