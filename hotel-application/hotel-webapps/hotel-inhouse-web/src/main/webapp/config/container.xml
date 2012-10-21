@@ -50,7 +50,7 @@
     </component>
 
 
-    <component class-key="org.objectledge.web.rest.JerseyRestValve" class="org.objectledge.web.rest.JerseyRestValve">
+    <component class-key="org.objectledge.web.rest.JerseyRestValve" class="org.objectledge.web.rest.JerseyRestValve"></component>
 
     <!-- // pipeline //////////////////////////////////////////////////////////////////////// -->
 
