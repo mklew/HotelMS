@@ -3,13 +3,39 @@
         "http://java.sun.com/j2ee/dtds/web-app_2.5.dtd">
 <web-app>
     <display-name>Hotel management system</display-name>
+
+    <context-param>
+        <param-name>shiroConfigLocations</param-name>
+        <param-value>/config/shiro.ini</param-value>
+    </context-param>
+
     <listener>
         <listener-class>org.objectledge.web.LedgeServletContextListener</listener-class>
     </listener>
+
+    <listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener>
+
     <context-param>
         <param-name>root</param-name>
         <param-value>workdir</param-value>
     </context-param>
+
+    <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>ledge</servlet-name>
         <servlet-class>org.objectledge.web.LedgeServlet</servlet-class>
