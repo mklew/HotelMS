@@ -45,9 +45,23 @@
         </init-param>
     </servlet>
 
+    <servlet>
+        <servlet-name>rest</servlet-name>
+        <servlet-class>org.objectledge.web.LedgeServlet</servlet-class>
+        <init-param>
+            <param-name>dispatcher</param-name>
+            <param-value>restDispatcher</param-value>
+        </init-param>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>ledge</servlet-name>
         <url-pattern>/ledge/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>rest</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
     <session-config>
