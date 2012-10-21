@@ -1,3 +1,44 @@
 $pageTool.insertTitlePrefix('dashboard ')##
 
-<p>This is dashboard view at views/dashboard/Default.vt</p>
+<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region : 'center', splitter : 'false'">
+    <!-- Tabs start here -->
+    <!-- First tab -->
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title : 'content'">
+        <p>This is dashboard view at views/dashboard/Default.vt</p>
+        <p>	This is left panel content</p>
+         <h1>Hello, Dijit</h1>
+       <!--  <button data-dojo-type="dijit/form/Button">Click me, dojo</button> -->
+        <button >Click me, normal</button>
+    </div>
+    <!-- Second tab -->
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title : 'this is second tab'">
+        <h1> Some header in that tab</h1>
+        <h2> Some second header in that tab </h2>
+        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+        anim id est laborum. </p>
+         <p> This is center panel content </p>
+         <button data-dojo-type="dijit/form/Button">Click me, dojo</button>
+    </div>
+</div>
+
+<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'left', splitter: 'true'">
+    <!-- Accordion Container -->
+    <div data-dojo-type="dijit/layout/AccordionContainer">
+        <div data-dojo-type="dijit/layout/AccordionPane" data-dojo-props="title : 'Calendar'">
+            <div data-dojo-type="dijit/Calendar"></div>
+        </div>
+        <div data-dojo-type="dijit/layout/AccordionPane" data-dojo-props="title : 'Legend'">
+            <div class="legend checkin"><p>Checkin</p></div>
+            <div class="legend checkout"><p>Checkout</p></div>
+            <div class="legend inhouse"><p>Inhouse</p></div>
+            <div class="legend history"><p>History</p></div>
+            <div class="legend reserved"><p>Reserved</p></div>
+            <div class="legend overbooked"><p>Overbooked</p></div>
+        </div>
+        <div data-dojo-type="dijit/layout/AccordionPane">content of accordion pane #3</div>
+        <div data-dojo-type="dijit/layout/AccordionPane">content of accordion pane #4</div>
+    </div>
+</div>
