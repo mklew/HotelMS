@@ -84,8 +84,17 @@
 
     <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
 
+    <!-- main dispatcher - serves views -->
+
     <component class="org.objectledge.web.dispatcher.PipelineHttpDispatcher" key="main">
         <parameter class-key="org.objectledge.pipeline.ErrorHandlingPipeline"/>
+        <parameter/>
+    </component>
+
+    <!-- rest dispatcher -->
+
+    <component class="org.objectledge.web.dispatcher.PipelineHttpDispatcher" key="restDispatcher">
+        <parameter key="restPipeline"/>
         <parameter/>
     </component>
 
