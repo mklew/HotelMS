@@ -74,6 +74,13 @@
         </sequence>
     </component>
 
+    <!-- rest pipeline -->
+    <component class="org.objectledge.pipeline.SimplePipeline" key="restPipeline">
+        <sequence>
+            <parameter class-key="org.objectledge.web.rest.JerseyRestValve"/>
+        </sequence>
+    </component>
+
 
     <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
 
