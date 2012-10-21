@@ -1,0 +1,3 @@
+$pageTool.insertTitlePrefix('dashboard ')##
+
+<p>This is dashboard view at views/dashboard/Default.vt</p>
