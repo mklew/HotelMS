@@ -32,12 +32,12 @@
   <encoding>UTF-8</encoding>
   <paths>
     <path>/templates/</path>
+    <path>/templates/common/</path>
   </paths>
   <properties>
       <property name="velocimacro.library" value="templates/common/options.vt"/>
       <property name="velocimacro.library" value="templates/common/result.vt"/>
       <property name="velocimacro.library" value="templates/common/table.vt"/>
-      <property name="velocimacro.library" value="templates/common/browser.vt"/>
       <property name="velocimacro.library" value="templates/common/dateSelector.vt"/>
       <property name="velocimacro.library" value="templates/common/sockets.vt"/>
   </properties>
