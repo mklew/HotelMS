@@ -9,6 +9,11 @@ $pageTool.insertTitlePrefix('dashboard ')##
          <h1>Hello, Dijit</h1>
        <!--  <button data-dojo-type="dijit/form/Button">Click me, dojo</button> -->
         <button >Click me, normal</button>
+
+##
+          <a href="$link.renderComponent('test.TestDynamicComponent')">render component</a>
+          <a href="$link.renderAjaxComponent('test.TestDynamicComponent')">render ajax component</a>
+##
     </div>
     <!-- Second tab -->
     <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title : 'this is second tab'">
