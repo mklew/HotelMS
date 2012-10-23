@@ -41,10 +41,12 @@
     <component class-key="org.objectledge.web.mvc.tools.LinkToolFactory"
                class="org.objectledge.web.mvc.tools.LinkToolFactoryImpl"/>
     <component class="org.objectledge.web.mvc.tools.PageToolFactory"/>
+    <component class="org.objectledge.web.mvc.components.ComponentToolFactory"/>
     <component class="org.objectledge.templating.tools.ContextTools">
         <sequence>
             <parameter class-key="org.objectledge.web.mvc.tools.LinkToolFactory"/>
             <parameter class-key="org.objectledge.web.mvc.tools.PageToolFactory"/>
+            <parameter class-key="org.objectledge.web.mvc.components.ComponentToolFactory"/>
             <parameter class-key="org.objectledge.web.mvc.builders.ViewEnclosureManager"/>
         </sequence>
     </component>
