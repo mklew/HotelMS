@@ -18,6 +18,12 @@
             <classifier>classes</classifier>
         </dependency>
         <dependency>
+            <groupId>org.objectledge</groupId>
+            <artifactId>ledge-web</artifactId>
+            <version>${versions.ledge}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
             <version>2.0-m12</version>
@@ -52,6 +58,21 @@
                     <webAppConfig>
                         <contextPath>/</contextPath>
                     </webAppConfig>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <dependentWarExcludes>WEB-INF/web.xml,META-INF/MANIFEST.MF</dependentWarExcludes>
+                    <packagingExcludes>WEB-INF/eclipse-web.xml</packagingExcludes>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <overlays>
+                        <overlay>
+                            <groupId>org.objectledge</groupId>
+                            <artifactId>ledge-web</artifactId>
+                        </overlay>
+                    </overlays>
                 </configuration>
             </plugin>
         </plugins>
