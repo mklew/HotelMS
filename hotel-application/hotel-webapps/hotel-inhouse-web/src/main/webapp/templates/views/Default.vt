@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="/content/dojo/dijit/themes/claro/document.css">
         <link rel="stylesheet" href="/content/dojo/dijit/themes/claro/claro.css">
 		<link rel="stylesheet/less" href="/content/style/style.less">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script src="/content/less.js"></script>
         <style>
             #appLayout {
