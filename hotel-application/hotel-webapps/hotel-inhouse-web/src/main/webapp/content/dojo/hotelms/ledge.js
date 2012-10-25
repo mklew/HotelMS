@@ -1,0 +1,17 @@
+define(["dojo/request", "dojo/dom-construct", "dijit/layout/ContentPane"], function(request, domConstruct, ContentPane){
+     return {
+        tab : function(urlToView, options){
+            request(urlToView).then(function(data){
+                var dataDOM = domConstruct.toDom(data);
+                options.content = dataDOM;
+                var cp = new ContentPane(options);
+                MainTabContainer.addChild(cp);
+                request(urlToView + 'Script', { handleAs: 'javascript' });
+                }, function(err){
+                    console.log(err);
+                }, function(event){
+                    console.log(event);
+            });
+        }
+     };
+});
