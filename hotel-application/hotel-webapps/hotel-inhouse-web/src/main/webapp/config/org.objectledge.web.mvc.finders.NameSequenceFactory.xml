@@ -29,7 +29,7 @@
 <config>
   <views separator="."/>
   <classes separator="." default-suffix="Default">
-    <prefix>net.mklew.modules</prefix>
+    <prefix>net.mklew.hotelms.inhouse.web.modules</prefix>
   </classes>
   <templates separator="/" default-suffix="Default"/>
 </config>  
