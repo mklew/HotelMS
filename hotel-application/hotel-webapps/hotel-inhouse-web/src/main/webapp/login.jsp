@@ -45,11 +45,11 @@
 <div id="appLayout">
     <form data-dojo-type="dijit/form/Form" id="myForm" name="loginform" data-dojo-id="myForm" action="" method="post">
         <label for="username">Username</label>
-        <input type="text" name="username" value="username"
+        <input type="text" name="username" value="root"
             data-dojo-type="dijit/form/TextBox"
             data-dojo-props="trim:true" id="username" />
         <label for="password">Password</label>
-        <input type="password" name="password" value=""
+        <input type="password" name="password" value="root"
         data-dojo-type="dijit/form/TextBox"
         data-dojo-props="trim:true" id="password"/>
         <div id="but">
