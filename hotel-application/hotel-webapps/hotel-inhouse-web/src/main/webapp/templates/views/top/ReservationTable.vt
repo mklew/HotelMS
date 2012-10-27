@@ -1,0 +1,5 @@
+<div id="dynamicReservationTable">
+                    <!-- dynamic table goes here -->
+                    <p> This is reservation table </p>
+                    <button data-dojo-type="dijit/form/Button" type="button">Widget inside</button>
+</div>
