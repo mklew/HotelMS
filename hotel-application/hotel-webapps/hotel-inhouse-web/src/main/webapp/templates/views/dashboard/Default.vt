@@ -1,6 +1,6 @@
 $pageTool.insertTitlePrefix('dashboard ')##
 
-<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region : 'center', splitter : 'false'">
+<div data-dojo-type="dijit/layout/TabContainer" data-dojo-id="MainTabContainer" data-dojo-props="region : 'center', splitter : 'false'">
     <!-- Tabs start here -->
     <!-- First tab -->
     <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title : 'content'">
@@ -9,11 +9,6 @@ $pageTool.insertTitlePrefix('dashboard ')##
          <h1>Hello, Dijit</h1>
        <!--  <button data-dojo-type="dijit/form/Button">Click me, dojo</button> -->
         <button >Click me, normal</button>
-
-##
-          <a href="$link.renderComponent('test.TestDynamicComponent')">render component</a>
-          <a href="$link.renderAjaxComponent('test.TestDynamicComponent')">render ajax component</a>
-##
     </div>
     <!-- Second tab -->
     <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title : 'this is second tab'">
@@ -32,10 +27,10 @@ $pageTool.insertTitlePrefix('dashboard ')##
 <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'left', splitter: 'true'">
     <!-- Accordion Container -->
     <div data-dojo-type="dijit/layout/AccordionContainer">
-        <div data-dojo-type="dijit/layout/AccordionPane" data-dojo-props="title : 'Calendar'">
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title : 'Calendar'">
             <div data-dojo-type="dijit/Calendar"></div>
         </div>
-        <div data-dojo-type="dijit/layout/AccordionPane" data-dojo-props="title : 'Legend'">
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="title : 'Legend'">
             <div class="legend checkin"><p>Checkin</p></div>
             <div class="legend checkout"><p>Checkout</p></div>
             <div class="legend inhouse"><p>Inhouse</p></div>
@@ -43,7 +38,7 @@ $pageTool.insertTitlePrefix('dashboard ')##
             <div class="legend reserved"><p>Reserved</p></div>
             <div class="legend overbooked"><p>Overbooked</p></div>
         </div>
-        <div data-dojo-type="dijit/layout/AccordionPane">content of accordion pane #3</div>
-        <div data-dojo-type="dijit/layout/AccordionPane">content of accordion pane #4</div>
+        <div data-dojo-type="dijit/layout/ContentPane">content of accordion pane #3</div>
+        <div data-dojo-type="dijit/layout/ContentPane">content of accordion pane #4</div>
     </div>
 </div>
