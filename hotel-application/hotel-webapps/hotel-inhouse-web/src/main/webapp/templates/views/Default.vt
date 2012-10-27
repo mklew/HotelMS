@@ -18,21 +18,42 @@
             width: 100%; height: 100%;
             border: 0; padding: 0; margin: 0;
         	}
+        	#preloader {
+                      width:100%; height:100%; margin:0; padding:0;
+                      background:#fff
+                        url('$link.content('img/loading.gif')')
+                        no-repeat center center;
+                        position:absolute;
+                        z-index:999;
+            }
         </style>
-        <script data-dojo-config="async : true , parseOnLoad : true, isDebug:true" src="/content/dojo/dojo/dojo.js"></script>
-        <script type="text/javascript">
-               require(["dojo/parser",
-               			"dijit/Dialog",
-                		"dijit/form/Button",
-                		"dijit/layout/BorderContainer",
-                		"dijit/layout/TabContainer",
-                		"dijit/layout/ContentPane",
-                		"dijit/layout/AccordionContainer",
-                		"dijit/Calendar"
-                		]);
-        </script>
+        <script data-dojo-config="async : true , parseOnLoad : false, isDebug:true" src="/content/dojo/dojo/dojo.js"></script>
 	</head>
 	<body class="claro">
+	        <div id="preloader"></div>
+	        <script>
+	            require(["dojo/parser", "dojo/dom-style", "dojo/_base/fx", "dojo/on",
+	            "dijit/Dialog",
+                "dijit/form/Button",
+                "dijit/layout/BorderContainer",
+                "dijit/layout/TabContainer",
+                "dijit/layout/ContentPane",
+                "dijit/layout/AccordionContainer",
+                "dijit/Calendar"],
+                function(parser, domStyle, basefx, on){
+                        parser.parse().then(function(){
+                            basefx.animateProperty({
+                                  node: "preloader", duration: 500,
+                                  properties: {
+                                    opacity: { start: 1, end: 0 },
+                                  },
+                                  onEnd: function(){
+                                    domStyle.set("preloader", "display", "none");
+                                  }
+                                }).play();
+                        });
+	            });
+	        </script>
     		<div id="appLayout"  data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design: 'headline'">
     			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region : 'top'">
                 				<p>Top panel text</p>
@@ -40,8 +61,6 @@
                 				<!-- TODO Add toolbar, drop down menu with user specific information, some panel with system information like date and time -->
 
                 				<p>more top panel text ... </p>
-                				$component.embed('test.TestDynamicComponent')
-
                 				<button data-dojo-type="dijit/form/Button" data-dojo-id="CreateTabBtn" type="button">Click to create new tab</button>
                 				<button data-dojo-type="dijit/form/Button" data-dojo-id="ReservationTableBtn" type="button">Reservation Table</button>
                 				<button data-dojo-type="dijit/form/Button" data-dojo-id="LedgeReservationTableBtn" type="button">Ledge Reservation Table</button>
