@@ -43,6 +43,10 @@
     </listener>
 
     <listener>
+        <listener-class>org.objectledge.cometd.BayeuxServerHookListener</listener-class>
+    </listener>
+
+    <listener>
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
     </listener>
 
@@ -72,6 +76,7 @@
             <param-name>dispatcher</param-name>
             <param-value>main</param-value>
         </init-param>
+        <load-on-startup>3</load-on-startup>
     </servlet>
 
     <servlet>
