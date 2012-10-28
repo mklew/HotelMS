@@ -4,13 +4,13 @@
     <!--<component class="net.mklew.demo.Counter"/>-->
 
     <!-- Bayeux services and channels -->
-    <component class="net.mklew.hotelms.inhouse.web.cometd.AuthorizerValve"/>
+    <!--<component class="net.mklew.hotelms.inhouse.web.cometd.AuthorizerValve"/>-->
     <component class="net.mklew.hotelms.inhouse.web.cometd.HelloService"/>
 
     <component class="org.objectledge.cometd.BayeuxServerConfigurator">
         <parameter/>
         <sequence>
-            <parameter class-key="net.mklew.hotelms.inhouse.web.cometd.AuthorizerValve"/>
+            <!--<parameter class-key="net.mklew.hotelms.inhouse.web.cometd.AuthorizerValve"/>-->
         </sequence>
         <sequence>
             <parameter class-key="net.mklew.hotelms.inhouse.web.cometd.HelloService"/>
