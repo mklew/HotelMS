@@ -11,6 +11,8 @@
         <parameter/>
         <sequence>
             <parameter class-key="net.mklew.hotelms.inhouse.web.cometd.AuthorizerValve"/>
+        </sequence>
+        <sequence>
             <parameter class-key="net.mklew.hotelms.inhouse.web.cometd.HelloService"/>
         </sequence>
     </component>
