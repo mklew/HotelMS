@@ -64,7 +64,9 @@
                 				<button data-dojo-type="dijit/form/Button" data-dojo-id="CreateTabBtn" type="button">Click to create new tab</button>
                 				<button data-dojo-type="dijit/form/Button" data-dojo-id="ReservationTableBtn" type="button">Reservation Table</button>
                 				<button data-dojo-type="dijit/form/Button" data-dojo-id="LedgeReservationTableBtn" type="button">Ledge Reservation Table</button>
-
+                                <div data-dojo-type="dijit/layout/ContentPane">
+                                <p>Hello, $username</p>
+                                </div>
                 </div>
 
     			$embeddedPlaceholder##

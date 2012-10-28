@@ -11,6 +11,7 @@
     <component class="org.objectledge.web.mvc.MVCResultsValve"/>
     <component class="org.objectledge.web.mvc.MVCInitializerValve"/>
     <component class="org.objectledge.parameters.RequestParametersLoaderValve"/>
+    <component class="org.objectledge.web.ShiroSubjectValve"/>
 
     <component class="org.objectledge.web.mvc.builders.ViewEnclosureManager"/>
 
@@ -63,6 +64,7 @@
             <parameter class-key="org.objectledge.parameters.RequestParametersLoaderValve"/>
             <parameter class-key="org.objectledge.web.mvc.MVCInitializerValve"/>
             <parameter class-key="org.objectledge.templating.TemplatingContextLoaderValve"/>
+            <parameter class-key="org.objectledge.web.ShiroSubjectValve"/>
             <parameter class-key="org.objectledge.templating.tools.ContextToolPopulatorValve"/>
             <parameter class-key="org.objectledge.web.mvc.actions.ActionExecutorValve"/>
             <parameter class-key="org.objectledge.web.mvc.builders.BuilderExecutorValve"/>
