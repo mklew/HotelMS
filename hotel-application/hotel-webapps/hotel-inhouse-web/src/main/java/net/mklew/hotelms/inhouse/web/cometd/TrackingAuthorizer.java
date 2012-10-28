@@ -13,10 +13,32 @@ import org.cometd.server.DefaultSecurityPolicy;
  */
 public class TrackingAuthorizer extends DefaultSecurityPolicy
 {
+    private static final String USERNAME = "username";
+
     @Override
     public boolean canHandshake(BayeuxServer server, ServerSession session, ServerMessage message)
     {
-        return super.canHandshake(server, session, message);    //To change body of overridden methods use File | Settings | File Templates.
+        if(session.isLocalSession())
+            return true;
+        if(!message.containsKey(USERNAME))
+        {
+            return false;
+        }
+        String username = (String) message.get(USERNAME);
+
+        // TODO map username to userId and also both to ServerSession
+        // TODO map should be available in some pico component with synchronized access
+
+        session.addListener(new ServerSession.RemoveListener()
+        {
+            @Override
+            public void removed(ServerSession serverSession, boolean b)
+            {
+                // TODO remove entry from map
+            }
+        });
+
+        return true;
     }
 
     @Override
