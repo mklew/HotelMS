@@ -18,12 +18,6 @@
         <url-pattern>/cometd/*</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>initializer</servlet-name>
-        <servlet-class>net.mklew.hotelms.inhouse.web.cometd.BayeuxInitializer</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-
     <filter>
         <filter-name>cross-origin</filter-name>
         <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
