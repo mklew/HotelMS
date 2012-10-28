@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.cometd.bayeux.Message;
 import org.cometd.bayeux.server.BayeuxServer;
 import org.cometd.bayeux.server.ServerSession;
+import org.jcontainer.dna.Logger;
 import org.objectledge.cometd.BayeuxService;
 
 /**
@@ -15,14 +16,18 @@ import org.objectledge.cometd.BayeuxService;
  */
 public class HelloService extends BayeuxService
 {
-    public HelloService(BayeuxServer bayeux)
+    private final Logger logger;
+
+    public HelloService(BayeuxServer bayeux, Logger logger)
     {
         super(bayeux, "hello");
+        this.logger = logger;
         addService("/service/hello", "processHello");
     }
 
     public void processHello(ServerSession remote, Message message)
     {
+        logger.debug("Processing message: "+ message);
         Map<String, Object> input = message.getDataAsMap();
         String name = (String) input.get("name");
 
