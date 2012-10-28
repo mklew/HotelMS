@@ -6,14 +6,14 @@ import java.util.HashMap;
 import org.cometd.bayeux.Message;
 import org.cometd.bayeux.server.BayeuxServer;
 import org.cometd.bayeux.server.ServerSession;
-import org.cometd.server.AbstractService;
+import org.objectledge.cometd.BayeuxService;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 10/28/12
  *        Time: 5:50 PM
  */
-public class HelloService extends AbstractService
+public class HelloService extends BayeuxService
 {
     public HelloService(BayeuxServer bayeux)
     {
