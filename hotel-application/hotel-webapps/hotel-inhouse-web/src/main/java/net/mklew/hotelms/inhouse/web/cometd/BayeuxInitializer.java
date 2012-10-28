@@ -20,6 +20,8 @@ public class BayeuxInitializer extends GenericServlet
     {
         BayeuxServer bayeux = (BayeuxServer) getServletContext().getAttribute(BayeuxServer.ATTRIBUTE);
         new HelloService(bayeux);
+
+        bayeux.setSecurityPolicy(new TrackingAuthorizer());
     }
 
     public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException
