@@ -45,7 +45,9 @@
                 "dijit/layout/TabContainer",
                 "dijit/layout/ContentPane",
                 "dijit/layout/AccordionContainer",
-                "dijit/Calendar"],
+                "dijit/Calendar",
+                "dijit/MenuBar",
+                "dijit/MenuBarItem"],
                 function(parser, domStyle, basefx, on){
                         parser.parse().then(function(){
                             basefx.animateProperty({
@@ -63,6 +65,19 @@
 
     		<div id="appLayout"  data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design: 'headline'">
     			<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region : 'top'">
+                				  <div id="menubar" data-dojo-type="dijit/MenuBar">
+                                      <div id="reservationsMenu" data-dojo-type="dijit/MenuBarItem">Reservations</div>
+                                      <div id="housekeepingMenu" data-dojo-type="dijit/MenuBarItem">Housekeeping</div>
+                                      <div id="billingMenu" data-dojo-type="dijit/MenuBarItem">Billing</div>
+                                      <div id="guestsMenu" data-dojo-type="dijit/MenuBarItem">Guests</div>
+                                      <div id="reportsMenu" data-dojo-type="dijit/MenuBarItem">Reports</div>
+                                      <div id="inclusionsMenu" data-dojo-type="dijit/MenuBarItem">Inclusions</div>
+                                      <div id="nightAuditMenu" data-dojo-type="dijit/MenuBarItem">Night audit</div>
+                                  </div>
+                                  <div id="submenubar" data-dojo-type="dijit/layout/ContentPane">
+
+                                  </div>
+
                 				<p>Top panel text</p>
 
                 				<!-- TODO Add toolbar, drop down menu with user specific information, some panel with system information like date and time -->
@@ -80,7 +95,9 @@
     		</div>
 
     		<script>
-    		         require(["dojo/ready", "dojo/on", "dijit/layout/ContentPane", "dojo/request", "dojo/dom-construct", "dojo/parser", "hotelms/ledge"], function(ready, on, ContentPane, request, domConstruct, parser, ledge){
+    		         require(["dojo/ready", "dojo/on", "dijit/layout/ContentPane", "dojo/request", "dojo/dom-construct",
+    		          "dojo/parser", "hotelms/ledge", "dijit/registry", "dojo/_base/array", "dijit/MenuBarItem", "dijit/MenuBar"],
+    		         function(ready, on, ContentPane, request, domConstruct, parser, ledge, registry, array, MenuBarItem, MenuBar){
     		            ready(function(){
     		                    on(CreateTabBtn.domNode, "click", function(event){
      		                         var cp1 = new ContentPane({
@@ -109,6 +126,58 @@
                                     ##ledge.tab("$link.view('top.ReservationTable')", { title: 'Reservation Table'});
                                 on(LedgeReservationTableBtn.domNode, "click", function(event){
                                     ledge.tab("$link.view('top.ReservationTable')", {title: 'Reservation Table fetched by ajax from views and json view'});
+                                });
+
+                                 var menuToSubmenus = {
+                                "reservations" : [
+                                                  { subMenuItemName : "Open Booking sheet",
+                                                    viewName : "$link.view('top.ReservationTable')",
+                                                    tabTitle : "Booking sheet"
+                                                  },
+                                                  { subMenuItemName : "Book new reservation",
+                                                    viewName : "$link.view('top.ReservationTable')",
+                                                    tabTitle : "Booking sheet"
+                                                  },
+                                                  { subMenuItemName : "Book new reservation",
+                                                    viewName : "$link.view('top.ReservationTable')",
+                                                    tabTitle : "Booking sheet"
+                                                  },
+                                                  { subMenuItemName : "Show check-ins",
+                                                    viewName : "$link.view('top.ReservationTable')",
+                                                    tabTitle : "Booking sheet"
+                                                  },
+                                                  { subMenuItemName : "Show check-outs",
+                                                    viewName : "$link.view('top.ReservationTable')",
+                                                    tabTitle : "Booking sheet"
+                                                  },
+                                                  { subMenuItemName : "Browse reservations",
+                                                    viewName : "$link.view('top.ReservationTable')",
+                                                    tabTitle : "Booking sheet"
+                                                  }
+                                                ]
+                                };
+
+                                var changeSubmenuTo = function(name)
+                                {
+                                     var submenubar = registry.byId("submenubar");
+                                     submenubar.destroyDescendants(false);
+                                     var menuBar = new MenuBar();
+                                     submenubar.addChild(menuBar);
+
+                                     array.forEach(menuToSubmenus[name], function(subMenuItem){
+                                        var barItem = new MenuBarItem({
+                                            title : subMenuItem.subMenuItemName,
+                                            label : subMenuItem.subMenuItemName,
+                                            onClick : function(){
+                                                ledge.tab(subMenuItem.viewName, {title: subMenuItem.tabTitle});
+                                            }
+                                        });
+                                        menuBar.addChild(barItem);
+                                     });
+                                }
+
+                                on(registry.byId("reservationsMenu"), "click", function(event){
+                                   changeSubmenuTo("reservations");
                                 });
 
     		            });
