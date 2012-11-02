@@ -2,8 +2,8 @@ $viewEnclosureTool.top()
     console.log('ReservationTableScript was fetched');
     require(["dojo/store/Memory", "dojo/dom-construct", "dojo/date", "dojo/date/locale",
             "dojo/_base/array", "hotelms/TableCell",
-            "dojo/ready","dojo/dom-class", "dojo/dom", "dojo/request"],
-            function(Memory, domConstruct, date, locale, array, TableCell, ready, domClass, dom, request){
+            "dojo/ready","dojo/dom-class", "dojo/dom", "dojo/request", "dijit/registry"],
+            function(Memory, domConstruct, date, locale, array, TableCell, ready, domClass, dom, request, registry){
                 // use ready and not domReady! because I want to operate after widgets are initialized
             ready(function(){
 
@@ -92,12 +92,8 @@ $viewEnclosureTool.top()
                     return header;
                 }
 
-                var builder = function(from, to, store)
+                var builder = function(fromDate, toDate, store, localeParserOptions)
                 {
-                    var localeParserOptions = {datePattern: "yyyy-MM-dd" , selector : "date"};
-                    var fromDate = locale.parse(from, localeParserOptions);
-                    var toDate = locale.parse(to, localeParserOptions);
-
                     var colgroupDOM = buildColgroupDOM(fromDate, toDate);
                     var theadDOM = buildTableHeaderDOM(fromDate, toDate, localeParserOptions);
                     console.log("theadDOM");
@@ -155,8 +151,18 @@ $viewEnclosureTool.top()
                     // creates one or more td depending on reservation...
                     // overbooking cannot be handled..
 
-                    buildedTableDOM = builder(reservationsData.from, reservationsData.to, store);
+                    var localeParserOptions = {datePattern: "yyyy-MM-dd" , selector : "date"};
+                    var fromDate = locale.parse(reservationsData.from, localeParserOptions);
+                    var toDate = locale.parse(reservationsData.to, localeParserOptions);
+
+                    registry.byId("fromDateBookingSheetId").set('value', fromDate);
+                    console.log('tutaj tuaj tuaj tutuaj tutaj tutaj');
+                    console.log(registry.byId("fromDateBookingSheetId"));
+                    registry.byId("toDateBookingSheetId").set('value', toDate);
+
+                    buildedTableDOM = builder(fromDate, toDate, store, localeParserOptions);
                     domConstruct.place(buildedTableDOM, dom.byId("dynamicReservationTable"), "last");
+
                 });
             });
 });

@@ -47,7 +47,8 @@
                 "dijit/layout/AccordionContainer",
                 "dijit/Calendar",
                 "dijit/MenuBar",
-                "dijit/MenuBarItem"],
+                "dijit/MenuBarItem",
+                "dijit/form/DateTextBox"],
                 function(parser, domStyle, basefx, on){
                         parser.parse().then(function(){
                             basefx.animateProperty({
@@ -78,20 +79,24 @@
 
                                   </div>
 
-                				<p>Top panel text</p>
-
-                				<!-- TODO Add toolbar, drop down menu with user specific information, some panel with system information like date and time -->
-
-                				<p>more top panel text ... </p>
-                				<button data-dojo-type="dijit/form/Button" data-dojo-id="CreateTabBtn" type="button">Click to create new tab</button>
-                				<button data-dojo-type="dijit/form/Button" data-dojo-id="ReservationTableBtn" type="button">Reservation Table</button>
-                				<button data-dojo-type="dijit/form/Button" data-dojo-id="LedgeReservationTableBtn" type="button">Ledge Reservation Table</button>
-                                <div data-dojo-type="dijit/layout/ContentPane">
-                                <p>Hello, $username</p>
-                                </div>
+##                				<p>Top panel text</p>
+##
+##                				<!-- TODO Add toolbar, drop down menu with user specific information, some panel with system information like date and time -->
+##
+##                				<p>more top panel text ... </p>
+##                				<button data-dojo-type="dijit/form/Button" data-dojo-id="CreateTabBtn" type="button">Click to create new tab</button>
+##                				<button data-dojo-type="dijit/form/Button" data-dojo-id="ReservationTableBtn" type="button">Reservation Table</button>
+##                				<button data-dojo-type="dijit/form/Button" data-dojo-id="LedgeReservationTableBtn" type="button">Ledge Reservation Table</button>
+##                                <div data-dojo-type="dijit/layout/ContentPane">
+##                                <p>Hello, $username</p>
+##                                </div>
                 </div>
 
-    			$embeddedPlaceholder##
+
+    			<div data-dojo-type="dijit/layout/TabContainer" data-dojo-id="MainTabContainer" data-dojo-props="region : 'center', splitter : 'false'">
+
+                    $embeddedPlaceholder##
+                </div>
     		</div>
 
     		<script>
@@ -99,34 +104,34 @@
     		          "dojo/parser", "hotelms/ledge", "dijit/registry", "dojo/_base/array", "dijit/MenuBarItem", "dijit/MenuBar"],
     		         function(ready, on, ContentPane, request, domConstruct, parser, ledge, registry, array, MenuBarItem, MenuBar){
     		            ready(function(){
-    		                    on(CreateTabBtn.domNode, "click", function(event){
-     		                         var cp1 = new ContentPane({
-                                                  title: "New Tab",
-                                                  content: "We offer amazing food"
-                                             });
-                                     MainTabContainer.addChild(cp1);
-    		                    });
-
-
-    		                    on(ReservationTableBtn.domNode, "click", function(event){
-                                    request("$link.view('top.ReservationTable')").then(function(data){
-                                        var dataDOM = domConstruct.toDom(data);
-                                        var cp1 = new ContentPane({
-                                            title: 'Reservation table',
-                                            content: dataDOM
-                                        });
-                                        MainTabContainer.addChild(cp1);
-                                        request("$link.view('top.ReservationTableScript')",{handleAs:'javascript'});
-                                    }, function(err){
-                                       console.log(err);
-                                    }, function(event){
-                                        console.log(event);
-                                    });
-                                });
-                                    ##ledge.tab("$link.view('top.ReservationTable')", { title: 'Reservation Table'});
-                                on(LedgeReservationTableBtn.domNode, "click", function(event){
-                                    ledge.tab("$link.view('top.ReservationTable')", {title: 'Reservation Table fetched by ajax from views and json view'});
-                                });
+##    		                    on(CreateTabBtn.domNode, "click", function(event){
+##     		                         var cp1 = new ContentPane({
+##                                                  title: "New Tab",
+##                                                  content: "We offer amazing food"
+##                                             });
+##                                     MainTabContainer.addChild(cp1);
+##    		                    });
+##
+##
+##    		                    on(ReservationTableBtn.domNode, "click", function(event){
+##                                    request("$link.view('top.ReservationTable')").then(function(data){
+##                                        var dataDOM = domConstruct.toDom(data);
+##                                        var cp1 = new ContentPane({
+##                                            title: 'Reservation table',
+##                                            content: dataDOM
+##                                        });
+##                                        MainTabContainer.addChild(cp1);
+##                                        request("$link.view('top.ReservationTableScript')",{handleAs:'javascript'});
+##                                    }, function(err){
+##                                       console.log(err);
+##                                    }, function(event){
+##                                        console.log(event);
+##                                    });
+##                                });
+##                                    ##ledge.tab("$link.view('top.ReservationTable')", { title: 'Reservation Table'});
+##                                on(LedgeReservationTableBtn.domNode, "click", function(event){
+##                                    ledge.tab("$link.view('top.ReservationTable')", {title: 'Reservation Table fetched by ajax from views and json view'});
+##                                });
 
                                  var menuToSubmenus = {
                                 "reservations" : [
@@ -174,6 +179,7 @@
                                         });
                                         menuBar.addChild(barItem);
                                      });
+                                     registry.byId("appLayout").resize();
                                 }
 
                                 on(registry.byId("reservationsMenu"), "click", function(event){
