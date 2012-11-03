@@ -21,4 +21,9 @@ public class RoomType
     {
         return new RoomType(name);
     }
+
+    public String getTypeName()
+    {
+        return typeName;
+    }
 }
