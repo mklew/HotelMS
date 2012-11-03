@@ -14,11 +14,13 @@ public class Room
     private RoomAvailability availability;
     private RoomType type;
     private RoomName name;
+    private Integer maxExtraBeds;
 
-    public Room(RoomType type, RoomName name)
+    public Room(RoomType type, RoomName name, Integer maxExtraBeds)
     {
         this.type = type;
         this.name = name;
+        this.maxExtraBeds = maxExtraBeds;
     }
 
     private Occupancy occupancy;
@@ -36,5 +38,10 @@ public class Room
     public String roomTypeName()
     {
         return type.getTypeName();
+    }
+
+    public Integer maxExtraBeds()
+    {
+        return maxExtraBeds;
     }
 }
