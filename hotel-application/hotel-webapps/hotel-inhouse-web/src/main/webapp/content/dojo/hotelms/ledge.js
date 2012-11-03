@@ -1,4 +1,5 @@
-define(["dojo/request", "dojo/dom-construct", "dijit/layout/ContentPane"], function(request, domConstruct, ContentPane){
+define(["dojo/request", "dojo/dom-construct", "dijit/layout/ContentPane", "dojo/io-query"],
+function(request, domConstruct, ContentPane, ioQuery){
      return {
         tab : function(urlToView, options){
             request(urlToView).then(function(data){
@@ -21,6 +22,17 @@ define(["dojo/request", "dojo/dom-construct", "dijit/layout/ContentPane"], funct
                 }, function(event){
                     console.log(event);
             });
+        },
+
+        requestJson : function(urlToView, queryHash){
+          var queryStr = ioQuery.objectToQuery(queryHash);
+          request.post(urlToView, { query : queryStr, handleAs : 'json'}).then(function(data){
+                return data;
+           }, function(err){
+                console.log(err);
+           }, function(evt){
+                console.log(evt);
+           });
         }
      };
 });
