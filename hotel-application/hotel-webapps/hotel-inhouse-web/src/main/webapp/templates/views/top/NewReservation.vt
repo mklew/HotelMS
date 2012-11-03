@@ -1,0 +1,103 @@
+<form data-dojo-type="dijit/form/Form">
+    <fieldset>
+        <legend>Reservation type</legend>
+        <div>
+            <label for="reservation-type">Choose reservation type:</label>
+
+             <select id="reservationType" name="reservation-type" data-dojo-type="dijit/form/FilteringSelect"
+                    data-dojo-props="
+                        value: '',
+                        placeHolder: 'Select reservation type'" autofocus>
+                    <option value="single">Single</option>
+                    <option value="group">Group</option>
+                    <option value="corporate">Corporate</option>
+                    <option value="agent">Agent</option>
+            </select>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Stay details</legend>
+        <div>
+          <label for="checkin">Check-in:</label>
+          <input name="checkin" data-dojo-type='dijit/form/DateTextBox'>
+        </div>
+        <div>
+          <label for="checkout">Check-out:</label>
+          <input name="checkout" data-dojo-type='dijit/form/DateTextBox'>
+        </div>
+        <div>
+          <label for="number-of-adults">Number of adults:</label>
+          <input name="number-of-adults" data-dojo-type='dijit/form/NumberTextBox' data-dojo-props="constraints:{min:0,max:20,places:0}">
+        </div>
+        <div>
+          <label for="number-of-children">Number of children:</label>
+          <input name="number-of-children" data-dojo-type='dijit/form/NumberTextBox' data-dojo-props="constraints:{min:0,max:20,places:0}">
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Room</legend>
+        <div>
+            <div data-dojo-type="dojo/store/Memory"
+                data-dojo-id="roomTypesStore"
+                data-dojo-props="data: [
+                    #foreach($roomType in $roomTypes)
+                        {id: '$roomType.typeName'}#if( $foreach.hasNext ),#end
+                    #end
+                ]">
+            </div>
+            <label for="room-type">Choose room type:</label>
+            <input id="roomTypeChooser" name="room-type" data-dojo-type="dijit/form/FilteringSelect"
+                             data-dojo-props="placeHolder: 'Select room type', store: roomTypesStore, searchAttr:'id'"/>
+        </div>
+            <div data-dojo-type="dojo/store/Memory"
+                data-dojo-id="roomsStore"
+                data-dojo-props="data: [
+                    #foreach($room in $rooms)
+                        {id: '$room.fullRoomName()', roomType: '$room.roomTypeName()'}#if( $foreach.hasNext ),#end
+                    #end
+                ], idProperty: 'id'">
+            </div>
+            <label for="room-name">Choose  type:</label>
+            <input id="roomChooser" name="room-name" data-dojo-type="dijit/form/FilteringSelect"
+                                         data-dojo-props="placeHolder: 'Select room', store: roomsStore, searchAttr:'id', disabled:true, query: {roomType: /.*/}"
+                                         />
+        </div>
+        <div>
+##            <label for="reservation-type">Choose reservation type:</label>
+##
+##            <select id="reservationType" name="reservation-type" data-dojo-type="dijit/form/FilteringSelect"
+##                    data-dojo-props="
+##                        value: '',
+##                        placeHolder: 'Select '" >
+##                    <option value="single">Single</option>
+##                    <option value="group">Group</option>
+##                    <option value="corporate">Corporate</option>
+##                    <option value="agent">Agent</option>
+##            </select>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Rate</legend>
+        <div>jdaskljdjakdklajlkd</div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Reservation owner details</legend>
+        <div>jdaskljdjakdklajlkd</div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Method of payment</legend>
+    </fieldset>
+
+    <fieldset>
+        <legend>Payment summary</legend>
+    </fieldset>
+
+    <fieldset>
+        <legend>Additional information</legend>
+    </fieldset>
+</form>
