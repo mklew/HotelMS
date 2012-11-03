@@ -5,6 +5,7 @@
 		<title>$pageTool.title</title>
 		<link rel="stylesheet" href="/content/dojo/dijit/themes/claro/document.css">
         <link rel="stylesheet" href="/content/dojo/dijit/themes/claro/claro.css">
+        <link rel="stylesheet" href="/content/style/form.css">
 		<link rel="stylesheet/less" href="/content/style/style.less">
         <script src="/content/less.js"></script>
         <style>
@@ -48,7 +49,11 @@
                 "dijit/Calendar",
                 "dijit/MenuBar",
                 "dijit/MenuBarItem",
-                "dijit/form/DateTextBox"],
+                "dijit/form/DateTextBox",
+                "dijit/form/FilteringSelect",
+                "dijit/form/NumberTextBox",
+                "dojo/store/Memory",
+                "dijit/form/Form"],
                 function(parser, domStyle, basefx, on){
                         parser.parse().then(function(){
                             basefx.animateProperty({
@@ -90,6 +95,27 @@
 ##                                <div data-dojo-type="dijit/layout/ContentPane">
 ##                                <p>Hello, $username</p>
 ##                                </div>
+
+### testy
+##<form data-dojo-type="dijit/form/Form">
+##    <fieldset>
+##        <legend>Room</legend>
+##        <div>
+##            <div data-dojo-type="dojo/store/Memory"
+##                 data-dojo-id="roomTypesStore"
+##                 data-dojo-props="data: [
+##                     {id: 'abc', name: 'abc'},
+##                     {id: 'def', name: 'def'},
+##                     {id: 'ghi', name: 'ghi'}
+##                 ]">
+##            </div>
+##            <label for="room-type">Choose room type:</label>
+##            <input id="roomType" name="room-type" data-dojo-type="dijit/form/FilteringSelect"
+##                 data-dojo-props="placeHolder: 'Select room type', store: roomTypesStore, searchAttr:'name'"/>
+##        </div>
+##    </fieldset>
+##</form>
+### testy
                 </div>
 
 
@@ -137,27 +163,33 @@
                                 "reservations" : [
                                                   { subMenuItemName : "Open Booking sheet",
                                                     viewName : "$link.view('top.ReservationTable')",
-                                                    tabTitle : "Booking sheet"
+                                                    tabTitle : "Booking sheet",
+                                                    script : true
+                                                  },
+                                                  { subMenuItemName : "Book new reservation",
+                                                    viewName : "$link.view('top.NewReservation')",
+                                                    tabTitle : "New reservation",
+                                                    script : true
                                                   },
                                                   { subMenuItemName : "Book new reservation",
                                                     viewName : "$link.view('top.ReservationTable')",
-                                                    tabTitle : "Booking sheet"
-                                                  },
-                                                  { subMenuItemName : "Book new reservation",
-                                                    viewName : "$link.view('top.ReservationTable')",
-                                                    tabTitle : "Booking sheet"
+                                                    tabTitle : "Booking sheet",
+                                                    script : false
                                                   },
                                                   { subMenuItemName : "Show check-ins",
                                                     viewName : "$link.view('top.ReservationTable')",
-                                                    tabTitle : "Booking sheet"
+                                                    tabTitle : "Booking sheet",
+                                                    script : false
                                                   },
                                                   { subMenuItemName : "Show check-outs",
                                                     viewName : "$link.view('top.ReservationTable')",
-                                                    tabTitle : "Booking sheet"
+                                                    tabTitle : "Booking sheet",
+                                                    script : false
                                                   },
                                                   { subMenuItemName : "Browse reservations",
                                                     viewName : "$link.view('top.ReservationTable')",
-                                                    tabTitle : "Booking sheet"
+                                                    tabTitle : "Booking sheet",
+                                                    script : false
                                                   }
                                                 ]
                                 };
@@ -174,7 +206,7 @@
                                             title : subMenuItem.subMenuItemName,
                                             label : subMenuItem.subMenuItemName,
                                             onClick : function(){
-                                                ledge.tab(subMenuItem.viewName, {title: subMenuItem.tabTitle});
+                                                ledge.tab(subMenuItem.viewName, {title: subMenuItem.tabTitle, script: subMenuItem.script});
                                             }
                                         });
                                         menuBar.addChild(barItem);
