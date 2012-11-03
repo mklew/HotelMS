@@ -1,0 +1,9 @@
+fieldset {
+    border: 1px solid black;
+    margin: 15px 0px 15px 0px;
+}
+
+legend {
+    margin: 0px 5px 0px 25px;
+    padding: 0px 8px 0px 8px;
+}​
