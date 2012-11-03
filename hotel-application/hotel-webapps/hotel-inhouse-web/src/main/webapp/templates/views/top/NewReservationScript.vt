@@ -6,9 +6,6 @@ require(["dijit/registry", "dojo/on", "dojo/ready"], function(registry, on, read
         on(roomTypeChooser, "change", function(){
             var roomChooser = registry.byId("roomChooser");
             roomChooser.set('disabled', false);
-            console.log(this);
-            console.log(this.item);
-            console.log("setting roomType to " + this.item.roomType);
             roomChooser.query.roomType = this.item.id || /.*/;
         })
     });
