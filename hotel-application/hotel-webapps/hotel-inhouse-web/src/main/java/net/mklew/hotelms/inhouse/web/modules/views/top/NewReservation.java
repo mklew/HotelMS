@@ -46,12 +46,12 @@ public class NewReservation extends BasicLedgeTopView
         // TODO fetch rooms from repository
         // TODO add comparable to Room and compare it by room names
         // TODO pass Set (so its ordered) to templatingContext instead of collection
-        Room L100 = new Room(luxury, new RoomName("100", "L"));
-        Room L101 = new Room(luxury, new RoomName("101", "L"));
-        Room L102 = new Room(luxury, new RoomName("102", "L"));
-        Room C103 = new Room(cheap, new RoomName("103", "C"));
-        Room C104 = new Room(cheap, new RoomName("104", "C"));
-        Room N105 = new Room(niceOne, new RoomName("105", "N"));
+        Room L100 = new Room(luxury, new RoomName("100", "L"), 1);
+        Room L101 = new Room(luxury, new RoomName("101", "L"), 0);
+        Room L102 = new Room(luxury, new RoomName("102", "L"), 3);
+        Room C103 = new Room(cheap, new RoomName("103", "C"), 4);
+        Room C104 = new Room(cheap, new RoomName("104", "C"), 5);
+        Room N105 = new Room(niceOne, new RoomName("105", "N"), 2);
 
         Collection<Room> rooms = Arrays.asList(L100, L101, L102, C103, C104, N105);
         templatingContext.put("rooms", rooms);
