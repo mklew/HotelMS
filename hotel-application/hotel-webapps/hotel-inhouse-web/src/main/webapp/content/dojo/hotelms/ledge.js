@@ -6,14 +6,16 @@ define(["dojo/request", "dojo/dom-construct", "dijit/layout/ContentPane"], funct
                 options.content = dataDOM;
                 var cp = new ContentPane(options);
                 MainTabContainer.addChild(cp);
-
-                request(urlToView + 'Script', { handleAs: 'javascript' }).then(function(data){
-                    console.log('retrived script');
-                    }, function(err){
-                         console.log(err);
-                    }, function(event){
-                         console.log(event);
-                    });
+                if(options && options.script == true)
+                {
+                    request(urlToView + 'Script', { handleAs: 'javascript' }).then(function(data){
+                        console.log('retrived script');
+                        }, function(err){
+                             console.log(err);
+                        }, function(event){
+                             console.log(event);
+                        });
+                }
                 }, function(err){
                     console.log(err);
                 }, function(event){
