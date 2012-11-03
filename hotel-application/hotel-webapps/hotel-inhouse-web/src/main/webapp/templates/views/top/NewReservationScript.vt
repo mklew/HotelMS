@@ -10,6 +10,7 @@ require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory"], functi
         });
         on(roomChooser, "change", function(){
             var extraBeds = registry.byId("extraBedChooser");
+            extraBeds.set('disabled', false);
             var max = roomsStore.get(this.item.id).maxExtraBeds;
             var newStoreData = extraBedsStore.query().filter(function(item){
                return item.extraBed <= max;
