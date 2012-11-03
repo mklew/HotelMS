@@ -43,7 +43,7 @@ public class NewReservation extends BasicLedgeTopView
         roomTypes.addAll(Arrays.asList(luxury, cheap, niceOne));
         templatingContext.put("roomTypes", roomTypes);
 
-        // TODO fetch rooms from repository
+        // TODO fetch rooms from repository filtered by provided number of adults and number of children
         // TODO add comparable to Room and compare it by room names
         // TODO pass Set (so its ordered) to templatingContext instead of collection
         Room L100 = new Room(luxury, new RoomName("100", "L"), 1);
