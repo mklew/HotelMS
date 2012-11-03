@@ -59,23 +59,12 @@
                     #end
                 ], idProperty: 'id'">
             </div>
-            <label for="room-name">Choose  type:</label>
+            <label for="room-name">Choose room:</label>
             <input id="roomChooser" name="room-name" data-dojo-type="dijit/form/FilteringSelect"
                                          data-dojo-props="placeHolder: 'Select room', store: roomsStore, searchAttr:'id', disabled:true, query: {roomType: /.*/}"
                                          />
         </div>
         <div>
-##            <label for="reservation-type">Choose reservation type:</label>
-##
-##            <select id="reservationType" name="reservation-type" data-dojo-type="dijit/form/FilteringSelect"
-##                    data-dojo-props="
-##                        value: '',
-##                        placeHolder: 'Select '" >
-##                    <option value="single">Single</option>
-##                    <option value="group">Group</option>
-##                    <option value="corporate">Corporate</option>
-##                    <option value="agent">Agent</option>
-##            </select>
         </div>
     </fieldset>
 
