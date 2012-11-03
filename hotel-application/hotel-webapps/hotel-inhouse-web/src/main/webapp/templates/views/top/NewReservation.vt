@@ -73,7 +73,7 @@
               ]}"
             <label for="room-extra-bed">Extra beds:</label>
             <input id="extraBedChooser" name="room-extra-bed" data-dojo-type="dijit/form/FilteringSelect"
-                data-dojo-props="store: extraBedsStore, searchAttr:'extraBed'" value="0"/>
+                data-dojo-props="store: extraBedsStore, searchAttr:'extraBed', disabled:true" value="0"/>
         </div>
     </fieldset>
 
