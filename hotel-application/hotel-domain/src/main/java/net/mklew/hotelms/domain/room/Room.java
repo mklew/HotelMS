@@ -14,6 +14,13 @@ public class Room
     private RoomAvailability availability;
     private RoomType type;
     private RoomName name;
+
+    public Room(RoomType type, RoomName name)
+    {
+        this.type = type;
+        this.name = name;
+    }
+
     private Occupancy occupancy;
 
     public boolean isAvailable()
@@ -21,4 +28,13 @@ public class Room
         return availability.isAvailable();
     }
 
+    public String fullRoomName()
+    {
+        return name.getRoomName();
+    }
+
+    public String roomTypeName()
+    {
+        return type.getTypeName();
+    }
 }
