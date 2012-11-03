@@ -22,6 +22,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <versions.ledge>1.0.15-SNAPSHOT</versions.ledge>
   </properties>
 
   <build>

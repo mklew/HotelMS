@@ -19,7 +19,6 @@
   </modules>
 
     <properties>
-        <versions.ledge>1.0.15-SNAPSHOT</versions.ledge>
         <versions.jetty>8.1.3.v20120416</versions.jetty>
         <versions.shiro>1.2.1</versions.shiro>
     </properties>
