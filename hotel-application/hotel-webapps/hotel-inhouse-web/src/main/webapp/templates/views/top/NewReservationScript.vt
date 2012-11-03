@@ -1,12 +1,20 @@
 $viewEnclosureTool.top()
 console.log("NewReservationScript has been fetched successfully");
-require(["dijit/registry", "dojo/on", "dojo/ready"], function(registry, on, ready){
+require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory"], function(registry, on, ready, Memory){
     ready(function(){
         var roomTypeChooser = registry.byId("roomTypeChooser");
+        var roomChooser = registry.byId("roomChooser");
         on(roomTypeChooser, "change", function(){
-            var roomChooser = registry.byId("roomChooser");
             roomChooser.set('disabled', false);
             roomChooser.query.roomType = this.item.id || /.*/;
-        })
+        });
+        on(roomChooser, "change", function(){
+            var extraBeds = registry.byId("extraBedChooser");
+            var max = roomsStore.get(this.item.id).maxExtraBeds;
+            var newStoreData = extraBedsStore.query().filter(function(item){
+               return item.extraBed <= max;
+            });
+            extraBeds.set('store', new Memory({idProperty: 'extraBed', data: newStoreData}));
+        });
     });
 });

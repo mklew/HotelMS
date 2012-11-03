@@ -55,7 +55,7 @@
                 data-dojo-id="roomsStore"
                 data-dojo-props="data: [
                     #foreach($room in $rooms)
-                        {id: '$room.fullRoomName()', roomType: '$room.roomTypeName()'}#if( $foreach.hasNext ),#end
+                        {id: '$room.fullRoomName()', roomType: '$room.roomTypeName()', maxExtraBeds : '$room.maxExtraBeds()'}#if( $foreach.hasNext ),#end
                     #end
                 ], idProperty: 'id'">
             </div>
@@ -65,6 +65,15 @@
                                          />
         </div>
         <div>
+            <div data-dojo-type="dojo/store/Memory"
+            data-dojo-id="extraBedsStore"
+            data-dojo-props="data: { identifier: 'extraBed', items:[{ extraBed: 0 },{extraBed: 1},{extraBed:2}, {extraBed:3},
+                                             { extraBed: 4 },{extraBed: 5},{extraBed:6}, {extraBed:7},
+                                             { extraBed: 8 },{extraBed: 9},{extraBed:10}, {extraBed:11}
+              ]}"
+            <label for="room-extra-bed">Extra beds:</label>
+            <input id="extraBedChooser" name="room-extra-bed" data-dojo-type="dijit/form/FilteringSelect"
+                data-dojo-props="store: extraBedsStore, searchAttr:'extraBed'" value="0"/>
         </div>
     </fieldset>
 
