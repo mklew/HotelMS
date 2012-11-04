@@ -22,6 +22,9 @@
         <!-- Disable the second-level cache  -->
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">jta</property>
+
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
 
@@ -32,7 +35,9 @@
         <property name="jadira.usertype.autoRegisterUserTypes">true</property>
 
         <!--<mapping resource="org/hibernate/tutorial/hbm/Event.hbm.xml"/>-->
-        <mapping resource="rates/TimePeriod.hbm.xml"/>
+        <!--<mapping resource="rates/TimePeriod.hbm.xml"/>-->
+        <mapping resource="rates/Season.hbm.xml"/>
+        <mapping resource="rates/AvailabilityPeriod.hbm.xml"/>
 
     </session-factory>
 
