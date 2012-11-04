@@ -1,6 +1,5 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 /**
@@ -8,10 +7,8 @@ import org.joda.time.Interval;
  * @since 9/27/12
  *        Time: 12:15 PM
  */
-public interface Season
+public interface Season extends AvailableIn, Activated
 {
-    Interval getSeason();
-    boolean isAvailableIn(DateTime time);
-    boolean isAvailableNow();
+    AvailabilityPeriod getSeason();
     String getSeasonName();
 }
