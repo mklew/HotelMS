@@ -16,6 +16,11 @@
             <parameter class-key="net.mklew.hotelms.inhouse.web.cometd.HelloService"/>
         </sequence>
     </component>
+
+    <!-- Hibernate -->
+    <component class-key="net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory"
+               class="net.mklew.hotelms.persistance.hibernate.configuration.NativelyConfiguredHibernateSessionFactory"/>
+
     <!-- // valves ////////////////////////////////////////////////////////////////////// -->
 
     <component class="org.objectledge.web.ContentTypeInitializerValve"/>
