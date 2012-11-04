@@ -1,6 +1,7 @@
 package net.mklew.hotelms.domain.room;
 
 import net.mklew.hotelms.domain.booking.reservation.rates.RackRate;
+import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -9,21 +10,25 @@ import net.mklew.hotelms.domain.booking.reservation.rates.RackRate;
  */
 public class Room
 {
-    private RackRate rackRate;
-    private HousekeepingStatus status;
-    private RoomAvailability availability;
-    private RoomType type;
     private RoomName name;
+    private RoomType type;
+    private RackRate rackRate;
+    private HousekeepingStatus housekeepingStatus;
+    private RoomAvailability availability;
     private Integer maxExtraBeds;
-
-    public Room(RoomType type, RoomName name, Integer maxExtraBeds)
-    {
-        this.type = type;
-        this.name = name;
-        this.maxExtraBeds = maxExtraBeds;
-    }
-
     private Occupancy occupancy;
+
+    public Room(RoomName name, RoomType type, RackRate rackRate, HousekeepingStatus housekeepingStatus,
+                RoomAvailability availability, Integer maxExtraBeds, Occupancy occupancy)
+    {
+        this.name = name;
+        this.type = type;
+        this.rackRate = rackRate;
+        this.housekeepingStatus = housekeepingStatus;
+        this.availability = availability;
+        this.maxExtraBeds = maxExtraBeds;
+        this.occupancy = occupancy;
+    }
 
     public boolean isAvailable()
     {
@@ -43,5 +48,87 @@ public class Room
     public Integer maxExtraBeds()
     {
         return maxExtraBeds;
+    }
+
+    public Rate rackRate()
+    {
+        return rackRate;
+    }
+
+    // hibernate
+
+
+    private RoomName getName()
+    {
+        return name;
+    }
+
+    private void setName(RoomName name)
+    {
+        this.name = name;
+    }
+
+    private RoomType getType()
+    {
+        return type;
+    }
+
+    private void setType(RoomType type)
+    {
+        this.type = type;
+    }
+
+    private RackRate getRackRate()
+    {
+        return rackRate;
+    }
+
+    private void setRackRate(RackRate rackRate)
+    {
+        this.rackRate = rackRate;
+    }
+
+    private HousekeepingStatus getHousekeepingStatus()
+    {
+        return housekeepingStatus;
+    }
+
+    private void setHousekeepingStatus(HousekeepingStatus housekeepingStatus)
+    {
+        this.housekeepingStatus = housekeepingStatus;
+    }
+
+    private RoomAvailability getAvailability()
+    {
+        return availability;
+    }
+
+    private void setAvailability(RoomAvailability availability)
+    {
+        this.availability = availability;
+    }
+
+    private Integer getMaxExtraBeds()
+    {
+        return maxExtraBeds;
+    }
+
+    private void setMaxExtraBeds(Integer maxExtraBeds)
+    {
+        this.maxExtraBeds = maxExtraBeds;
+    }
+
+    private Occupancy getOccupancy()
+    {
+        return occupancy;
+    }
+
+    private void setOccupancy(Occupancy occupancy)
+    {
+        this.occupancy = occupancy;
+    }
+
+    Room()
+    {
     }
 }
