@@ -15,10 +15,10 @@ public abstract class Rate
     protected Money upchargeExtraBed;
     protected Room room;
 
-    public Rate(Money upchargeExtraPerson, Money standardPrice, Money upchargeExtraBed, Room room)
+    public Rate(Money standardPrice, Money upchargeExtraPerson, Money upchargeExtraBed, Room room)
     {
-        this.upchargeExtraPerson = upchargeExtraPerson;
         this.standardPrice = standardPrice;
+        this.upchargeExtraPerson = upchargeExtraPerson;
         this.upchargeExtraBed = upchargeExtraBed;
     }
 
@@ -42,5 +42,53 @@ public abstract class Rate
     public Room getRoom()
     {
         return room;
+    }
+
+    // hibernate
+    protected void setStandardPrice(Money standardPrice)
+    {
+        this.standardPrice = standardPrice;
+    }
+
+    // hibernate
+    protected void setUpchargeExtraPerson(Money upchargeExtraPerson)
+    {
+        this.upchargeExtraPerson = upchargeExtraPerson;
+    }
+
+    // hibernate
+    protected void setUpchargeExtraBed(Money upchargeExtraBed)
+    {
+        this.upchargeExtraBed = upchargeExtraBed;
+    }
+
+    // hibernate
+    protected void setRoom(Room room)
+    {
+        this.room = room;
+    }
+
+    // hibernate
+    protected Money getStandardPrice()
+    {
+        return standardPrice;
+    }
+
+    // hibernate
+    protected Money getUpchargeExtraPerson()
+    {
+        return upchargeExtraPerson;
+    }
+
+    // hibernate
+    protected Money getUpchargeExtraBed()
+    {
+        return upchargeExtraBed;
+    }
+
+    // hibernate
+    Rate()
+    {
+        // hibernate
     }
 }
