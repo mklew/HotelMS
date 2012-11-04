@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Package
 {
-    private List<AvailabilityPeriod> timePeriods;
+    private List<AvailableIn> timePeriods;
     private List<Night> nights;
     private List<Inclusion> inclusions;
     private List<Policy> policies;
