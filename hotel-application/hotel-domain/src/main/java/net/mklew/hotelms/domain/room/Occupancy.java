@@ -8,8 +8,8 @@ package net.mklew.hotelms.domain.room;
 public class Occupancy
 {
 
-    private final int standard;
-    private final int maximum;
+    private int standard;
+    private int maximum;
 
     public Occupancy(int standard, int maximum)
     {
@@ -25,5 +25,34 @@ public class Occupancy
     public int getStandardOccupancy()
     {
         return standard;
+    }
+
+    // hibernate
+    private void setStandard(int standard)
+    {
+        this.standard = standard;
+    }
+
+    // hibernate
+    private void setMaximum(int maximum)
+    {
+        this.maximum = maximum;
+    }
+
+    // hibernate
+    int getStandard()
+    {
+        return standard;
+    }
+
+    // hibernate
+    int getMaximum()
+    {
+        return maximum;
+    }
+
+    Occupancy()
+    {
+        // hibernate
     }
 }
