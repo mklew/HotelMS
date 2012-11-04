@@ -10,14 +10,19 @@ import net.mklew.hotelms.domain.room.Room;
  */
 public class RackRate extends Rate
 {
-    public RackRate(Money upchargeExtraPerson, Money standardPrice, Money upchargeExtraBed, Room room)
+    public RackRate(Money standardPrice, Money upchargeExtraPerson, Money upchargeExtraBed, Room room)
     {
-        super(upchargeExtraPerson, standardPrice, upchargeExtraBed, room);
+        super(standardPrice, upchargeExtraPerson, upchargeExtraBed, room);
     }
 
     @Override
     public String getRateName()
     {
         return "Rack rate";
+    }
+
+    RackRate()
+    {
+        // hibernate
     }
 }
