@@ -8,26 +8,16 @@ import net.mklew.hotelms.domain.room.Room;
  * @since 9/27/12
  *        Time: 11:24 AM
  */
-public class RackRate implements Rate
+public class RackRate extends Rate
 {
-
-    private Room room;
-
-    @Override
-    public Money standardPrice()
+    public RackRate(Money upchargeExtraPerson, Money standardPrice, Money upchargeExtraBed, Room room)
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        super(upchargeExtraPerson, standardPrice, upchargeExtraBed, room);
     }
 
     @Override
-    public Money upchargeExtraPerson()
+    public String getRateName()
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public Money upchargeExtraBed()
-    {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return "Rack rate";
     }
 }

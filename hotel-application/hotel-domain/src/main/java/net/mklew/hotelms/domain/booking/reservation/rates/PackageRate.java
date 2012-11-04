@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
+import net.mklew.hotelms.domain.room.Room;
 import org.joda.money.Money;
 
 /**
@@ -7,23 +8,19 @@ import org.joda.money.Money;
  * @since 9/27/12
  *        Time: 12:00 PM
  */
-public class PackageRate implements Rate
+public class PackageRate extends Rate
 {
-    @Override
-    public Money standardPrice()
+    private Package pack;
+
+    public PackageRate(Money standardPrice, Money upchargeExtraPerson, Money upchargeExtraBed, Room room, Package pack)
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        super(upchargeExtraPerson, standardPrice, upchargeExtraBed, room);
+        this.pack = pack;
     }
 
     @Override
-    public Money upchargeExtraPerson()
+    public String getRateName()
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public Money upchargeExtraBed()
-    {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return pack.getPackageName();
     }
 }

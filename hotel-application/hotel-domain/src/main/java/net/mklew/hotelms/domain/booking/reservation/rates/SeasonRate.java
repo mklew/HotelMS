@@ -8,22 +8,14 @@ import net.mklew.hotelms.domain.room.Room;
  * @since 9/27/12
  *        Time: 11:59 AM
  */
-public class SeasonRate implements Rate
+public class SeasonRate extends Rate
 {
-
-    private Money standardPrice;
-    private Money upchargeExtraPerson;
-    private Money upchargeExtraBed;
     private Season season;
-    private Room room;
 
-    public SeasonRate(Money standardPrice, Money upchargeExtraPerson, Money upchargeExtraBed, Season season, Room room)
+    public SeasonRate(Money upchargeExtraPerson, Money standardPrice, Money upchargeExtraBed, Room room, Season season)
     {
-        this.standardPrice = standardPrice;
-        this.upchargeExtraPerson = upchargeExtraPerson;
-        this.upchargeExtraBed = upchargeExtraBed;
+        super(upchargeExtraPerson, standardPrice, upchargeExtraBed, room);
         this.season = season;
-        this.room = room;
     }
 
     @Override
