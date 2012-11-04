@@ -12,9 +12,9 @@ public class SeasonRate extends Rate
 {
     private Season season;
 
-    public SeasonRate(Money upchargeExtraPerson, Money standardPrice, Money upchargeExtraBed, Room room, Season season)
+    public SeasonRate(Money standardPrice, Money upchargeExtraPerson, Money upchargeExtraBed, Room room, Season season)
     {
-        super(upchargeExtraPerson, standardPrice, upchargeExtraBed, room);
+        super(standardPrice, upchargeExtraPerson, upchargeExtraBed, room);
         this.season = season;
     }
 
