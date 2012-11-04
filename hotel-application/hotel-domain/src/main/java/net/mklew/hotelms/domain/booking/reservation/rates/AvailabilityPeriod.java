@@ -1,15 +1,96 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /**
+ * Represents time period when something is available.
+ * For example there could be a special weekend package available in every weekend in October or
+ * it might be season rate which is available only during some season.
+ *
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since 9/27/12
- *        Time: 12:20 PM
+ * @since 11/4/12
+ *        Time: 2:14 PM
+ *
+ * @see Package
+ * @see Season
  */
-public interface AvailabilityPeriod
+public class AvailabilityPeriod implements AvailableIn
 {
-    boolean isAvailableIn(DateTime time);
-    boolean isAvailableNow();
+    private Long id; // hibernate
 
+    private DateTime from;
+    private DateTime to;
+    private boolean active;
+
+    public AvailabilityPeriod(DateTime from, DateTime to, boolean active)
+    {
+        this.from = from;
+        this.to = to;
+        this.active = active;
+    }
+
+    @Override
+    public boolean isAvailableIn(DateTime time)
+    {
+        return new Interval(from, to).contains(time);
+    }
+
+    @Override
+    public boolean isAvailableNow()
+    {
+        return isAvailableIn(DateTime.now());
+    }
+
+    @Override
+    public boolean isActive()
+    {
+        return active;
+    }
+
+    // hibernate
+
+    // private for hibernate
+    private Long getId()
+    {
+        return id;
+    }
+
+    // private setters for Hibernate
+    private void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    AvailabilityPeriod()
+    {
+        // for hibernate
+        from = null;
+        to = null;
+    }
+
+    DateTime getFrom()
+    {
+        return from;
+    }
+
+    DateTime getTo()
+    {
+        return to;
+    }
+
+    private void setFrom(DateTime from)
+    {
+        this.from = from;
+    }
+
+    private void setTo(DateTime to)
+    {
+        this.to = to;
+    }
+
+    private void setActive(boolean active)
+    {
+        this.active = active;
+    }
 }
