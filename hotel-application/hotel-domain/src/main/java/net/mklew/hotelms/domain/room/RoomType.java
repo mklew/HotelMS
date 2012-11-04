@@ -10,7 +10,7 @@ package net.mklew.hotelms.domain.room;
  */
 public class RoomType
 {
-    private final String typeName;
+    private String typeName;
 
     public RoomType(String typeName)
     {
@@ -25,5 +25,16 @@ public class RoomType
     public String getTypeName()
     {
         return typeName;
+    }
+
+    // hibernate
+    private void setTypeName(String typeName)
+    {
+        this.typeName = typeName;
+    }
+
+    RoomType()
+    {
+        // hibernate
     }
 }
