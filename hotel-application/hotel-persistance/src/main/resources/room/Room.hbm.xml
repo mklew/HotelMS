@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="net.mklew.hotelms.domain.room">
+    <class name="Room">
+
+        <composite-id name="name" class="RoomName">
+            <key-property name="prefix"/>
+            <key-property name="name"/>
+        </composite-id>
+
+        <property name="housekeepingStatus">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">net.mklew.hotelms.domain.room.HousekeepingStatus</param>
+            </type>
+        </property>
+
+        <property name="availability">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">net.mklew.hotelms.domain.room.RoomAvailability</param>
+            </type>
+        </property>
+
+        <!--<property name="availability" type="org.hibernate.type.EnumType"/>-->
+
+        <component name="type" class="RoomType">
+            <property name="typeName"/>
+        </component>
+
+        <property name="maxExtraBeds"/>
+
+        <component name="rackRate" class="net.mklew.hotelms.domain.booking.reservation.rates.RackRate">
+            <property name="standardPrice"/>
+            <property name="upchargeExtraPerson"/>
+            <property name="upchargeExtraBed"/>
+        </component>
+
+        <component name="occupancy" class="Occupancy">
+            <property name="standard"/>
+            <property name="maximum"/>
+        </component>
+    </class>
+</hibernate-mapping>
+

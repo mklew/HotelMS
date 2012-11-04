@@ -38,6 +38,7 @@
         <!--<mapping resource="rates/TimePeriod.hbm.xml"/>-->
         <mapping resource="rates/Season.hbm.xml"/>
         <mapping resource="rates/AvailabilityPeriod.hbm.xml"/>
+        <mapping resource="room/Room.hbm.xml"/>
 
     </session-factory>
 
