@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="net.mklew.hotelms.domain.booking.reservation.rates">
+
+    <class name="AvailabilityPeriod" table="TIME_PERIODS">
+        <id name="id" column="id">
+            <generator class="sequence">
+                <param name="sequence">time_periods_sequence</param>
+            </generator>
+        </id>
+        <property name="from" column="FROM_DATE"/>
+        <property name="to" column="TO_DATE"/>
+        <property name="active"/>
+    </class>
+
+</hibernate-mapping>
+
