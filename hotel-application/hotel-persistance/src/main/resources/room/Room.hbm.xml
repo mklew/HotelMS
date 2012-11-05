@@ -15,12 +15,16 @@
         <property name="housekeepingStatus">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">net.mklew.hotelms.domain.room.HousekeepingStatus</param>
+                <param name="type">12</param>
+                <param name="useNamed"></param>
             </type>
         </property>
 
         <property name="availability">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">net.mklew.hotelms.domain.room.RoomAvailability</param>
+                <param name="type">12</param>
+                <param name="useNamed"></param>
             </type>
         </property>
 
