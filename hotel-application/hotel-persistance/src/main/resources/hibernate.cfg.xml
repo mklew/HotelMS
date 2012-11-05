@@ -33,6 +33,8 @@
 
         <!-- Enable autoregistration of Joda Time datatypes -->
         <property name="jadira.usertype.autoRegisterUserTypes">true</property>
+        <property name="jadira.usertype.currencyCode">USD</property>
+        <property name="jadira.usertype.seed">abc</property>
 
         <!--<mapping resource="org/hibernate/tutorial/hbm/Event.hbm.xml"/>-->
         <!--<mapping resource="rates/TimePeriod.hbm.xml"/>-->
