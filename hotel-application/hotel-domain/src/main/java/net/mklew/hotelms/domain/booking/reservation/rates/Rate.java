@@ -10,6 +10,7 @@ import org.joda.money.Money;
  */
 public abstract class Rate
 {
+    protected Long id; // hibernate
     protected Money standardPrice;
     protected Money upchargeExtraPerson;
     protected Money upchargeExtraBed;
@@ -84,6 +85,16 @@ public abstract class Rate
     protected Money getUpchargeExtraBed()
     {
         return upchargeExtraBed;
+    }
+
+    protected Long getId()
+    {
+        return id;
+    }
+
+    protected void setId(Long id)
+    {
+        this.id = id;
     }
 
     // hibernate
