@@ -7,10 +7,16 @@
 <hibernate-mapping package="net.mklew.hotelms.domain.room">
     <class name="Room">
 
+        <!--<composite-id name="name" class="RoomName">-->
+            <!--<key-property name="prefix"/>-->
+            <!--<key-property name="name"/>-->
+        <!--</composite-id>-->
+
+        <!-- alternative solution, because room names are unique even without prefix-->
         <composite-id name="name" class="RoomName">
-            <key-property name="prefix"/>
             <key-property name="name"/>
         </composite-id>
+        <property name="prefix"/>
 
         <property name="housekeepingStatus">
             <type name="org.hibernate.type.EnumType">

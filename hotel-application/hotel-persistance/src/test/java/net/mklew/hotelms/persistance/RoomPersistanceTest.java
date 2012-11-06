@@ -6,9 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.joda.money.Money;
-import org.joda.time.DateTime;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * Database end tests for Room
@@ -30,7 +32,8 @@ public class RoomPersistanceTest
     @Test
     public void should_successfully_save_and_retrieve_room() throws Exception
     {
-        final RoomName roomName = new RoomName("101", "C");
+//        final RoomName roomName = new RoomName("101", "C");
+        final RoomName roomName = new RoomName("101");
         final RoomType roomType = new RoomType("cheap");
         final Money standardPrice = Money.parse("USD 100");
         final Money upchargeExtraPerson = Money.parse("USD 50");
@@ -38,12 +41,21 @@ public class RoomPersistanceTest
         final RackRate rackRate = new RackRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, null);
         final int maxExtraBeds = 2;
         final Occupancy occupancy = new Occupancy(4, 2);
-        Room room = new Room(roomName, roomType, rackRate, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, maxExtraBeds, occupancy);
+        Room room = new Room("C", roomName, roomType, rackRate, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, maxExtraBeds, occupancy);
 
         //Session session = sessionFactory.getCurrentSession(); // No TransactionManagerLookup specified
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(room);
+        session.getTransaction().commit();
+        session.close();
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Room retrievedRoom = (Room)session.byId(Room.class).load(roomName);
+
+        assertThat(retrievedRoom.rackRate().standardPrice()).isEqualTo(standardPrice);
         session.getTransaction().commit();
         session.close();
     }

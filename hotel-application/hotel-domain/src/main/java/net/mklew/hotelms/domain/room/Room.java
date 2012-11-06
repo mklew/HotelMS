@@ -10,6 +10,8 @@ import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
  */
 public class Room
 {
+    private String prefix; // work around Hibernate limits, if id is composite-id then
+                           // all properties of that composite-id class must be used otherwise strange things happen
     private RoomName name;
     private RoomType type;
     private RackRate rackRate;
@@ -18,9 +20,10 @@ public class Room
     private Integer maxExtraBeds;
     private Occupancy occupancy;
 
-    public Room(RoomName name, RoomType type, RackRate rackRate, HousekeepingStatus housekeepingStatus,
+    public Room(String prefix, RoomName name, RoomType type, RackRate rackRate, HousekeepingStatus housekeepingStatus,
                 RoomAvailability availability, Integer maxExtraBeds, Occupancy occupancy)
     {
+        this.prefix = prefix;
         this.name = name;
         this.type = type;
         this.rackRate = rackRate;
@@ -37,7 +40,7 @@ public class Room
 
     public String fullRoomName()
     {
-        return name.getRoomName();
+        return prefix + name.getRoomName();
     }
 
     public String roomTypeName()
@@ -126,6 +129,16 @@ public class Room
     private void setOccupancy(Occupancy occupancy)
     {
         this.occupancy = occupancy;
+    }
+
+    private String getPrefix()
+    {
+        return prefix;
+    }
+
+    private void setPrefix(String prefix)
+    {
+        this.prefix = prefix;
     }
 
     Room()

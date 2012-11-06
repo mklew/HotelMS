@@ -14,31 +14,16 @@ public class RoomName implements Serializable
 {
     private final static String DELIMETER = "#";
 
-    private String prefix;
     private String name;
 
-    public RoomName(String name, String prefix)
+    public RoomName(String name)
     {
         this.name = name;
-        this.prefix = prefix;
     }
 
     public String getRoomName()
     {
-        return prefix + DELIMETER + name;
-    }
-
-
-    // hibernate
-    private String getPrefix()
-    {
-        return prefix;
-    }
-
-    // hibernate
-    private void setPrefix(String prefix)
-    {
-        this.prefix = prefix;
+        return DELIMETER + name;
     }
 
     // hibernate
@@ -56,5 +41,24 @@ public class RoomName implements Serializable
     RoomName()
     {
         // hibernate
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RoomName roomName = (RoomName) o;
+
+        if (name != null ? !name.equals(roomName.name) : roomName.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return name != null ? name.hashCode() : 0;
     }
 }
