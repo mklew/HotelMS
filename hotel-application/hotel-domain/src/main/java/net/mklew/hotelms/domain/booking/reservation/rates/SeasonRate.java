@@ -41,4 +41,21 @@ public class SeasonRate extends Rate
     {
        return season.getSeasonName();
     }
+
+    public Season getSeason()
+    {
+        return season;
+    }
+
+    // hibernate
+    private void setSeason(Season season)
+    {
+        this.season = season;
+    }
+
+    // hibernate
+    SeasonRate()
+    {
+        // hibernate
+    }
 }
