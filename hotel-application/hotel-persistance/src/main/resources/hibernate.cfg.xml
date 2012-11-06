@@ -41,6 +41,7 @@
         <mapping resource="rates/Season.hbm.xml"/>
         <mapping resource="rates/AvailabilityPeriod.hbm.xml"/>
         <mapping resource="room/Room.hbm.xml"/>
+        <mapping resource="rates/Rate.hbm.xml"/>
 
     </session-factory>
 
