@@ -13,7 +13,10 @@
                 </generator>
             </id>
             <property name="name"/>
-
+            <set name="rates" inverse="true">
+                <key column="packageId"/>
+                <one-to-many class="PackageRate"/>
+            </set>
             <!--TODO map rest of properties-->
         </class>
 
