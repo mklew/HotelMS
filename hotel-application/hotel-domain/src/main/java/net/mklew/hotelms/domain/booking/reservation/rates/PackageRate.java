@@ -14,7 +14,7 @@ public class PackageRate extends Rate
 
     public PackageRate(Money standardPrice, Money upchargeExtraPerson, Money upchargeExtraBed, Room room, Package pack)
     {
-        super(upchargeExtraPerson, standardPrice, upchargeExtraBed, room);
+        super(standardPrice, upchargeExtraPerson, upchargeExtraBed, room);
         this.pack = pack;
     }
 
@@ -22,5 +22,28 @@ public class PackageRate extends Rate
     public String getRateName()
     {
         return pack.getPackageName();
+    }
+
+    public Package getPackage()
+    {
+        return pack;
+    }
+
+    // hibernate
+    private Package getPack()
+    {
+        return pack;
+    }
+
+    // hibernate
+    private void setPack(Package pack)
+    {
+        this.pack = pack;
+    }
+
+    // hibernate
+    PackageRate()
+    {
+        // hibernate
     }
 }
