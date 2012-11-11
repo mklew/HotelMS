@@ -2,6 +2,8 @@ package net.mklew.hotelms.domain.room;
 
 import net.mklew.hotelms.domain.booking.reservation.rates.RackRate;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -61,7 +63,7 @@ public class Room
     // hibernate
 
 
-    private RoomName getName()
+    public RoomName getName()
     {
         return name;
     }
@@ -139,6 +141,43 @@ public class Room
     private void setPrefix(String prefix)
     {
         this.prefix = prefix;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Room rhs = (Room) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(prefix, rhs.prefix)
+                .append(name, rhs.name)
+                .append(type, rhs.type)
+                .append(rackRate, rhs.rackRate)
+                .append(housekeepingStatus, rhs.housekeepingStatus)
+                .append(availability, rhs.availability)
+                .append(maxExtraBeds, rhs.maxExtraBeds)
+                .append(occupancy, rhs.occupancy)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(13, 47)
+                .append(prefix)
+                .append(name)
+                .append(type)
+                .append(rackRate)
+                .append(housekeepingStatus)
+                .append(availability)
+                .append(maxExtraBeds)
+                .append(occupancy)
+                .toHashCode();
     }
 
     Room()
