@@ -63,7 +63,6 @@ public class DbBootstrap implements Startable
         }
 
         session.getTransaction().commit();
-        session.close();
         logger.debug("Finished bootstrapping database");
     }
 
