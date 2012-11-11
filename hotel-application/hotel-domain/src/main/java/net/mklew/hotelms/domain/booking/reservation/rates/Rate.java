@@ -1,6 +1,8 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
 import net.mklew.hotelms.domain.room.Room;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.money.Money;
 
 /**
@@ -96,6 +98,35 @@ public abstract class Rate
     protected void setId(Long id)
     {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Rate rhs = (Rate) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(standardPrice, rhs.standardPrice)
+                .append(upchargeExtraPerson, rhs.upchargeExtraPerson)
+                .append(upchargeExtraBed, rhs.upchargeExtraBed)
+                .append(room, rhs.room)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(17, 53)
+                .append(standardPrice)
+                .append(upchargeExtraPerson)
+                .append(upchargeExtraBed)
+                .append(room)
+                .toHashCode();
     }
 
     // hibernate
