@@ -2,7 +2,10 @@ package net.mklew.hotelms.inhouse.web.modules.views.top;
 
 import net.mklew.hotelms.domain.room.Room;
 import net.mklew.hotelms.domain.room.RoomName;
+import net.mklew.hotelms.domain.room.RoomRepository;
 import net.mklew.hotelms.domain.room.RoomType;
+import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
+import org.hibernate.Session;
 import org.objectledge.context.Context;
 import org.objectledge.i18n.I18nContext;
 import org.objectledge.modules.views.BasicLedgeTopView;
@@ -21,39 +24,38 @@ import java.util.*;
  */
 public class NewReservation extends BasicLedgeTopView
 {
+    private final RoomRepository roomRepository;
+    private final HibernateSessionFactory hibernateSessionFactory;
+
     /**
      * Constructs a builder instance.
      *
      * @param context application context for use by this builder.
+     * @param roomRepository
+     * @param hibernateSessionFactory
      */
-    public NewReservation(Context context)
+    public NewReservation(Context context, RoomRepository roomRepository, HibernateSessionFactory hibernateSessionFactory)
     {
         super(context);
+        this.roomRepository = roomRepository;
+        this.hibernateSessionFactory = hibernateSessionFactory;
     }
 
     @Override
     public void process(Parameters parameters, TemplatingContext templatingContext, MVCContext mvcContext, HttpContext httpContext, I18nContext i18nContext) throws ProcessingException
     {
-        Collection<RoomType> roomTypes = new ArrayList<>();
-        // TODO fetch room types from repository
-        RoomType luxury = new RoomType("luxury");
-        RoomType cheap = new RoomType("cheap");
-        RoomType niceOne = new RoomType("nice one");
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
 
-        roomTypes.addAll(Arrays.asList(luxury, cheap, niceOne));
+        Collection<RoomType> roomTypes = roomRepository.getAllRoomTypes();
         templatingContext.put("roomTypes", roomTypes);
 
         // TODO fetch rooms from repository filtered by provided number of adults and number of children
         // TODO add comparable to Room and compare it by room names
         // TODO pass Set (so its ordered) to templatingContext instead of collection
-        Room L100 = new Room(luxury, new RoomName("100", "L"), 1);
-        Room L101 = new Room(luxury, new RoomName("101", "L"), 0);
-        Room L102 = new Room(luxury, new RoomName("102", "L"), 3);
-        Room C103 = new Room(cheap, new RoomName("103", "C"), 4);
-        Room C104 = new Room(cheap, new RoomName("104", "C"), 5);
-        Room N105 = new Room(niceOne, new RoomName("105", "N"), 2);
 
-        Collection<Room> rooms = Arrays.asList(L100, L101, L102, C103, C104, N105);
-        templatingContext.put("rooms", rooms);
+        //Collection<Room> rooms = roomRepository.getAllRooms();
+        //templatingContext.put("rooms", rooms);
+        session.getTransaction().commit();
     }
 }
