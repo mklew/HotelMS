@@ -21,6 +21,11 @@
     <component class-key="net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory"
                class="net.mklew.hotelms.persistance.hibernate.configuration.NativelyConfiguredHibernateSessionFactory"/>
 
+    <component class-key="net.mklew.hotelms.domain.room.RoomRepository"
+               class="net.mklew.hotelms.persistance.RoomRepositoryHibernate"/>
+
+    <component class-key="net.mklew.hotelms.domain.booking.reservation.rates.RateRepository"
+               class="net.mklew.hotelms.persistance.RateRepositoryHibernate"/>
     <!-- // valves ////////////////////////////////////////////////////////////////////// -->
 
     <component class="org.objectledge.web.ContentTypeInitializerValve"/>
