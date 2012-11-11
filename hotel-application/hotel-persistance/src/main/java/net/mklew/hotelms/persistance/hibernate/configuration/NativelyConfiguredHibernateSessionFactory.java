@@ -1,5 +1,6 @@
 package net.mklew.hotelms.persistance.hibernate.configuration;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -32,6 +33,12 @@ public class NativelyConfiguredHibernateSessionFactory implements HibernateSessi
     public SessionFactory getSessionFactory()
     {
         return sessionFactory;
+    }
+
+    @Override
+    public Session getCurrentSession()
+    {
+        return sessionFactory.getCurrentSession();
     }
 
     @Override

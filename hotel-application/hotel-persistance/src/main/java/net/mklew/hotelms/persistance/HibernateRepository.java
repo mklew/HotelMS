@@ -21,7 +21,7 @@ public abstract class HibernateRepository
         this.hibernateSessionFactory = hibernateSessionFactory;
     }
 
-    protected Session getCurrentSession() {
-        return hibernateSessionFactory.getSessionFactory().getCurrentSession();
+    public Session getCurrentSession() {
+        return hibernateSessionFactory.getCurrentSession();
     }
 }

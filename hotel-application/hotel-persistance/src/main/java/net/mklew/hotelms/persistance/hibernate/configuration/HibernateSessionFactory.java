@@ -1,5 +1,6 @@
 package net.mklew.hotelms.persistance.hibernate.configuration;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.picocontainer.Startable;
 
@@ -13,4 +14,5 @@ import org.picocontainer.Startable;
 public interface HibernateSessionFactory extends Startable
 {
     SessionFactory getSessionFactory();
+    Session getCurrentSession();
 }

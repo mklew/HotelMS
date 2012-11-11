@@ -1,5 +1,6 @@
 package net.mklew.hotelms.persistance.hibernate.configuration;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
@@ -20,6 +21,12 @@ public class StubHibernateSessionFactory implements HibernateSessionFactory
     public SessionFactory getSessionFactory()
     {
         return sessionFactory;
+    }
+
+    @Override
+    public Session getCurrentSession()
+    {
+        return sessionFactory.getCurrentSession();
     }
 
     @Override
