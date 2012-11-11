@@ -5,7 +5,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="net.mklew.hotelms.domain.room">
-    <class name="Room" table="ROOMS">
+    <class name="Room" table="ROOMS" lazy="false">
 
         <!--<composite-id name="name" class="RoomName">-->
             <!--<key-property name="prefix"/>-->
