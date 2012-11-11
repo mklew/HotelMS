@@ -1,12 +1,11 @@
 package net.mklew.hotelms.persistance.hibernate.configuration;
 
-import net.mklew.hotelms.domain.booking.reservation.rates.RackRate;
+import net.mklew.hotelms.domain.booking.reservation.rates.*;
 import net.mklew.hotelms.domain.room.*;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.hibernate.Session;
 import org.jcontainer.dna.Logger;
 import org.joda.money.Money;
+import org.joda.time.DateTime;
 import org.picocontainer.Startable;
 
 import java.util.ArrayList;
@@ -44,37 +43,16 @@ public class DbBootstrap implements Startable
     {
         logger.debug("Started bootstrapping database");
         Session session = hibernateSessionFactory.getCurrentSession();
-        final Pair<Collection<RoomType>, Collection<Room>> roomTypesAndRooms = bootstrapRoomTypes();
-        Collection<RoomType> types = roomTypesAndRooms.getKey();
-        Collection<Room> rooms = roomTypesAndRooms.getValue();
 
-        session.beginTransaction();
-        logger.debug("adding room types:");
-        for (RoomType type : types)
-        {
-            session.save(type);
-            logger.debug("room type: " + type.toString());
-        }
-        logger.debug("adding rooms");
-        for (Room room : rooms)
-        {
-            logger.debug("room: " + room.toString());
-            session.save(room);
-        }
+        // bootstrapping data
 
-        session.getTransaction().commit();
-        logger.debug("Finished bootstrapping database");
-    }
-
-    private Pair<Collection<RoomType>, Collection<Room>> bootstrapRoomTypes()
-    {
         Collection<RoomType> types = new ArrayList<>();
         RoomType luxury = new RoomType("luxury");
         RoomType cheap = new RoomType("cheap");
         RoomType niceOne = new RoomType("nice one");
 
         types.addAll(Arrays.asList(luxury, cheap, niceOne));
-        Collection<Room> rooms = new ArrayList<>();
+        Collection<Room> rooms;
 
         Money standardPrice = Money.parse("USD 100");
         Money upchargeExtraPerson = Money.parse("USD 110");
@@ -95,7 +73,59 @@ public class DbBootstrap implements Startable
 
         rooms = Arrays.asList(L100, L101, L102, C103, C104, N105);
 
-        return new ImmutablePair<Collection<RoomType>, Collection<Room>>(types, rooms);
+        Collection<Rate> rates;
+
+        Season season = new BasicSeason("winter special", new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(90), true));
+        Season season2 = new BasicSeason("christmas special", new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(30), true));
+
+        Rate rate1_L100 = new SeasonRate(Money.parse("USD 50"), Money.parse("USD 60"), Money.parse("USD 70"), L100, season);
+        Rate rate2_L100 = new SeasonRate(Money.parse("USD 20"), Money.parse("USD 60"), Money.parse("USD 70"), L100, season2);
+        Rate rate1_L101 = new SeasonRate(Money.parse("USD 60"), Money.parse("USD 70"), Money.parse("USD 60"), L101, season);
+        Rate rate2_L101 = new SeasonRate(Money.parse("USD 20"), Money.parse("USD 70"), Money.parse("USD 60"), L101, season2);
+        Rate rate1_L102 = new SeasonRate(Money.parse("USD 60"), Money.parse("USD 70"), Money.parse("USD 60"), L102, season);
+        Rate rate2_L102 = new SeasonRate(Money.parse("USD 20"), Money.parse("USD 70"), Money.parse("USD 60"), L102, season2);
+        Rate rate1_C103 = new SeasonRate(Money.parse("USD 40"), Money.parse("USD 70"), Money.parse("USD 60"), C103, season);
+        Rate rate2_C103 = new SeasonRate(Money.parse("USD 30"), Money.parse("USD 70"), Money.parse("USD 60"), C103, season2);
+        Rate rate1_C104 = new SeasonRate(Money.parse("USD 70"), Money.parse("USD 70"), Money.parse("USD 60"), C104, season);
+        Rate rate2_C104 = new SeasonRate(Money.parse("USD 50"), Money.parse("USD 70"), Money.parse("USD 60"), C104, season2);
+        Rate rate1_N105 = new SeasonRate(Money.parse("USD 80"), Money.parse("USD 70"), Money.parse("USD 60"), N105, season);
+        Rate rate2_N105 = new SeasonRate(Money.parse("USD 90"), Money.parse("USD 70"), Money.parse("USD 60"), N105, season2);
+
+        Collection<Season> seasons = Arrays.asList(season, season2);
+        rates = Arrays.asList(rate1_L100, rate2_L100, rate1_L101, rate2_L101, rate1_L102, rate2_L102, rate1_C103,
+                rate2_C103, rate1_C104, rate2_C104, rate1_N105, rate2_N105);
+
+        // bootstrapping data
+        session.beginTransaction();
+        logger.debug("adding room types:");
+        for (RoomType type : types)
+        {
+            session.save(type);
+            logger.debug("room type: " + type.toString());
+        }
+        logger.debug("adding rooms");
+        for (Room room : rooms)
+        {
+            logger.debug("room: " + room.toString());
+            session.save(room);
+        }
+
+        logger.debug("adding seasons");
+        for(Season s : seasons)
+        {
+            logger.debug("season: " + s.toString());
+            session.save(s);
+        }
+
+        logger.debug("adding season rates");
+        for(Rate rate : rates)
+        {
+            logger.debug("rate: " + rate.toString());
+            session.save(rate);
+        }
+
+        session.getTransaction().commit();
+        logger.debug("Finished bootstrapping database");
     }
 
     @Override
