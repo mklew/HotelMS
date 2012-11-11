@@ -1,5 +1,7 @@
 package net.mklew.hotelms.domain.room;
 
+import java.util.Collection;
+
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 11/11/12
@@ -8,4 +10,6 @@ package net.mklew.hotelms.domain.room;
 public interface RoomRepository
 {
     Room getRoomByName(RoomName name);
+
+    Collection<RoomType> getAllRoomTypes();
 }
