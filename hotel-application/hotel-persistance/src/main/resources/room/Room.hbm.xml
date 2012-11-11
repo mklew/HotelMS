@@ -5,7 +5,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="net.mklew.hotelms.domain.room">
-    <class name="Room">
+    <class name="Room" table="ROOMS">
 
         <!--<composite-id name="name" class="RoomName">-->
             <!--<key-property name="prefix"/>-->
@@ -33,8 +33,6 @@
                 <param name="useNamed"></param>
             </type>
         </property>
-
-        <!--<property name="availability" type="org.hibernate.type.EnumType"/>-->
 
         <component name="type" class="RoomType">
             <property name="typeName"/>
