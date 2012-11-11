@@ -54,8 +54,8 @@ public class NewReservation extends BasicLedgeTopView
         // TODO add comparable to Room and compare it by room names
         // TODO pass Set (so its ordered) to templatingContext instead of collection
 
-        //Collection<Room> rooms = roomRepository.getAllRooms();
-        //templatingContext.put("rooms", rooms);
+        Collection<Room> rooms = roomRepository.getAllRooms();
+        templatingContext.put("rooms", rooms);
         session.getTransaction().commit();
     }
 }
