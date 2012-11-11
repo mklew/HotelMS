@@ -21,6 +21,7 @@ public abstract class Rate
         this.standardPrice = standardPrice;
         this.upchargeExtraPerson = upchargeExtraPerson;
         this.upchargeExtraBed = upchargeExtraBed;
+        this.room = room;
     }
 
     public abstract String getRateName();
