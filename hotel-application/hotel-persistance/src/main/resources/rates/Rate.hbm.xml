@@ -21,11 +21,11 @@
         </many-to-one>
 
         <subclass name="SeasonRate" discriminator-value="S">
-            <many-to-one name="season" class="BasicSeason" column="seasonId"/>
+            <many-to-one name="season" class="BasicSeason" column="seasonId" lazy="false"/>
         </subclass>
 
         <subclass name="PackageRate" discriminator-value="P">
-            <many-to-one name="pack" column="packageId"/>
+            <many-to-one name="pack" column="packageId" lazy="false"/>
         </subclass>
 
 
