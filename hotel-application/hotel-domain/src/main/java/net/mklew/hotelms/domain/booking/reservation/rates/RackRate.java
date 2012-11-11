@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.joda.money.Money;
 import net.mklew.hotelms.domain.room.Room;
 
@@ -24,5 +25,25 @@ public class RackRate extends Rate
     RackRate()
     {
         // hibernate
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        RackRate rhs = (RackRate) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
     }
 }
