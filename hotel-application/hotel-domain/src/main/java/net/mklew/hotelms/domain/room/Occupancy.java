@@ -1,5 +1,8 @@
 package net.mklew.hotelms.domain.room;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 9/27/12
@@ -25,6 +28,31 @@ public class Occupancy
     public int getStandardOccupancy()
     {
         return standard;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Occupancy rhs = (Occupancy) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(standard, rhs.standard)
+                .append(maximum, rhs.maximum)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(29, 71)
+                .append(standard)
+                .append(maximum)
+                .toHashCode();
     }
 
     // hibernate
