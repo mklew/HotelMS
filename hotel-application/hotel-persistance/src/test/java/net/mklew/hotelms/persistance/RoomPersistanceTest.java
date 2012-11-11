@@ -48,6 +48,7 @@ public class RoomPersistanceTest
         //Session session = sessionFactory.getCurrentSession(); // No TransactionManagerLookup specified
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+        session.save(roomType);
         session.save(room);
         session.getTransaction().commit();
         session.close();

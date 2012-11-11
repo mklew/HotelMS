@@ -46,7 +46,8 @@ public class RatesPersistanceTest
         Money standardPrice = Money.parse("USD 85");
         Money upchargeExtraPerson = Money.parse("USD 80");
         Money upchargeExtraBed = Money.parse("USD 75");
-        Room room = getMeRoom();
+        RoomType roomType = getMeRoomType();
+        Room room = getMeRoom(roomType);
 
         AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(5), true);
         Season season = new BasicSeason("season name", availabilityPeriod);
@@ -54,7 +55,7 @@ public class RatesPersistanceTest
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
+        session.save(roomType);
         session.save(room);
 
         session.save(season);
@@ -102,10 +103,16 @@ public class RatesPersistanceTest
 
     }
 
-    private Room getMeRoom()
+    private RoomType getMeRoomType()
+    {
+        final RoomType roomType = new RoomType("cheap");
+        return roomType;
+    }
+
+    private Room getMeRoom(RoomType roomType)
     {
         final RoomName roomName = new RoomName("101");
-        final RoomType roomType = new RoomType("cheap");
+
         final Money standardPrice = Money.parse("USD 100");
         final Money upchargeExtraPerson = Money.parse("USD 50");
         final Money upchargeExtraBed = Money.parse("USD 20");

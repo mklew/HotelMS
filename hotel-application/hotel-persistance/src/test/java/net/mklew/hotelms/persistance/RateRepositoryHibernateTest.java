@@ -56,6 +56,7 @@ public class RateRepositoryHibernateTest
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+        session.save(roomType);
         session.save(room);
         session.getTransaction().commit();
         session.close();
