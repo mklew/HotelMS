@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 public class RoomName implements Serializable
 {
-    private final static String DELIMETER = "#";
+    public final static String DELIMETER = "#";
 
     private String name;
 
