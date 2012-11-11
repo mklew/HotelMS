@@ -34,9 +34,9 @@
             </type>
         </property>
 
-        <component name="type" class="RoomType">
-            <property name="typeName"/>
-        </component>
+        <many-to-one name="type" not-null="false">
+            <column name="type"/>
+        </many-to-one>
 
         <property name="maxExtraBeds"/>
 
