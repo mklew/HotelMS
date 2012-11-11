@@ -1,5 +1,8 @@
 package net.mklew.hotelms.domain.room;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.io.Serializable;
 
 /**
@@ -44,21 +47,25 @@ public class RoomName implements Serializable
     }
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(Object obj)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RoomName roomName = (RoomName) o;
-
-        if (name != null ? !name.equals(roomName.name) : roomName.name != null) return false;
-
-        return true;
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        RoomName rhs = (RoomName) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(name, rhs.name)
+                .isEquals();
     }
 
     @Override
     public int hashCode()
     {
-        return name != null ? name.hashCode() : 0;
+        return new HashCodeBuilder(17, 37).
+                append(name).
+                toHashCode();
     }
 }
