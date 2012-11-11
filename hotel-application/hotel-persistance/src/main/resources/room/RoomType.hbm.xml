@@ -5,7 +5,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="net.mklew.hotelms.domain.room">
-    <class name="RoomType" table="ROOM_TYPES">
+    <class name="RoomType" table="ROOM_TYPES" lazy="false">
         <id name="typeName" column="type_name">
 
         </id>
