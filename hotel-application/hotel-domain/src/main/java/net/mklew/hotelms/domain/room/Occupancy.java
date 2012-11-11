@@ -40,7 +40,6 @@ public class Occupancy
         }
         Occupancy rhs = (Occupancy) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(standard, rhs.standard)
                 .append(maximum, rhs.maximum)
                 .isEquals();

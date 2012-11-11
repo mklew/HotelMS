@@ -60,7 +60,6 @@ public class AvailabilityPeriod implements AvailableIn
         }
         AvailabilityPeriod rhs = (AvailabilityPeriod) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(from, rhs.from)
                 .append(to, rhs.to)
                 .append(active, rhs.active)

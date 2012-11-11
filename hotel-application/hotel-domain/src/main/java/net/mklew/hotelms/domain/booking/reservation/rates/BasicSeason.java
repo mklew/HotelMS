@@ -99,7 +99,6 @@ public class BasicSeason implements Season
         }
         BasicSeason rhs = (BasicSeason) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(period, rhs.period)
                 .append(name, rhs.name)
                 .isEquals();

@@ -110,11 +110,10 @@ public abstract class Rate
         }
         Rate rhs = (Rate) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(standardPrice, rhs.standardPrice)
                 .append(upchargeExtraPerson, rhs.upchargeExtraPerson)
                 .append(upchargeExtraBed, rhs.upchargeExtraBed)
-                .append(room, rhs.room)
+                .append(getRoom(), rhs.getRoom())
                 .isEquals();
     }
 
@@ -125,7 +124,7 @@ public abstract class Rate
                 .append(standardPrice)
                 .append(upchargeExtraPerson)
                 .append(upchargeExtraBed)
-                .append(room)
+                .append(getRoom())
                 .toHashCode();
     }
 
