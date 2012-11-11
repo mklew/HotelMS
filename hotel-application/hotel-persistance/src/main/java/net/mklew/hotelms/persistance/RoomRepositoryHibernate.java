@@ -38,4 +38,12 @@ public class RoomRepositoryHibernate extends HibernateRepository implements Room
         Collection<RoomType> roomTypes = session.createQuery("from RoomType").list();
         return roomTypes;
     }
+
+    @Override
+    public Collection<Room> getAllRooms()
+    {
+        Session session = getCurrentSession();
+        Collection<Room> allRooms = session.createQuery("from Room").list();
+        return allRooms;
+    }
 }
