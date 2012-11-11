@@ -68,7 +68,7 @@ public class SeasonRate extends Rate
     public int hashCode()
     {
         return new HashCodeBuilder(43, 89)
-                .append(getSeason())
+                .append(season)
                 .toHashCode();
     }
 
