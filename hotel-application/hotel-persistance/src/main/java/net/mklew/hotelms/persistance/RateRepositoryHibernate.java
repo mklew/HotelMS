@@ -7,6 +7,7 @@ import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFac
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -28,7 +29,11 @@ public class RateRepositoryHibernate  extends HibernateRepository implements Rat
     {
         final Session session = getCurrentSession();
         final Query query = session.createQuery(ALL_RATES_FOR_ROOM).setParameter("room", room);
-        final Collection<Rate> rates = query.list();
+        Collection<Rate> rates = query.list();
+        if(rates == null)
+        {
+            rates = new ArrayList<>();
+        }
         rates.add(room.rackRate()); // rack rates are not mapped as rate entity so rack rate need to be added separately
         return rates;
     }
