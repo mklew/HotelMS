@@ -46,7 +46,6 @@ public class RoomType
         }
         RoomType rhs = (RoomType) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(typeName, rhs.typeName)
                 .isEquals();
     }

@@ -153,7 +153,6 @@ public class Room
         }
         Room rhs = (Room) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(prefix, rhs.prefix)
                 .append(name, rhs.name)
                 .append(type, rhs.type)

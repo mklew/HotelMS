@@ -56,7 +56,6 @@ public class RoomName implements Serializable
         }
         RoomName rhs = (RoomName) obj;
         return new EqualsBuilder()
-                .appendSuper(super.equals(obj))
                 .append(name, rhs.name)
                 .isEquals();
     }
