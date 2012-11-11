@@ -1,5 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -46,6 +48,33 @@ public class AvailabilityPeriod implements AvailableIn
     public boolean isActive()
     {
         return active;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        AvailabilityPeriod rhs = (AvailabilityPeriod) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(from, rhs.from)
+                .append(to, rhs.to)
+                .append(active, rhs.active)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(23, 67)
+                .append(from)
+                .append(to)
+                .append(active)
+                .toHashCode();
     }
 
     // hibernate
