@@ -1,5 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation.rates;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 
 /**
@@ -85,6 +87,32 @@ public class BasicSeason implements Season
     private void setName(String name)
     {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        BasicSeason rhs = (BasicSeason) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(period, rhs.period)
+                .append(name, rhs.name)
+                .isEquals();
+    }
+
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(31, 89)
+                .append(period)
+                .append(name)
+                .toHashCode();
     }
 
     BasicSeason()
