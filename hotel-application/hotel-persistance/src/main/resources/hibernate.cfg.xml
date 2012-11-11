@@ -40,9 +40,10 @@
         <!--<mapping resource="rates/TimePeriod.hbm.xml"/>-->
         <mapping resource="rates/Season.hbm.xml"/>
         <mapping resource="rates/AvailabilityPeriod.hbm.xml"/>
-        <mapping resource="room/Room.hbm.xml"/>
-        <mapping resource="rates/Rate.hbm.xml"/>
         <mapping resource="rates/Package.hbm.xml"/>
+        <mapping resource="rates/Rate.hbm.xml"/>
+        <mapping resource="room/Room.hbm.xml"/>
+        <mapping resource="room/RoomType.hbm.xml"/>
 
     </session-factory>
 
