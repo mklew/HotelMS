@@ -10,6 +10,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
+import java.util.List;
+
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
@@ -58,5 +60,14 @@ public class RoomPersistanceTest
         assertThat(retrievedRoom.rackRate().standardPrice()).isEqualTo(standardPrice);
         session.getTransaction().commit();
         session.close();
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        final List<Room> list = session.createQuery("from Room r where r.name = :name").setParameter("name", roomName).list();
+        Room room1 = list.get(0);
+        assertThat(room1.rackRate().standardPrice()).isEqualTo(standardPrice);
+        assertThat(list).hasSize(1);
+
     }
 }
