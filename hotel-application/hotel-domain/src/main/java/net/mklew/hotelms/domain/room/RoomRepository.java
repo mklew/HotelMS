@@ -12,4 +12,6 @@ public interface RoomRepository
     Room getRoomByName(RoomName name);
 
     Collection<RoomType> getAllRoomTypes();
+
+    Collection<Room> getAllRooms();
 }
