@@ -3,6 +3,9 @@
 
     <!--<component class="net.mklew.demo.Counter"/>-->
 
+    <!-- Database bootstrap, only for development purposes! -->
+    <component class="net.mklew.hotelms.persistance.hibernate.configuration.DbBootstrap"/>
+
     <!-- Bayeux services and channels -->
     <!--<component class="net.mklew.hotelms.inhouse.web.cometd.AuthorizerValve"/>-->
     <component class="net.mklew.hotelms.inhouse.web.cometd.HelloService"/>
