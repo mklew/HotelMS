@@ -1,5 +1,5 @@
-define(["dojo/request", "dojo/dom-construct", "dijit/layout/ContentPane", "dojo/io-query"],
-function(request, domConstruct, ContentPane, ioQuery){
+define(["dojo/request", "dojo/dom-construct", "dijit/layout/ContentPane", "dojo/io-query", "dojo/json"],
+function(request, domConstruct, ContentPane, ioQuery, json){
      return {
         tab : function(urlToView, options){
             request(urlToView).then(function(data){
@@ -24,11 +24,18 @@ function(request, domConstruct, ContentPane, ioQuery){
             });
         },
 
-        requestJson : function(urlToView, queryHash){
+        requestJson : function(urlToView, queryHash, callback){
           var queryStr = ioQuery.objectToQuery(queryHash);
-          request.post(urlToView, { query : queryStr, handleAs : 'json'}).then(function(data){
-                return data;
-           }, function(err){
+          request(urlToView, { query : queryStr, handleAs : 'text'}).then(function(data){
+                console.log('received data');
+                console.log(data);
+                var obj = json.parse(data);
+                console.log('parsed data to json obj:');
+                console.log(obj);
+                console.log('calling callback');
+                callback(data);
+          }, function(err){
+                console.log("ERROR OCCURRED");
                 console.log(err);
            }, function(evt){
                 console.log(evt);
