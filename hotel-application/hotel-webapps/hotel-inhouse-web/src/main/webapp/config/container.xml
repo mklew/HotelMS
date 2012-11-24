@@ -111,6 +111,8 @@
         </sequence>
     </component>
 
+    <component class="net.mklew.hotelms.inhouse.web.rest.test.HelloComponent"/>
+    <component class="net.mklew.hotelms.inhouse.web.rest.HelloRest"/>
 
     <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
 
