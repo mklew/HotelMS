@@ -1,6 +1,6 @@
 $viewEnclosureTool.top()
 console.log("NewReservationScript has been fetched successfully");
-require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory"], function(registry, on, ready, Memory){
+require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory", "hotelms/ledge"], function(registry, on, ready, Memory, ledge){
     ready(function(){
         var roomTypeChooser = registry.byId("roomTypeChooser");
         var roomChooser = registry.byId("roomChooser");
@@ -16,6 +16,18 @@ require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory"], functi
                return item.extraBed <= max;
             });
             extraBeds.set('store', new Memory({idProperty: 'extraBed', data: newStoreData}));
+
+            ## populate rates
+            console.log('requesting json data about rates for given room');
+            var dataa = ledge.requestJson("$link.view('data.RoomData')", { room : this.item.id, rates : "rates" }, function(dane){
+                var rates = dane;
+                console.log('retrieved rates for room ' + this.item.id);
+                console.log(rates);
+                // TODO populate rates input
+
+            });
+            console.log('data from request, that should be undefined');
+            console.log(dataa);
         });
     });
 });
