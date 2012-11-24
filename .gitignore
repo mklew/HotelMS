@@ -5,14 +5,8 @@
 *.war
 .idea
 *.iml
-*/content/dojo/dijit/
-*/content/dojo/dojo/
-*/content/dojo/dojox/
 hotel-application/hotel-webapps/hotel-inhouse-web/target/
 hotel-application/hotel-webapps/hotel-inhouse-web/workdir/
 hotel-application/hotel-webapps/hotel-public-web/target/
-hotel-application/hotel-webapps/hotel-inhouse-web/src/main/webapp/content/dojo/dijit/
-hotel-application/hotel-webapps/hotel-inhouse-web/src/main/webapp/content/dojo/dojo/
-hotel-application/hotel-webapps/hotel-inhouse-web/src/main/webapp/content/dojo/dojox/
 hotel-application/hotel-persistance/target/
 hotel-application/hotel-domain/target/
