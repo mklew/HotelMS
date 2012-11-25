@@ -59,7 +59,7 @@
                             basefx.animateProperty({
                                   node: "preloader", duration: 500,
                                   properties: {
-                                    opacity: { start: 1, end: 0 },
+                                    opacity: { start: 1, end: 0 }
                                   },
                                   onEnd: function(){
                                     domStyle.set("preloader", "display", "none");
@@ -96,6 +96,8 @@
 ##                                <p>Hello, $username</p>
 ##                                </div>
 
+                    <button data-dojo-type="dijit/form/Button" data-dojo-id="CreateNewReservationWidget" type="button">Create New Reservation Widget</button>
+
 ### testy
 ##<form data-dojo-type="dijit/form/Form">
 ##    <fieldset>
@@ -127,16 +129,26 @@
 
     		<script>
     		         require(["dojo/ready", "dojo/on", "dijit/layout/ContentPane", "dojo/request", "dojo/dom-construct",
-    		          "dojo/parser", "hotelms/ledge", "dijit/registry", "dojo/_base/array", "dijit/MenuBarItem", "dijit/MenuBar"],
-    		         function(ready, on, ContentPane, request, domConstruct, parser, ledge, registry, array, MenuBarItem, MenuBar){
+    		          "dojo/parser", "hotelms/ledge", "dijit/registry", "dojo/_base/array", "dijit/MenuBarItem", "dijit/MenuBar", "hotelms/NewReservation"],
+    		         function(ready, on, ContentPane, request, domConstruct, parser, ledge, registry, array, MenuBarItem, MenuBar, NewReservation){
     		            ready(function(){
-##    		                    on(CreateTabBtn.domNode, "click", function(event){
-##     		                         var cp1 = new ContentPane({
-##                                                  title: "New Tab",
-##                                                  content: "We offer amazing food"
-##                                             });
-##                                     MainTabContainer.addChild(cp1);
-##    		                    });
+//    		                    on(CreateTabBtn.domNode, "click", function(event){
+//     		                         var cp1 = new ContentPane({
+//                                                  title: "New Tab",
+//                                                  content: "We offer amazing food"
+//                                             });
+//                                     MainTabContainer.addChild(cp1);
+//    		                    });
+
+                            on(CreateNewReservationWidget.domNode, "click", function(event){
+                                var cp1 = new ContentPane({
+                                    title: "New reservation widget"
+                                });
+                                var newForm = new NewReservation();
+//                                newForm.startup();
+                                cp1.addChild(newForm);
+                                MainTabContainer.addChild(cp1);
+                            });
 ##
 ##
 ##    		                    on(ReservationTableBtn.domNode, "click", function(event){
