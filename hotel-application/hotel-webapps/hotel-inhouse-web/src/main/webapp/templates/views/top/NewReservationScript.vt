@@ -1,6 +1,6 @@
 $viewEnclosureTool.top()
 console.log("NewReservationScript has been fetched successfully");
-require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory", "hotelms/ledge"], function(registry, on, ready, Memory, ledge){
+require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory", "hotelms/ledge", "dojo/request"], function(registry, on, ready, Memory, ledge, request){
     ready(function(){
         var roomTypeChooser = registry.byId("roomTypeChooser");
         var roomChooser = registry.byId("roomChooser");
@@ -19,15 +19,22 @@ require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory", "hotelm
 
             ## populate rates
             console.log('requesting json data about rates for given room');
-            var dataa = ledge.requestJson("$link.view('data.RoomData')", { room : this.item.id, rates : "rates" }, function(dane){
-                var rates = dane;
-                console.log('retrieved rates for room ' + this.item.id);
-                console.log(rates);
-                // TODO populate rates input
+            console.log('tralalala');
+            console.log("this.item.id is " + this.item.id );
+            console.log("this.item.number is " + this.item.number );
+            request("/rest/rates/" + this.item.number, { handleAs : 'json' }).then(function(data){
+                var rates = data;
+                console.log("odebralem requesta");
 
+                console.log(rates);
+##                // TODO populate rates input
+            }, function(error){
+                console.log("error occured");
+                console.log(error);
+            }, function(evt){
+                console.log("event occured");
             });
-            console.log('data from request, that should be undefined');
-            console.log(dataa);
+
         });
     });
 });
