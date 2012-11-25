@@ -79,7 +79,10 @@
 
     <fieldset>
         <legend>Rate</legend>
-        <div>jdaskljdjakdklajlkd</div>
+        <div>
+            <label for="rateType">Type:</label>
+            <input id="rateType" name="rate-type" data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="disabled:true"/>
+        </div>
     </fieldset>
 
     <fieldset>

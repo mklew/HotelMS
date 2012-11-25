@@ -27,7 +27,7 @@ require(["dijit/registry", "dojo/on", "dojo/ready", "dojo/store/Memory", "hotelm
                 console.log("odebralem requesta");
 
                 console.log(rates);
-##                // TODO populate rates input
+                registry.byId("rateType").set("store", new Memory({idProperty: 'name', data: data})).set("disabled", false);
             }, function(error){
                 console.log("error occured");
                 console.log(error);
