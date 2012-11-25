@@ -26,13 +26,13 @@ import java.util.Collection;
  */
 @Singleton
 @Path("rates/{roomName}")
-public class Rates
+public class RatesResource
 {
     private final RateRepository rateRepository;
     private final RoomRepository roomRepository;
     private final HibernateSessionFactory hibernateSessionFactory;
 
-    public Rates(RateRepository rateRepository, RoomRepository roomRepository, HibernateSessionFactory hibernateSessionFactory)
+    public RatesResource(RateRepository rateRepository, RoomRepository roomRepository, HibernateSessionFactory hibernateSessionFactory)
     {
         this.rateRepository = rateRepository;
         this.roomRepository = roomRepository;
