@@ -79,7 +79,8 @@
     </component>
 
 
-    <component class-key="org.objectledge.web.rest.JerseyRestValve" class="org.objectledge.web.rest.JerseyRestValve"></component>
+    <component class-key="org.objectledge.web.rest.JerseyRestValve"
+               class="org.objectledge.web.rest.JerseyRestValve"/>
 
     <!-- // pipeline //////////////////////////////////////////////////////////////////////// -->
 
@@ -111,8 +112,12 @@
         </sequence>
     </component>
 
+    <!-- // jersey resources //////////////////////////////////////////////////////////////// -->
+
     <component class="net.mklew.hotelms.inhouse.web.rest.test.HelloComponent"/>
     <component class="net.mklew.hotelms.inhouse.web.rest.HelloRest"/>
+    <component class="net.mklew.hotelms.inhouse.web.rest.Rates"/>
+    <component class="net.mklew.hotelms.inhouse.web.rest.JAXBJSONContextResolver"/>
 
     <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
 
