@@ -2,6 +2,7 @@
 <config>
     <packages>
         <package>net.mklew.hotelms.inhouse.web.rest</package>
+        <package>net.mklew.hotelms.inhouse.web.dto.jaxb</package>
         <package>org.codehaus.jackson.jaxrs</package>
     </packages>
     <excludedPackages>
