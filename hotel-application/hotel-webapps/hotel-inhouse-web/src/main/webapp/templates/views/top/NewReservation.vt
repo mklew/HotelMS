@@ -2,7 +2,7 @@
     <fieldset>
         <legend>Reservation type</legend>
         <div>
-            <label for="reservation-type">Choose reservation type:</label>
+            <label for="reservationType">Choose reservation type:</label>
 
              <select id="reservationType" name="reservation-type" data-dojo-type="dijit/form/FilteringSelect"
                     data-dojo-props="
@@ -20,19 +20,19 @@
         <legend>Stay details</legend>
         <div>
           <label for="checkin">Check-in:</label>
-          <input name="checkin" data-dojo-type='dijit/form/DateTextBox'>
+          <input id="checkin" name="checkin" data-dojo-type='dijit/form/DateTextBox'>
         </div>
         <div>
           <label for="checkout">Check-out:</label>
-          <input name="checkout" data-dojo-type='dijit/form/DateTextBox'>
+          <input id="checkout" name="checkout" data-dojo-type='dijit/form/DateTextBox'>
         </div>
         <div>
           <label for="number-of-adults">Number of adults:</label>
-          <input name="number-of-adults" data-dojo-type='dijit/form/NumberTextBox' data-dojo-props="constraints:{min:0,max:20,places:0}">
+          <input id="number-of-adults" name="number-of-adults" data-dojo-type='dijit/form/NumberTextBox' data-dojo-props="constraints:{min:0,max:20,places:0}">
         </div>
         <div>
           <label for="number-of-children">Number of children:</label>
-          <input name="number-of-children" data-dojo-type='dijit/form/NumberTextBox' data-dojo-props="constraints:{min:0,max:20,places:0}">
+          <input id="number-of-children" name="number-of-children" data-dojo-type='dijit/form/NumberTextBox' data-dojo-props="constraints:{min:0,max:20,places:0}">
         </div>
     </fieldset>
 
@@ -47,7 +47,7 @@
                     #end
                 ]">
             </div>
-            <label for="room-type">Choose room type:</label>
+            <label for="roomTypeChooser">Choose room type:</label>
             <input id="roomTypeChooser" name="room-type" data-dojo-type="dijit/form/FilteringSelect"
                              data-dojo-props="placeHolder: 'Select room type', store: roomTypesStore, searchAttr:'id'"/>
         </div>
@@ -55,13 +55,13 @@
                 data-dojo-id="roomsStore"
                 data-dojo-props="data: [
                     #foreach($room in $rooms)
-                        {id: '$room.fullRoomName()', roomType: '$room.roomTypeName()', maxExtraBeds : '$room.maxExtraBeds()'}#if( $foreach.hasNext ),#end
+                        {id: '$room.fullRoomName()', number : '$room.roomNumber()', roomType: '$room.roomTypeName()', maxExtraBeds : '$room.maxExtraBeds()'}#if( $foreach.hasNext ),#end
                     #end
                 ], idProperty: 'id'">
             </div>
-            <label for="room-name">Choose room:</label>
+            <label for="roomChooser">Choose room:</label>
             <input id="roomChooser" name="room-name" data-dojo-type="dijit/form/FilteringSelect"
-                                         data-dojo-props="placeHolder: 'Select room', store: roomsStore, searchAttr:'id', disabled:true, query: {roomType: /.*/}"
+                                         data-dojo-props="placeHolder: 'Select room', store: roomsStore, searchAttr:'id', disabled:true, query: {id: /.*/}"
                                          />
         </div>
         <div>
@@ -71,7 +71,7 @@
                                              { extraBed: 4 },{extraBed: 5},{extraBed:6}, {extraBed:7},
                                              { extraBed: 8 },{extraBed: 9},{extraBed:10}, {extraBed:11}
               ]}"
-            <label for="room-extra-bed">Extra beds:</label>
+            <label for="extraBedChooser">Extra beds:</label>
             <input id="extraBedChooser" name="room-extra-bed" data-dojo-type="dijit/form/FilteringSelect"
                 data-dojo-props="store: extraBedsStore, searchAttr:'extraBed', disabled:true" value="0"/>
         </div>
