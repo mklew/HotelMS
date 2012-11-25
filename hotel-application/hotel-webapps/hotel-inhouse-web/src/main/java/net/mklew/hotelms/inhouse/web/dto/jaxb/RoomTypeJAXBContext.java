@@ -1,8 +1,8 @@
-package net.mklew.hotelms.inhouse.web.rest;
+package net.mklew.hotelms.inhouse.web.dto.jaxb;
 
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.api.json.JSONJAXBContext;
-import net.mklew.hotelms.inhouse.web.dto.RateDto;
+import net.mklew.hotelms.inhouse.web.dto.RoomTypeDto;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.ext.ContextResolver;
@@ -12,21 +12,25 @@ import javax.xml.bind.JAXBContext;
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 11/25/12
- * time 1:26 PM
+ *        time 1:26 PM
  */
 @Provider
 @Produces("application/json")
-public class JAXBJSONContextResolver implements ContextResolver<JAXBContext>
+public class RoomTypeJAXBContext implements ContextResolver<JAXBContext>
 {
     private JAXBContext context;
-    public JAXBJSONContextResolver() throws Exception {
+
+    public RoomTypeJAXBContext() throws Exception
+    {
         JSONConfiguration.MappedBuilder b = JSONConfiguration.mapped();
         b.rootUnwrapping(true);
-        b.arrays("ratedto");
-        context = new JSONJAXBContext(b.build(), RateDto.class);
+        b.arrays("roomTypeDto");
+        context = new JSONJAXBContext(b.build(), RoomTypeDto.class);
     }
+
     @Override
-    public JAXBContext getContext(Class<?> objectType) {
-        return context;
+    public JAXBContext getContext(Class<?> objectType)
+    {
+        return objectType.equals(RoomTypeDto.class) ? context : null;
     }
 }
