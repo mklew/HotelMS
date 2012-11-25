@@ -70,7 +70,7 @@ function(dom, unloader, cometd)
     console.log("cometURL is " + cometURL);
     cometd.configure({
         url: cometURL,
-        logLevel: 'debug'
+        logLevel: 'error'
     });
 
     cometd.addListener('/meta/handshake', _metaHandshake);
