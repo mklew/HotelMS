@@ -2,5 +2,15 @@
 <config>
     <packages>
         <package>net.mklew.hotelms.inhouse.web.rest</package>
+        <package>org.codehaus.jackson.jaxrs</package>
     </packages>
+    <excludedPackages>
+        <package>org.codehaus.jackson.jaxrs</package>
+    </excludedPackages>
+    <init-parameters>
+        <init-parameter>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+            <param-value>true</param-value>
+        </init-parameter>
+    </init-parameters>
 </config>
