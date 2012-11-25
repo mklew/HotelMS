@@ -45,6 +45,11 @@ public class Room
         return prefix + name.getRoomName();
     }
 
+    public String roomNumber()
+    {
+        return name.getRoomNumber();
+    }
+
     public String roomTypeName()
     {
         return type.getTypeName();

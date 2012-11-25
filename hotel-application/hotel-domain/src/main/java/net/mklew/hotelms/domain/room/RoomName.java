@@ -29,6 +29,11 @@ public class RoomName implements Serializable
         return DELIMETER + name;
     }
 
+    public String getRoomNumber()
+    {
+        return name;
+    }
+
     // hibernate
     private String getName()
     {
