@@ -35,7 +35,7 @@ public class RoomPersistanceTest
     public void should_successfully_save_and_retrieve_room() throws Exception
     {
 //        final RoomName roomName = new RoomName("101", "C");
-        final RoomName roomName = new RoomName("101");
+        final RoomName roomName = new RoomName("106");
         final RoomType roomType = new RoomType("cheap");
         final Money standardPrice = Money.parse("USD 100");
         final Money upchargeExtraPerson = Money.parse("USD 50");

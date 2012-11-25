@@ -2,7 +2,6 @@ package net.mklew.hotelms.persistance;
 
 import net.mklew.hotelms.domain.booking.reservation.rates.*;
 import net.mklew.hotelms.domain.room.*;
-import net.mklew.hotelms.persistance.hibernate.configuration.NativelyConfiguredHibernateSessionFactory;
 import net.mklew.hotelms.persistance.hibernate.configuration.StubHibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,8 +11,10 @@ import org.joda.time.DateTime;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.fest.assertions.Assertions.assertThat;
+
 import java.util.Collection;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -44,7 +45,7 @@ public class RateRepositoryHibernateTest
     {
         // given
         final int EXPECTED_RATES = 3; // 2 season rates and 1 rack rate
-        final RoomName roomName = new RoomName("101");
+        final RoomName roomName = new RoomName("110");
         final RoomType roomType = new RoomType("cheap");
         final Money standardPrice = Money.parse("USD 100");
         final Money upchargeExtraPerson = Money.parse("USD 50");
@@ -91,20 +92,10 @@ public class RateRepositoryHibernateTest
         RateRepositoryHibernate rateRepositoryHibernate= new RateRepositoryHibernate(new StubHibernateSessionFactory(sessionFactory));
         // when
         final Collection<Rate> allRatesForRoom = rateRepositoryHibernate.getAllRatesForRoom(room);
+        session.getTransaction().commit();
 
         // then
         assertThat(allRatesForRoom.size()).isEqualTo(EXPECTED_RATES);
-        for(Rate rate : allRatesForRoom)
-        {
-            if(rate.getRateName().equals("season name 2"))
-            {
-                assertThat(rate.equals(seasonRate2)).isTrue();
-            }
-            if(rate.getRateName().equals("season name"))
-            {
-                assertThat(rate.equals(seasonRate)).isTrue();
-            }
-        }
-        //assertThat(allRatesForRoom).contains(seasonRate, seasonRate2); // this does not work some how
+        assertThat(allRatesForRoom).contains(seasonRate, seasonRate2);
     }
 }
