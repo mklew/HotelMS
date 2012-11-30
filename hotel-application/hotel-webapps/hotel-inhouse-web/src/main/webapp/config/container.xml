@@ -29,6 +29,9 @@
 
     <component class-key="net.mklew.hotelms.domain.booking.reservation.rates.RateRepository"
                class="net.mklew.hotelms.persistance.RateRepositoryHibernate"/>
+
+    <component class-key="net.mklew.hotelms.domain.booking.GuestRepository"
+               class="net.mklew.hotelms.persistance.GuestRepositoryHibernate"/>
     <!-- // valves ////////////////////////////////////////////////////////////////////// -->
 
     <component class="org.objectledge.web.ContentTypeInitializerValve"/>
@@ -118,6 +121,7 @@
     <component class="net.mklew.hotelms.inhouse.web.rest.HelloRest"/>
     <component class="net.mklew.hotelms.inhouse.web.rest.RatesResource"/>
     <component class="net.mklew.hotelms.inhouse.web.rest.RoomResource"/>
+    <component class="net.mklew.hotelms.inhouse.web.rest.ChargeCalculatorResource"/>
 
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RateDtoJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RoomTypeJAXBContext"/>
