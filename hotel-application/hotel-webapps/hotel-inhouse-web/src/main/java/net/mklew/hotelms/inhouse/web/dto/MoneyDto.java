@@ -15,6 +15,11 @@ public class MoneyDto
     public String amount;
     public String currency;
 
+    public MoneyDto()
+    {
+
+    }
+
     public MoneyDto(String amount, String currency)
     {
         this.amount = amount;
