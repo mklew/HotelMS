@@ -122,6 +122,7 @@
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RateDtoJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RoomTypeJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RoomJAXBContext"/>
+    <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.MoneyDtoJAXBContext"/>
 
     <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
 
