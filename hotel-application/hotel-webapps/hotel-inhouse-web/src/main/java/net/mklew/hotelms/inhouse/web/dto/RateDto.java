@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RateDto
 {
     public String name;
-    public String standardRate;
-    public String upchargeExtraPerson;
-    public String upchargeExtraBed;
+    public MoneyDto standardRate;
+    public MoneyDto upchargeExtraPerson;
+    public MoneyDto upchargeExtraBed;
 
     public RateDto()
     {
@@ -26,9 +26,9 @@ public class RateDto
     {
         RateDto rateDto = new RateDto();
         rateDto.name = rate.getRateName();
-        rateDto.standardRate = rate.standardPrice().toString();
-        rateDto.upchargeExtraPerson = rate.upchargeExtraPerson().toString();
-        rateDto.upchargeExtraBed = rate.upchargeExtraBed().toString();
+        rateDto.standardRate = MoneyDto.fromMoney(rate.standardPrice());
+        rateDto.upchargeExtraPerson = MoneyDto.fromMoney(rate.upchargeExtraPerson());
+        rateDto.upchargeExtraBed = MoneyDto.fromMoney(rate.upchargeExtraBed());
         return rateDto;
     }
 }
