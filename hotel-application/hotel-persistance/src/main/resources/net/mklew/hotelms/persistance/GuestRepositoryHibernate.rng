@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+    <start>
+        <element name="config">
+            <interleave>
+                <optional>
+                    <ref name="guestLookUpByNameLimit"/>
+                </optional>
+            </interleave>
+        </element>
+    </start>
+
+    <define name="guestLookUpByNameLimit">
+        <element name="guestLookUpByNameLimit">
+            <text/>
+        </element>
+    </define>
+</grammar>
