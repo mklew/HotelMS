@@ -52,4 +52,9 @@ public class Discount
     {
         return discount;
     }
+
+    private void setDiscount(BigDecimal discount)
+    {
+        this.discount = discount;
+    }
 }
