@@ -7,5 +7,5 @@ package net.mklew.hotelms.domain.guests;
  */
 public enum AddressType
 {
-    CONTACT, MAIN_BILLING, MAIN_OFFICE;
+    CONTACT_ADDRESS, MAIN_BILLING, MAIN_OFFICE, WORK_ADDRESS;
 }
