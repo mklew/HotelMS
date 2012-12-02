@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="net.mklew.hotelms.domain.guests">
+
+    <class name="Person" table="PERSONS" abstract="true" discriminator-value="null">
+        <id name="id" column="id">
+            <generator class="sequence">
+                <param name="sequence">persons_sequence</param>
+            </generator>
+        </id>
+        <discriminator column="PERSON_TYPE" type="character" length="1"/>
+        <set name="addresses">
+            <key column="person"/>
+            <one-to-many class="Address"/>
+        </set>
+
+        <subclass name="Guest" discriminator-value="G">
+            <property name="socialTitle" length="5"/>
+            <property name="firstName" length="50"/>
+            <property name="middleName" length="50"/>
+            <property name="surname" length="90"/>
+            <property name="gender">
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">net.mklew.hotelms.domain.guests.Gender</param>
+                    <param name="type">12</param>
+                    <param name="useNamed"></param>
+                </type>
+            </property>
+            <property name="documentType">
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">net.mklew.hotelms.domain.guests.DocumentType</param>
+                    <param name="type">12</param>
+                    <param name="useNamed"></param>
+                </type>
+            </property>
+            <property name="documentId"/>
+            <property name="nationality"/>
+            <property name="dateOfBirth"/>
+            <property name="phoneNumber"/>
+            <property name="faxNumber"/>
+            <property name="emailAddress"/>
+            <property name="preferences"/>
+            <component name="workDetails" class="net.mklew.hotelms.domain.guests.WorkDetails">
+                <property name="organizationName"/>
+                <property name="designation"/>
+                <one-to-one name="address" />
+                <property name="primaryPhoneNumber"/>
+                <property name="secondaryPhoneNumber"/>
+            </component>
+            <property name="website"/>
+        </subclass>
+
+        <subclass name="Employee" discriminator-value="E">
+            <property name="identifier"/>
+        </subclass>
+
+        <subclass name="Legal" discriminator-value="L">
+            <property name="businessName"/>
+            <component name="discount" class="net.mklew.hotelms.domain.money.Discount">
+                <property name="discount"/>
+            </component>
+            <one-to-one name="contactPerson"/>
+        </subclass>
+
+    </class>
+</hibernate-mapping>
