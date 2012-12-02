@@ -1,5 +1,7 @@
 package net.mklew.hotelms.domain.booking;
 
+import net.mklew.hotelms.domain.guests.Guest;
+
 import java.util.Collection;
 
 /**
@@ -9,5 +11,5 @@ import java.util.Collection;
  */
 public interface GuestRepository
 {
-   public Collection<Guest> findAllWhereCommonNameLike(String commonName);
+   public Collection<Guest> findAllWhereNameLike(String firstName, String surname);
 }
