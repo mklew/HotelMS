@@ -1,8 +1,9 @@
 package net.mklew.hotelms.persistance;
 
-import net.mklew.hotelms.domain.booking.Guest;
 import net.mklew.hotelms.domain.booking.GuestRepository;
+import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
+import org.hibernate.Session;
 import org.jcontainer.dna.Configuration;
 
 import java.util.Collection;
@@ -18,15 +19,32 @@ public class GuestRepositoryHibernate extends HibernateRepository implements Gue
 
     private final int guestLookupByNameLimit;
 
+    private final static String FIND_ALL_WHERE_NAME_LIKE = "select guest from Guest guest where firstName like " +
+            ":firstName and surname like :surname";
+
     public GuestRepositoryHibernate(HibernateSessionFactory hibernateSessionFactory, Configuration config)
     {
         super(hibernateSessionFactory);
-        guestLookupByNameLimit = config.getChild("guestLookUpByNameLimit").getValueAsInteger(GUEST_LOOK_UP_BY_NAME_LIMIT_DEFAULT);
+        guestLookupByNameLimit = config.getChild("guestLookUpByNameLimit").getValueAsInteger
+                (GUEST_LOOK_UP_BY_NAME_LIMIT_DEFAULT);
+    }
+
+    public GuestRepositoryHibernate(HibernateSessionFactory hibernateSessionFactory)
+    {
+        super(hibernateSessionFactory);
+        guestLookupByNameLimit = GUEST_LOOK_UP_BY_NAME_LIMIT_DEFAULT;
     }
 
     @Override
-    public Collection<Guest> findAllWhereCommonNameLike(String commonName)
+    public Collection<Guest> findAllWhereNameLike(String firstName, String surname)
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        final Session session = getCurrentSession();
+        String surnameLike = surname + "%";
+        String firstNameLike = firstName + "%";
+        @SuppressWarnings("unchecked") final Collection<Guest> guests = session.createQuery(FIND_ALL_WHERE_NAME_LIKE).setParameter("firstName",
+                firstNameLike).setParameter("surname", surnameLike).setMaxResults
+                (GUEST_LOOK_UP_BY_NAME_LIMIT_DEFAULT).list();
+        return guests;
+
     }
 }
