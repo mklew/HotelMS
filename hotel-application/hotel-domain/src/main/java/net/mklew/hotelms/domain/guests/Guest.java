@@ -43,6 +43,12 @@ public class Guest extends Person
         this.phoneNumber = phoneNumber;
     }
 
+    /**
+     * Returns WorkInformation
+     *
+     * @return work information, address and work place details.
+     * @throws GuestHasNoWorkInformationException when work information is not found
+     */
     public WorkInformation getWorkInformation()   throws GuestHasNoWorkInformationException
     {
         for (Address address : getAddresses())
