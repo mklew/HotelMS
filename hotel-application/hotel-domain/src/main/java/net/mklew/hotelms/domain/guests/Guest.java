@@ -1,6 +1,8 @@
 package net.mklew.hotelms.domain.guests;
 
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 
 /**
@@ -216,5 +218,55 @@ public class Guest extends Person
     public void setWebsite(String website)
     {
         this.website = website;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(17, 53)
+                .append(socialTitle)
+                .append(firstName)
+                .append(middleName)
+                .append(surname)
+                .append(gender)
+                .append(documentType)
+                .append(documentId)
+                .append(nationality)
+                .append(dateOfBirth)
+                .append(phoneNumber)
+                .append(faxNumber)
+                .append(emailAddress)
+                .append(preferences)
+                .append(workDetails)
+                .append(website)
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Guest rhs = (Guest) obj;
+        return new EqualsBuilder()
+                .append(socialTitle, rhs.socialTitle)
+                .append(firstName, rhs.firstName)
+                .append(middleName, rhs.middleName)
+                .append(surname, rhs.surname)
+                .append(gender, rhs.gender)
+                .append(documentType, rhs.documentType)
+                .append(documentId, rhs.documentId)
+                .append(nationality, rhs.nationality)
+                .append(dateOfBirth, rhs.dateOfBirth)
+                .append(phoneNumber, rhs.phoneNumber)
+                .append(faxNumber, rhs.faxNumber)
+                .append(emailAddress, rhs.emailAddress)
+                .append(preferences, rhs.preferences)
+                .append(workDetails, rhs.workDetails)
+                .append(website, rhs.website)
+                .isEquals();
     }
 }
