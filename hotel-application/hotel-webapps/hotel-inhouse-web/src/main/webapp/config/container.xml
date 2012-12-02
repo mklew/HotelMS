@@ -119,14 +119,17 @@
 
     <component class="net.mklew.hotelms.inhouse.web.rest.test.HelloComponent"/>
     <component class="net.mklew.hotelms.inhouse.web.rest.HelloRest"/>
+
     <component class="net.mklew.hotelms.inhouse.web.rest.RatesResource"/>
     <component class="net.mklew.hotelms.inhouse.web.rest.RoomResource"/>
     <component class="net.mklew.hotelms.inhouse.web.rest.ChargeCalculatorResource"/>
+    <component class="net.mklew.hotelms.inhouse.web.rest.GuestResource"/>
 
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RateDtoJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RoomTypeJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RoomJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.MoneyDtoJAXBContext"/>
+    <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.GuestDtoJAXBContext"/>
 
     <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
 
