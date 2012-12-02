@@ -1,5 +1,8 @@
 package net.mklew.hotelms.domain.guests;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 11/30/12
@@ -94,5 +97,41 @@ class Address
     public void setAddressType(AddressType addressType)
     {
         this.addressType = addressType;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(17, 53)
+                .append(id)
+                .append(regionName)
+                .append(areaCode)
+                .append(city)
+                .append(street)
+                .append(streetNumber)
+                .append(apartmentNumber)
+                .append(addressType)
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Address rhs = (Address) obj;
+        return new EqualsBuilder()
+                .append(id, rhs.id)
+                .append(regionName, rhs.regionName)
+                .append(areaCode, rhs.areaCode)
+                .append(city, rhs.city)
+                .append(street, rhs.city)
+                .append(streetNumber, rhs.streetNumber)
+                .append(apartmentNumber, rhs.apartmentNumber)
+                .append(addressType, rhs.addressType)
+                .isEquals();
     }
 }

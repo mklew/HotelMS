@@ -1,5 +1,8 @@
 package net.mklew.hotelms.domain.guests;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.io.Serializable;
 
 /**
@@ -53,5 +56,31 @@ public class AddressId implements Serializable
     public void setSeq(long seq)
     {
         this.seq = seq;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(17, 53)
+                .append(person)
+                .append(country)
+                .append(seq)
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        AddressId rhs = (AddressId) obj;
+        return new EqualsBuilder()
+                .append(person, rhs.person)
+                .append(country, rhs.country)
+                .append(seq, rhs.seq)
+                .isEquals();
     }
 }

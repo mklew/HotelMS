@@ -1,5 +1,8 @@
 package net.mklew.hotelms.domain.guests;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.io.Serializable;
 
 /**
@@ -88,5 +91,37 @@ public class Country implements Serializable
     void setNumCode(int numCode)
     {
         this.numCode = numCode;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(17, 53)
+                .append(id)
+                .append(iso1Code)
+                .append(nameCaps)
+                .append(name)
+                .append(iso3Code)
+                .append(numCode)
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null) { return false; }
+        if (obj == this) { return true; }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Country rhs = (Country) obj;
+        return new EqualsBuilder()
+                .append(id, rhs.id)
+                .append(iso1Code, rhs.iso1Code)
+                .append(nameCaps, rhs.nameCaps)
+                .append(name, rhs.name)
+                .append(iso3Code, rhs.iso3Code)
+                .append(numCode, rhs.numCode)
+                .isEquals();
     }
 }
