@@ -43,6 +43,24 @@ public class Guest extends Person
         this.phoneNumber = phoneNumber;
     }
 
+    public WorkInformation getWorkInformation()   throws GuestHasNoWorkInformationException
+    {
+        for (Address address : getAddresses())
+        {
+            if (address.getAddressType().equals(AddressType.WORK_ADDRESS))
+            {
+                return new WorkInformation(workDetails, address);
+            }
+        }
+        throw new GuestHasNoWorkInformationException();
+    }
+
+    public void addWorkInformation(WorkInformation workInformation)
+    {
+        getAddresses().add(workInformation.getAddress());
+        this.workDetails = workInformation.getWorkDetails();
+    }
+
 
     public String getSocialTitle()
     {
