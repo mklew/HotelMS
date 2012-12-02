@@ -44,6 +44,9 @@
         <mapping resource="rates/Rate.hbm.xml"/>
         <mapping resource="room/Room.hbm.xml"/>
         <mapping resource="room/RoomType.hbm.xml"/>
+        <mapping resource="guests/Country.hbm.xml"/>
+        <mapping resource="guests/Person.hbm.xml"/>
+        <mapping resource="guests/Address.hbm.xml"/>
 
     </session-factory>
 
