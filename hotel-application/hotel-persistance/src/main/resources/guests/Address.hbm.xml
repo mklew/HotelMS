@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="net.mklew.hotelms.domain.guests">
+
+    <class name="Address" table="ADDRESSES">
+        <composite-id name="id" class="AddressId">
+            <key-many-to-one name="person">
+                <column name="person_fk"/>
+            </key-many-to-one>
+            <key-many-to-one name="country">
+                <column name="country_fk"/>
+            </key-many-to-one>
+            <key-property name="seq"/>
+        </composite-id>
+
+        <property name="regionName" column="region_name" not-null="true" length="160"/>
+        <property name="areaCode" column="area_code" not-null="true" length="10"/>
+        <property name="city" column="city" not-null="true" length="160"/>
+        <property name="street" column="street" not-null="true" length="160"/>
+        <property name="streetNumber"  column="street_number" not-null="true" length="10"/>
+        <property name="apartmentNumber" column="apartment_number" length="10"/>
+        <property name="addressType">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">net.mklew.hotelms.domain.guests.AddressType</param>
+                <param name="type">12</param>
+                <param name="useNamed"></param>
+            </type>
+        </property>
+
+    </class>
+</hibernate-mapping>
+
