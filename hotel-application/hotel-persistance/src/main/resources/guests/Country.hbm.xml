@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="net.mklew.hotelms.domain.guests">
+
+    <class name="Country" table="COUNTRIES">
+        <id name="id" column="id">
+            <generator class="sequence">
+                <param name="sequence">countries_sequence</param>
+            </generator>
+        </id>
+        <property name="iso1Code" column="iso1code" length="2"/>
+        <property name="nameCaps" column="name_caps" not-null="true" length="80"/>
+        <property name="name" column="name" not-null="true" length="80"/>
+        <property name="iso3Code" column="iso3code" not-null="true" length="3"/>
+        <property name="numCode" column="num_code" not-null="true" precision="6" scale="0"/>
+    </class>
+
+</hibernate-mapping>
+
