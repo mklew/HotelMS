@@ -13,7 +13,7 @@
             </generator>
         </id>
         <discriminator column="PERSON_TYPE" type="character" length="1"/>
-        <set name="addresses">
+        <set name="addresses" lazy="false">
             <key column="person"/>
             <one-to-many class="Address"/>
         </set>
@@ -47,7 +47,6 @@
             <component name="workDetails" class="net.mklew.hotelms.domain.guests.WorkDetails">
                 <property name="organizationName"/>
                 <property name="designation"/>
-                <one-to-one name="address" />
                 <property name="primaryPhoneNumber"/>
                 <property name="secondaryPhoneNumber"/>
             </component>
