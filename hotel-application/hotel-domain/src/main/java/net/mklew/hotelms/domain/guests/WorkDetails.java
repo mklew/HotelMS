@@ -5,11 +5,10 @@ package net.mklew.hotelms.domain.guests;
  * @since 11/30/12
  *        time 8:39 PM
  */
-public class WorkDetails
+class WorkDetails
 {
     private String organizationName;
     private String designation;
-    private Address address;
     private String primaryPhoneNumber;
     private String secondaryPhoneNumber;
 
@@ -35,16 +34,6 @@ public class WorkDetails
     public void setDesignation(String designation)
     {
         this.designation = designation;
-    }
-
-    public Address getAddress()
-    {
-        return address;
-    }
-
-    public void setAddress(Address address)
-    {
-        this.address = address;
     }
 
     public String getPrimaryPhoneNumber()
