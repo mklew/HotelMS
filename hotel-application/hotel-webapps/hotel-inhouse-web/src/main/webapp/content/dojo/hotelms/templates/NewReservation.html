@@ -19,19 +19,23 @@
         <legend>Stay details</legend>
         <div>
             <label for="${id}-checkin">Check-in:</label>
-            <input id="${id}-checkin" name="checkin" data-dojo-type='dijit/form/DateTextBox'>
+            <input id="${id}-checkin" name="checkin" data-dojo-type='dijit/form/DateTextBox'
+                   data-dojo-attach-point="checkinDate"/>
         </div>
         <div>
             <label for="${id}-checkout">Check-out:</label>
-            <input id="${id}-checkout" name="checkout" data-dojo-type='dijit/form/DateTextBox'>
+            <input id="${id}-checkout" name="checkout" data-dojo-type='dijit/form/DateTextBox'
+                   data-dojo-attach-point="checkoutDate"/>
         </div>
         <div>
             <label for="${id}-number-of-adults">Number of adults:</label>
-            <input id="${id}-number-of-adults" name="number-of-adults" data-dojo-type='dijit/form/NumberTextBox' data-dojo-props="constraints:{min:0,max:20,places:0}">
+            <input id="${id}-number-of-adults" name="number-of-adults" data-dojo-type='dijit/form/NumberTextBox'
+                   data-dojo-props="constraints:{min:0,max:20,places:0}">
         </div>
         <div>
             <label for="${id}-number-of-children">Number of children:</label>
-            <input id="${id}-number-of-children" name="number-of-children" data-dojo-type='dijit/form/NumberTextBox' data-dojo-props="constraints:{min:0,max:20,places:0}">
+            <input id="${id}-number-of-children" name="number-of-children" data-dojo-type='dijit/form/NumberTextBox'
+                   data-dojo-props="constraints:{min:0,max:20,places:0}">
         </div>
     </fieldset>
 
@@ -39,13 +43,16 @@
         <legend>Room</legend>
         <div>
             <label for="${id}-roomTypeChooser">Choose room type:</label>
-            <input id="${id}-roomTypeChooser" data-dojo-attach-point="roomTypeChooser" name="room-type" data-dojo-type="dijit/form/FilteringSelect"
+            <input id="${id}-roomTypeChooser" data-dojo-attach-point="roomTypeChooser" name="room-type"
+                   data-dojo-type="dijit/form/FilteringSelect"
                    data-dojo-props="placeHolder: 'Select room type', searchAttr:'id'"/>
         </div>
         <label for="${id}-roomChooser">Choose room:</label>
-        <input id="${id}-roomChooser" data-dojo-attach-point="roomChooser" name="room-name" data-dojo-type="dijit/form/FilteringSelect"
+        <input id="${id}-roomChooser" data-dojo-attach-point="roomChooser" name="room-name"
+               data-dojo-type="dijit/form/FilteringSelect"
                data-dojo-props="placeHolder: 'Select room', searchAttr:'id', disabled:true, query: {id: /.*/}"
                 />
+
         <div>
             <div data-dojo-type="dojo/store/Memory"
                  data-dojo-id="extraBedsStore"
@@ -55,7 +62,8 @@
                                              { extraBed: 8 },{extraBed: 9},{extraBed:10}, {extraBed:11}
               ]}"></div>
             <label for="${id}-extraBedChooser">Extra beds:</label>
-            <input id="${id}-extraBedChooser" data-dojo-attach-point="extraBedsChooser" name="room-extra-bed" data-dojo-type="dijit/form/FilteringSelect"
+            <input id="${id}-extraBedChooser" data-dojo-attach-point="extraBedsChooser" name="room-extra-bed"
+                   data-dojo-type="dijit/form/FilteringSelect"
                    data-dojo-props="store: extraBedsStore, searchAttr:'extraBed', disabled:true" value="0"/>
         </div>
     </fieldset>
@@ -64,13 +72,22 @@
         <legend>Rate</legend>
         <div>
             <label for="${id}-rateType">Type:</label>
-            <input id="${id}-rateType" data-dojo-attach-point="rateType" name="rate-type" data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="disabled:true"/>
+            <input id="${id}-rateType" data-dojo-attach-point="rateType" name="rate-type"
+                   data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="disabled:true"/>
+        </div>
+        <div>
+            <p>Amount</p>
+
+            <div id="${id}-rateCharge" data-dojo-attach-point="rateCharge" name="rate-charge"
+                 data-dojo-type="dijit/form/CurrencyTextBox"/>
         </div>
     </fieldset>
 
     <fieldset>
         <legend>Reservation owner details</legend>
-        <div>jdaskljdjakdklajlkd</div>
+        <div id="${id}-find-guest" data-dojo-attach-point="findGuest" name="findGuest"
+             data-dojo-type="hotelms/GuestLookup"
+             data-dojo-props="trim:true, placeHolder:'type to search', url:'/rest/guests'"></div>
     </fieldset>
 
     <fieldset>
