@@ -1,0 +1,14 @@
+<div>
+    <label for="${id}-find-guest">Find guest</label>
+
+    <select id="${id}-find-guest" data-dojo-attach-point="_findGuestSelect" name="findGuest"
+            data-dojo-type="dijit/form/FilteringSelect"
+            data-dojo-props="
+                        query: {displayed: /.*/},
+                        placeHolder: 'Type to search: firstName surname',
+                        labelAttr: 'displayed'
+                        ">
+
+    </select>
+    <input id="${id}-debugBtn" type="button" data-dojo-attach-point="_debugBtn" title="DEBUG" value="DEBUG"/>
+</div>
