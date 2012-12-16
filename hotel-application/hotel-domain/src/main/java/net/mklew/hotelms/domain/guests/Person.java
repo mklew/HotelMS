@@ -16,7 +16,7 @@ public abstract class Person
     {
     }
 
-    long getId()
+    public long getId()
     {
         return id;
     }
