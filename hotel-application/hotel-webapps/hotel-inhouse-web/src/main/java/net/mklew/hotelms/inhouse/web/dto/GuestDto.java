@@ -15,9 +15,11 @@ import java.util.Collection;
 public class GuestDto
 {
     // TODO add fields
+    public String id;
     public String firstName;
     public String middleName;
     public String surname;
+    public String displayed;
 
     public GuestDto()
     {
@@ -30,8 +32,10 @@ public class GuestDto
         {
             GuestDto dto = new GuestDto();
             dto.firstName = guest.getFirstName();
-            dto.middleName = guest.getMiddleName();
+            dto.middleName = guest.getMiddleName() != null ? guest.getMiddleName() : "";
             dto.surname = guest.getSurname();
+            dto.displayed = guest.getFirstName() + " " + guest.getSurname();
+            dto.id = String.valueOf(guest.getId());
             dtos.add(dto);
         }
         return dtos;
