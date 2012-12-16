@@ -10,13 +10,17 @@ define([
     "dijit/form/FilteringSelect",
     "dijit/form/DateTextBox",
     "dijit/form/NumberTextBox",
+    "dijit/form/CurrencyTextBox",
     "dojo/store/Memory",
     "dojo/request",
     "dojo/_base/lang",
-    "dojo/on"
+    "dojo/on",
+    "dojo/date/locale",
+    "dijit/form/TextBox",
+    "hotelms/GuestLookup"
 ], function(declare, _WidgetBase, _OnDijitClickMixin, _TemplatedMixin,
             _WidgetsInTemplateMixin, Button, template, Form, FilteringSelect,
-            DateTextBox, NumberTextBox, Memory, request, lang, on) {
+            DateTextBox, NumberTextBox, CurrencyTextBox, Memory, request, lang, on, locale, TextBox, GuestLookup) {
 
     return declare("hotelms.NewReservation", [_WidgetBase, _OnDijitClickMixin,
         _TemplatedMixin, _WidgetsInTemplateMixin
@@ -37,6 +41,14 @@ define([
 
         rateType : null,
 
+        rateCharge : null,
+
+        checkinDate : null,
+
+        checkoutDate : null,
+
+        findGuest : null,
+
         postCreate : function()
         {
             console.log("postCreate was called");
@@ -53,8 +65,10 @@ define([
                 this.roomTypeChooser.store = this.roomTypesStore;
                 console.log(this.roomTypeChooser);
             }), function(err){
+                console.log('error occured');
                 console.log(err);
             }, function(event){
+                console.log("event occured");
                 console.log(event);
             });
 
@@ -87,8 +101,32 @@ define([
                     console.log(error);
                 }, function(evt){
                     console.log("event occured");
+                    console.log(evt);
                 });
             }));
+
+            this.rateCharge.set("readOnly", true);
+
+            on(this.rateType, "change", lang.hitch(this, function(){
+
+                var localeParserOptions = {datePattern: "yyyy-MM-dd" , selector : "date"};
+                var checkin = locale.format(this.checkinDate.get("value"), localeParserOptions);
+                var checkout = locale.format(this.checkoutDate.get("value"), localeParserOptions);
+
+                var url = "/rest/charge/room/" + this.roomChooser.item.number + "/rate/" + this.rateType.item.name + "?" +
+                    "checkin=" + checkin + "&checkout=" + checkout;
+
+                request(url, { handleAs : "json" }).then(lang.hitch(this, function(data){
+                    this.rateCharge.set("currency", data.currency).set("value", data.amount);
+                }), function(error){
+                    console.log("error occured");
+                    console.log(error);
+                }, function(evt){
+                    console.log("event occured");
+                    console.log(evt);
+                });
+            }));
+            this.findGuest.startup();
         }
     });
 });
