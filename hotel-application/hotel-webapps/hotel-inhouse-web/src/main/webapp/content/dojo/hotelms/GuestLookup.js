@@ -7,12 +7,11 @@ define([
     "dijit/form/FilteringSelect",
     "dojo/_base/lang",
     "dojo/on",
-    "hotelms/MyQueryReadStore",
     "dojo/store/JsonRest",
     "dojo/_base/lang",
     "dojo/store/Memory"
 ], function(declare, _WidgetBase, _TemplatedMixin,
-            _WidgetsInTemplateMixin, template, FilteringSelect, lang, on, MyQueryReadStore, JsonRest, lang, Memory) {
+            _WidgetsInTemplateMixin, template, FilteringSelect, lang, on, JsonRest, lang, Memory) {
 
     return declare("hotelms.GuestLookup", [_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin
     ], {
