@@ -9,8 +9,11 @@ import org.hibernate.Session;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -31,13 +34,17 @@ public class GuestResource
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Collection<GuestDto> byCommonName(@QueryParam("q") String query)
     {
+        if (query == null)
+        {
+            return Collections.emptyList();
+        }
         final Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
-        // remove asterisk from query
-        String commonName = query.substring(0, query.length() - 2);
+        String commonName = query;
 
         // split on space and get firstname and possibly surname
         final String[] split = commonName.split(" ");
