@@ -3,99 +3,99 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>net.mklew.hotelms</groupId>
-    <artifactId>hotelms</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
-    
-  <artifactId>hotel-application</artifactId>
-  <packaging>pom</packaging>
-  <name>Hotel Management System application</name>
-    
-  <modules>
-    <module>hotel-webapps</module>
-    <module>hotel-domain</module>
-    <module>hotel-persistance</module>
-  </modules>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.mklew.hotelms</groupId>
+        <artifactId>hotelms</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <versions.ledge>1.0.15-SNAPSHOT</versions.ledge>
-  </properties>
+    <artifactId>hotel-application</artifactId>
+    <packaging>pom</packaging>
+    <name>Hotel Management System application</name>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>1.7</source>
-            <target>1.7</target>
-          </configuration>
-        </plugin>
-      </plugins>
-   </pluginManagement> 
-  </build>
+    <modules>
+        <module>hotel-webapps</module>
+        <module>hotel-domain</module>
+        <module>hotel-persistance</module>
+    </modules>
 
-  <!-- dependencies  -->
-  <dependencies>
-    <dependency>
-        <groupId>joda-time</groupId>
-        <artifactId>joda-time</artifactId>
-        <version>2.0</version>
-    </dependency>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <versions.ledge>1.0.15-MKLEW-SNAPSHOT</versions.ledge>
+    </properties>
 
-      <dependency>
-          <groupId>org.joda</groupId>
-          <artifactId>joda-money</artifactId>
-          <version>0.6</version>
-      </dependency>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-      <dependency>
-          <groupId>org.apache.commons</groupId>
-          <artifactId>commons-lang3</artifactId>
-          <version>3.1</version>
-      </dependency>
+    <!-- dependencies  -->
+    <dependencies>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.0</version>
+        </dependency>
 
-      <!-- test dependencies -->
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.10</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.testng</groupId>
-        <artifactId>testng</artifactId>
-        <version>6.1.1</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-all</artifactId>
-        <version>1.9.5-rc1</version>
-        <scope>test</scope>
-     </dependency>
-     <dependency>
-        <groupId>org.easytesting</groupId>
-        <artifactId>fest-assert</artifactId>
-        <version>1.4</version>
-        <scope>test</scope>
-     </dependency>
-     <dependency>
-        <groupId>com.googlecode.catch-exception</groupId>
-        <artifactId>catch-exception</artifactId>
-        <version>1.0.4</version>
-        <scope>test</scope>
-        <exclusions>
-            <exclusion>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-            </exclusion>
-        </exclusions>
-     </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>org.joda</groupId>
+            <artifactId>joda-money</artifactId>
+            <version>0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5-rc1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.catch-exception</groupId>
+            <artifactId>catch-exception</artifactId>
+            <version>1.0.4</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mockito</groupId>
+                    <artifactId>mockito-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
 </project>
