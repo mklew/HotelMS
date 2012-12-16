@@ -1,7 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
-import net.mklew.hotelms.domain.booking.Guest;
 import net.mklew.hotelms.domain.booking.ReservationStatus;
+import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.room.RoomId;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -96,7 +96,7 @@ public class Reservation
 
     public int lengthOfStay()
     {
-        return (int)stay.toDuration().getStandardDays() + 1;
+        return (int) stay.toDuration().getStandardDays() + 1;
     }
 
     private ReservationStatus getStatus()
