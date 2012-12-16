@@ -1,6 +1,9 @@
 package net.mklew.hotelms.persistance.hibernate.configuration;
 
 import net.mklew.hotelms.domain.booking.reservation.rates.*;
+import net.mklew.hotelms.domain.guests.DocumentType;
+import net.mklew.hotelms.domain.guests.Gender;
+import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.room.*;
 import org.hibernate.Session;
 import org.jcontainer.dna.Logger;
@@ -15,7 +18,7 @@ import java.util.Collection;
 /**
  * Populates database with some data upon startup.
  * One place to hardcore everything
- *
+ * <p/>
  * It should not be used for production!
  *
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -66,7 +69,7 @@ public class DbBootstrap implements Startable
 
         Room L100 = new Room("L", new RoomName("100"), luxury, rackRate, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, 1, new Occupancy(3, 4));
         Room L101 = new Room("L", new RoomName("101"), luxury, rackRate1, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, 1, new Occupancy(2, 3));
-        Room L102 = new Room("L", new RoomName("102"), luxury, rackRate2, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, 3, new Occupancy(2,4));
+        Room L102 = new Room("L", new RoomName("102"), luxury, rackRate2, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, 3, new Occupancy(2, 4));
         Room C103 = new Room("C", new RoomName("103"), cheap, rackRate3, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, 4, new Occupancy(4, 10));
         Room C104 = new Room("C", new RoomName("104"), cheap, rackRate4, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, 5, new Occupancy(6, 12));
         Room N105 = new Room("N", new RoomName("105"), niceOne, rackRate5, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, 2, new Occupancy(2, 5));
@@ -95,6 +98,18 @@ public class DbBootstrap implements Startable
         rates = Arrays.asList(rate1_L100, rate2_L100, rate1_L101, rate2_L101, rate1_L102, rate2_L102, rate1_C103,
                 rate2_C103, rate1_C104, rate2_C104, rate1_N105, rate2_N105);
 
+
+        Guest guest1 = new Guest("Mr", "John", "Doe", Gender.MALE, DocumentType.DRIVER_LICENSE, "Drivers123", "555123123");
+        Guest guest2 = new Guest("Mr", "Johnson", "Donnel", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI123", "555555123");
+        Guest guest3 = new Guest("Mr", "Johnathan", "Doougles", Gender.MALE, DocumentType.DRIVER_LICENSE, "DDRI1555", "555123123");
+        Guest guest4 = new Guest("Miss", "Joana", "Dooues", Gender.FEMALE, DocumentType.PERSONAL_ID, "APK132555", "819238923");
+        Guest guest5 = new Guest("Ms", "Kate", "Hudson", Gender.FEMALE, DocumentType.PERSONAL_ID, "DSA123889", "534098123");
+        Guest guest6 = new Guest("Mr", "Jack", "Hack", Gender.MALE, DocumentType.PERSONAL_ID, "LKK123555", "123589124");
+        Guest guest7 = new Guest("Ms", "Ewa", "Kowalska", Gender.FEMALE, DocumentType.PERSONAL_ID, "PAS123553", "123985332");
+        Guest guest8 = new Guest("Ms", "Karolina", "Iksinska", Gender.FEMALE, DocumentType.DRIVER_LICENSE, "DRI132511", "898123532");
+        Guest guest9 = new Guest("Mr", "Grzegorz", "Brzeczyszczykiewicz", Gender.MALE, DocumentType.PERSONAL_ID, "AAA123123", "342089123");
+        Guest guest10 = new Guest("Mrs", "John", "Smith", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132135", "12312353");
+        Collection<Guest> guests = Arrays.asList(guest1, guest2, guest3, guest4, guest5, guest6, guest7, guest8, guest9, guest10);
         // bootstrapping data
         session.beginTransaction();
         logger.debug("adding room types:");
@@ -111,17 +126,24 @@ public class DbBootstrap implements Startable
         }
 
         logger.debug("adding seasons");
-        for(Season s : seasons)
+        for (Season s : seasons)
         {
             logger.debug("season: " + s.toString());
             session.save(s);
         }
 
         logger.debug("adding season rates");
-        for(Rate rate : rates)
+        for (Rate rate : rates)
         {
             logger.debug("rate: " + rate.toString());
             session.save(rate);
+        }
+
+        logger.debug("adding guests");
+        for (Guest guest : guests)
+        {
+            logger.debug("guest: " + guest.toString());
+            session.save(guest);
         }
 
         session.getTransaction().commit();
