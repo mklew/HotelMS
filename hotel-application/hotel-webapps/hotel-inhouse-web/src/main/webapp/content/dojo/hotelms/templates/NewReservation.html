@@ -87,7 +87,88 @@
         <legend>Reservation owner details</legend>
         <div id="${id}-find-guest" data-dojo-attach-point="findGuest" name="findGuest"
              data-dojo-type="hotelms/GuestLookup"
-             data-dojo-props="trim:true, placeHolder:'type to search', url:'/rest/guests'"></div>
+             data-dojo-props="trim:true, placeHolder:'type to search', url:'/rest/guests'">
+
+        </div>
+        <div>
+            <p>Guest information</p>
+            <label for="${id}-vip">VIP</label>
+            <input id="${id}-vip" name="vip" data-dojo-type="dijit/form/CheckBox" value="vip">
+
+            <div>
+                <label for="${id}-socialTitle">Name</label>
+                <select id="${id}-socialTitle" name="socialTitle" data-dojo-type="dijit/form/ComboBox" value="title">
+                    <option value="Mr">Mr</option>
+                    <option value="Ms">Ms</option>
+                    <option value="Miss">Miss</option>
+                </select>
+
+                <input id="${id}-firstname" name="firstName" placeholder="first name"
+                       data-dojo-type="dijit/form/TextBox"/>
+                <input id="${id}-surname" name="surname" placeholder="surname" data-dojo-type="dijit/form/TextBox"/>
+
+                <label for="${id}-sex">sex</label>
+                <select id="${id}-sex" name="sex" data-dojo-type="dijit/form/FilteringSelect">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="refused">refused</option>
+                </select>
+            </div>
+            <div>
+                <label for="${id}-phone">Phone</label>
+                <input id="${id}-phone" name="phoneNumber" placeholder="phone number" type="tel" required
+                       data-dojo-type="dijit/form/TextBox"/>
+            </div>
+            <div>
+                <label for="${id}-nationality">Nationality</label>
+                <input id="${id}-nationality" name="nationality" required data-dojo-type="dijit/form/TextBox"/>
+            </div>
+
+            <div>
+                <label for="${id}-id-type">ID type</label>
+                <select id="${id}-id-type" name="idType" required data-dojo-type="dijit/form/FilteringSelect">
+                    <option value="passport">Passport</option>
+                    <option value="personalID">Personal ID</option>
+                    <option value="driverLicense">Drivers License</option>
+                    <option value="other">other</option>
+                </select>
+
+                <label for="${id}-id-number">ID number</label>
+                <input id="${id}-id-number" name="idNumber" required data-dojo-type="dijit/form/TextBox"/>
+
+                <label for="${id}-dateOfBirth">Date of Birth</label>
+                <input id="${id}-dateOfBirth" name="dateOfBirth" data-dojo-type="dijit/form/DateTextBox"/>
+            </div>
+
+            <p>Home address</p>
+
+            <label for="${id}-address">Address</label>
+            <input id="${id}-address" name="address" data-dojo-type="dijit/form/TextBox"/>
+
+            <label for="${id}-country">Country</label>
+            <select id="${id}-country" name="country" data-dojo-type="dijit/form/ComboBox"
+                    data-dojo-attach-point="countrySelect"/>
+
+            <label for="${id}-state">State</label>
+            <select id="${id}-state" name="state" data-dojo-type="dijit/form/ComboBox"
+                    data-dojo-attach-point="stateSelect"/>
+
+            <label for="${id}-city">City</label>
+            <select id="${id}-city" name="city" data-dojo-type="dijit/form/ComboBox"
+                    data-dojo-attach-point="citySelect"/>
+
+            <label for="${id}-zipcode">Zip code</label>
+            <input id="${id}-zipcode" name="zipcode" data-dojo-type="dijit/form/TextBox" placeholder="zipcode"/>
+
+            <div>
+                <label for="${id}-preferences">Preferences</label>
+                <textarea id="${id}-preferences" cols="50" rows="10" name="preferences"
+                          data-dojo-type="dijit/form/SimpleTextarea">
+                </textarea>
+            </div>
+        </div>
+
     </fieldset>
 
     <fieldset>

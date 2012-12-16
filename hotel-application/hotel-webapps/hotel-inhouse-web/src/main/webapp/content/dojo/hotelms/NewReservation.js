@@ -17,10 +17,13 @@ define([
     "dojo/on",
     "dojo/date/locale",
     "dijit/form/TextBox",
-    "hotelms/GuestLookup"
+    "hotelms/GuestLookup",
+    "dijit/form/CheckBox",
+    "dijit/form/ComboBox",
+    "dijit/form/SimpleTextarea"
 ], function(declare, _WidgetBase, _OnDijitClickMixin, _TemplatedMixin,
             _WidgetsInTemplateMixin, Button, template, Form, FilteringSelect,
-            DateTextBox, NumberTextBox, CurrencyTextBox, Memory, request, lang, on, locale, TextBox, GuestLookup) {
+            DateTextBox, NumberTextBox, CurrencyTextBox, Memory, request, lang, on, locale, TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea) {
 
     return declare("hotelms.NewReservation", [_WidgetBase, _OnDijitClickMixin,
         _TemplatedMixin, _WidgetsInTemplateMixin
