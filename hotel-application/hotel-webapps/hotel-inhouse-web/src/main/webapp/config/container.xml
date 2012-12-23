@@ -41,6 +41,8 @@
     <component class="org.objectledge.web.mvc.MVCInitializerValve"/>
     <component class="org.objectledge.parameters.RequestParametersLoaderValve"/>
     <component class="org.objectledge.web.ShiroSubjectValve"/>
+    <component class="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
+    <component class="net.mklew.hotelms.persistance.valve.EmptyValve"/>
 
     <component class="org.objectledge.web.mvc.builders.ViewEnclosureManager"/>
 
@@ -81,13 +83,12 @@
         </sequence>
     </component>
 
-
     <component class-key="org.objectledge.web.rest.JerseyRestValve"
                class="org.objectledge.web.rest.JerseyRestValve"/>
 
     <!-- // pipeline //////////////////////////////////////////////////////////////////////// -->
 
-    <component class="org.objectledge.pipeline.ErrorHandlingPipeline">
+    <component class="org.objectledge.pipeline.ErrorHandlingPipeline" key="mainErrorHandlingPipeline">
         <parameter class-key="org.jcontainer.dna.Logger"/>
         <sequence>
             <parameter class-key="org.objectledge.web.ContentTypeInitializerValve"/>
@@ -115,6 +116,20 @@
         </sequence>
     </component>
 
+
+    <component class="org.objectledge.pipeline.ErrorHandlingPipeline" key="restErrorHandlingPipeline">
+        <parameter class-key="org.jcontainer.dna.Logger"/>
+        <sequence>
+            <parameter key="restPipeline"/>
+        </sequence>
+        <sequence>
+            <parameter class-key="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
+        </sequence>
+        <sequence>
+            <parameter class-key="net.mklew.hotelms.persistance.valve.EmptyValve"/>
+        </sequence>
+    </component>
+
     <!-- // jersey resources //////////////////////////////////////////////////////////////// -->
 
     <component class="net.mklew.hotelms.inhouse.web.rest.test.HelloComponent"/>
@@ -136,15 +151,16 @@
     <!-- main dispatcher - serves views -->
 
     <component class="org.objectledge.web.dispatcher.PipelineHttpDispatcher" key="main">
-        <parameter class-key="org.objectledge.pipeline.ErrorHandlingPipeline"/>
+        <parameter key="mainErrorHandlingPipeline"/>
         <parameter/>
     </component>
 
     <!-- rest dispatcher -->
 
     <component class="org.objectledge.web.dispatcher.PipelineHttpDispatcher" key="restDispatcher">
-        <parameter key="restPipeline"/>
+        <parameter key="restErrorHandlingPipeline"/>
         <parameter/>
     </component>
+
 
 </container>
