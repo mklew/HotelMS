@@ -18,42 +18,41 @@ FilteringSelect, lang, dojoOn, JsonRest, Memory) ->
     _TemplatedMixin
     _WidgetsInTemplateMixin
   ],
-  {
-    templateString: template
 
-    url : null
+  templateString: template
 
-    _findGuestSelect : null
+  url : null
 
-    _debugBtn : null
+  _findGuestSelect : null
 
-    constructor : (args) ->
-      declare.safeMixin this, args
+  _debugBtn : null
 
-    postCreate : ->
-      console.log("postCreate was called");
-      #Run any parent postCreate processes - can be done at any point
-      @inherited arguments
+  constructor : (args) ->
+    declare.safeMixin this, args
 
-    startup : ->
-      store = new JsonRest { target : @url }
-      console.log "Query read store url is: #{@url}"
-      @_findGuestSelect.set "searchAttr", "displayed"
+  postCreate : ->
+    console.log("postCreate was called");
+    #Run any parent postCreate processes - can be done at any point
+    @inherited arguments
 
-      # debug
-      @store = store
+  startup : ->
+    store = new JsonRest { target : @url }
+    console.log "Query read store url is: #{@url}"
+    @_findGuestSelect.set "searchAttr", "displayed"
 
-      dojoOn @_debugBtn, "click", =>
-        console.log "debug button clicked"
-        console.log @store
+    # debug
+    @store = store
 
-      dojoOn @_findGuestSelect, "keydown", =>
-        console.log "ktos cos wpisal"
-        console.log (@_findGuestSelect.get "textbox").value
-        (@store.query "?q=#{@_findGuestSelect.get("textbox").value}").then (results) =>
-          console.log results
-          memStore = new Memory { idProperty : "id", data : results }
-          @_findGuestSelect.set "store", memStore
+    dojoOn @_debugBtn, "click", =>
+      console.log "debug button clicked"
+      console.log @store
 
-      return null
-  }
+    dojoOn @_findGuestSelect, "keydown", =>
+      console.log "ktos cos wpisal"
+      console.log (@_findGuestSelect.get "textbox").value
+      (@store.query "?q=#{@_findGuestSelect.get("textbox").value}").then (results) =>
+        console.log results
+        memStore = new Memory { idProperty : "id", data : results }
+        @_findGuestSelect.set "store", memStore
+
+    return null

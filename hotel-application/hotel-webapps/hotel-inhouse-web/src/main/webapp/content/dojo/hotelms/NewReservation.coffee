@@ -33,90 +33,89 @@ TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea) ->
     _TemplatedMixin
     _WidgetsInTemplateMixin
   ],
-  {
-    templateString: template
 
-    roomTypesStore: null
+  templateString: template
 
-    roomsStore: null
+  roomTypesStore: null
 
-    roomChooser : null
+  roomsStore: null
 
-    roomTypeChooser : null
+  roomChooser : null
 
-    extraBedsChooser : null
+  roomTypeChooser : null
 
-    extraBedsStore : null
+  extraBedsChooser : null
 
-    rateType : null
+  extraBedsStore : null
 
-    rateCharge : null
+  rateType : null
 
-    checkinDate : null
+  rateCharge : null
 
-    checkoutDate : null
+  checkinDate : null
 
-    findGuest : null
+  checkoutDate : null
 
-    postCreate : ->
-      console.log("postCreate was called")
-      # Run any parent postCreate processes - can be done at any point
-      @inherited(arguments)
-      return null
+  findGuest : null
 
-    startup : ->
-      console.log("startup")
-      request("/rest/room/types", { handleAs : "json" }).then(
+  postCreate : ->
+    console.log("postCreate was called")
+    # Run any parent postCreate processes - can be done at any point
+    @inherited(arguments)
+    return null
+
+  startup : ->
+    console.log("startup")
+    request("/rest/room/types", { handleAs : "json" }).then(
+      lang.hitch this, (data) ->
+        @roomTypesStore = new Memory { data : data } 
+        @roomTypeChooser.set "store", @roomTypesStore
+      (err) -> console.log("error occured #{err}")
+      (event) -> console.log("event occured #{event}")
+    )
+
+    request("/rest/room", { handleAs : "json" }).then(
+      lang.hitch this, (data) ->
+        @roomsStore = new Memory { data :data, idProperty : 'id' }
+        @roomChooser.set 'store', @roomsStore
+      (err) -> console.log("error occured #{err}")
+      (event) -> console.log("event occured #{event}")
+    )
+
+    dojoOn @roomTypeChooser, "change", =>
+      @roomChooser.set 'disabled', false
+      @roomChooser.query.roomType = @roomTypeChooser.item.id || /.*/
+
+    dojoOn @roomChooser, "change", =>
+      @extraBedsChooser.set 'disabled', false
+      max = @roomsStore.get(@roomChooser.item.id).maxExtraBeds
+      newStoreData = @extraBedsStore.query().filter (item) -> item.extraBed <= max
+      @extraBedsChooser.set 'store', new Memory {idProperty: 'extraBed', data: newStoreData}
+      request("/rest/rates/#{@roomChooser.item.number}", { handleAs : 'json' }).then(
         lang.hitch this, (data) ->
-          @roomTypesStore = new Memory { data : data } 
-          @roomTypeChooser.set "store", @roomTypesStore
+          @rateType.set "store", new Memory({idProperty: 'name', data: data})
+          @rateType.set "disabled", false
         (err) -> console.log("error occured #{err}")
         (event) -> console.log("event occured #{event}")
       )
 
-      request("/rest/room", { handleAs : "json" }).then(
+    @rateCharge.set "readOnly", true
+
+    dojoOn @rateType, "change", =>
+      localeParserOptions = { datePattern : "yyyy-MM-dd", selector : "date" }
+      checkinDateValue = @checkinDate.get "value"
+      checkin = locale.format checkinDateValue, localeParserOptions
+      checkoutDateValue = @checkoutDate.get "value"
+      checkout = locale.format checkoutDateValue, localeParserOptions
+      url = "/rest/charge/room/#{@roomChooser.item.number}/rate/#{@rateType.item.name}?checkin=#{checkin}&checkout=#{checkout}"
+
+      request(url, { handleAs : "json" }).then(
         lang.hitch this, (data) ->
-          @roomsStore = new Memory { data :data, idProperty : 'id' }
-          @roomChooser.set 'store', @roomsStore
+          @rateCharge.set "currency", data.currency
+          @rateCharge.set "value", data.amount
         (err) -> console.log("error occured #{err}")
         (event) -> console.log("event occured #{event}")
       )
 
-      dojoOn @roomTypeChooser, "change", =>
-        @roomChooser.set 'disabled', false
-        @roomChooser.query.roomType = @roomTypeChooser.item.id || /.*/
-
-      dojoOn @roomChooser, "change", =>
-        @extraBedsChooser.set 'disabled', false
-        max = @roomsStore.get(@roomChooser.item.id).maxExtraBeds
-        newStoreData = @extraBedsStore.query().filter (item) -> item.extraBed <= max
-        @extraBedsChooser.set 'store', new Memory {idProperty: 'extraBed', data: newStoreData}
-        request("/rest/rates/#{@roomChooser.item.number}", { handleAs : 'json' }).then(
-          lang.hitch this, (data) ->
-            @rateType.set "store", new Memory({idProperty: 'name', data: data})
-            @rateType.set "disabled", false
-          (err) -> console.log("error occured #{err}")
-          (event) -> console.log("event occured #{event}")
-        )
-
-      @rateCharge.set "readOnly", true
-
-      dojoOn @rateType, "change", =>
-        localeParserOptions = { datePattern : "yyyy-MM-dd", selector : "date" }
-        checkinDateValue = @checkinDate.get "value"
-        checkin = locale.format checkinDateValue, localeParserOptions
-        checkoutDateValue = @checkoutDate.get "value"
-        checkout = locale.format checkoutDateValue, localeParserOptions
-        url = "/rest/charge/room/#{@roomChooser.item.number}/rate/#{@rateType.item.name}?checkin=#{checkin}&checkout=#{checkout}"
-
-        request(url, { handleAs : "json" }).then(
-          lang.hitch this, (data) ->
-            @rateCharge.set "currency", data.currency
-            @rateCharge.set "value", data.amount
-          (err) -> console.log("error occured #{err}")
-          (event) -> console.log("event occured #{event}")
-        )
-
-      @findGuest.startup()
-      return null
-  }
+    @findGuest.startup()
+    return null
