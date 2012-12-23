@@ -5,7 +5,7 @@ define [
   "dijit/_TemplatedMixin"
   "dijit/_WidgetsInTemplateMixin"
   "dijit/form/Button"
-  "dojo/text!./templates/NewReservation.htl"
+  "dojo/text!./templates/NewReservation.html"
   "dijit/form/Form"
   "dijit/form/FilteringSelect"
   "dijit/form/DateTextBox"
@@ -83,18 +83,18 @@ TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea) ->
       )
 
       dojoOn @roomTypeChooser, "change", =>
-        @roomChooser.set 'diabled', false
+        @roomChooser.set 'disabled', false
         @roomChooser.query.roomType = @roomTypeChooser.item.id || /.*/
-      
+
       dojoOn @roomChooser, "change", =>
-        @extraBedChooser.set 'diabled', false
+        @extraBedsChooser.set 'disabled', false
         max = @roomsStore.get(@roomChooser.item.id).maxExtraBeds
         newStoreData = @extraBedsStore.query().filter (item) -> item.extraBed <= max
         @extraBedsChooser.set 'store', new Memory {idProperty: 'extraBed', data: newStoreData}
         request("/rest/rates/#{@roomChooser.item.number}", { handleAs : 'json' }).then(
           lang.hitch this, (data) ->
             @rateType.set "store", new Memory({idProperty: 'name', data: data})
-            @rateType set "disabled", false
+            @rateType.set "disabled", false
           (err) -> console.log("error occured #{err}")
           (event) -> console.log("event occured #{event}")
         )
@@ -107,11 +107,10 @@ TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea) ->
         checkin = locale.format checkinDateValue, localeParserOptions
         checkoutDateValue = @checkoutDate.get "value"
         checkout = locale.format checkoutDateValue, localeParserOptions
-        url = "/rest/charge/room/#{@roomChooser.item.number}/rate/
-        #{@rateType.item.name}?checkin=#{checkin}&checkout=#{checkout}"
+        url = "/rest/charge/room/#{@roomChooser.item.number}/rate/#{@rateType.item.name}?checkin=#{checkin}&checkout=#{checkout}"
 
         request(url, { handleAs : "json" }).then(
-          lang.hitch this, ->
+          lang.hitch this, (data) ->
             @rateCharge.set "currency", data.currency
             @rateCharge.set "value", data.amount
           (err) -> console.log("error occured #{err}")

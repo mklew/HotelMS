@@ -43,7 +43,7 @@ FilteringSelect, lang, dojoOn, JsonRest, Memory) ->
       # debug
       @store = store
 
-      dojoOn @_debugTn, "click", =>
+      dojoOn @_debugBtn, "click", =>
         console.log "debug button clicked"
         console.log @store
 
@@ -54,4 +54,6 @@ FilteringSelect, lang, dojoOn, JsonRest, Memory) ->
           console.log results
           memStore = new Memory { idProperty : "id", data : results }
           @_findGuestSelect.set "store", memStore
+
+      return null
   }
