@@ -1,185 +1,298 @@
-<form data-dojo-type="dijit/form/Form">
-    <fieldset>
-        <legend>Reservation type</legend>
-        <div>
-            <label for="${id}-reservationType">Choose reservation type:</label>
-            <select id="${id}-reservationType" name="reservation-type" data-dojo-type="dijit/form/FilteringSelect"
-                    data-dojo-props="
+<div> <!-- form widget cannot be retrieved if it is widget root, this is workaround -->
+<div id="${id}-form" data-dojo-type="dijit/form/Form" encType="multipart/form-data" action="" method=""
+     data-dojo-attach-point="reservationForm">
+<fieldset>
+    <legend>Reservation type</legend>
+    <div>
+        <label for="${id}-reservationType">Choose reservation type:</label>
+        <select id="${id}-reservationType" name="reservation-type" data-dojo-type="dijit/form/FilteringSelect"
+                data-dojo-props="
                         value: '',
                         placeHolder: 'Select reservation type'" autofocus>
-                <option value="single">Single</option>
-                <option value="group">Group</option>
-                <option value="corporate">Corporate</option>
-                <option value="agent">Agent</option>
-            </select>
-        </div>
-    </fieldset>
+            <option value="single">Single</option>
+            <option value="group">Group</option>
+            <option value="corporate">Corporate</option>
+            <option value="agent">Agent</option>
+        </select>
+    </div>
+</fieldset>
 
-    <fieldset>
-        <legend>Stay details</legend>
-        <div>
-            <label for="${id}-checkin">Check-in:</label>
-            <input id="${id}-checkin" name="checkin" data-dojo-type='dijit/form/DateTextBox'
-                   data-dojo-attach-point="checkinDate"/>
-        </div>
-        <div>
-            <label for="${id}-checkout">Check-out:</label>
-            <input id="${id}-checkout" name="checkout" data-dojo-type='dijit/form/DateTextBox'
-                   data-dojo-attach-point="checkoutDate"/>
-        </div>
-        <div>
-            <label for="${id}-number-of-adults">Number of adults:</label>
-            <input id="${id}-number-of-adults" name="number-of-adults" data-dojo-type='dijit/form/NumberTextBox'
-                   data-dojo-props="constraints:{min:0,max:20,places:0}">
-        </div>
-        <div>
-            <label for="${id}-number-of-children">Number of children:</label>
-            <input id="${id}-number-of-children" name="number-of-children" data-dojo-type='dijit/form/NumberTextBox'
-                   data-dojo-props="constraints:{min:0,max:20,places:0}">
-        </div>
-    </fieldset>
+<fieldset>
+    <legend>Stay details</legend>
+    <div>
+        <label for="${id}-checkin">Check-in:</label>
+        <input id="${id}-checkin" name="checkin" data-dojo-type='dijit/form/DateTextBox'
+               data-dojo-attach-point="checkinDate"/>
+    </div>
+    <div>
+        <label for="${id}-checkout">Check-out:</label>
+        <input id="${id}-checkout" name="checkout" data-dojo-type='dijit/form/DateTextBox'
+               data-dojo-attach-point="checkoutDate"/>
+    </div>
+    <div>
+        <label for="${id}-number-of-adults">Number of adults:</label>
+        <input id="${id}-number-of-adults" name="number-of-adults" data-dojo-type='dijit/form/NumberTextBox'
+               data-dojo-props="constraints:{min:0,max:20,places:0}">
+    </div>
+    <div>
+        <label for="${id}-number-of-children">Number of children:</label>
+        <input id="${id}-number-of-children" name="number-of-children" data-dojo-type='dijit/form/NumberTextBox'
+               data-dojo-props="constraints:{min:0,max:20,places:0}">
+    </div>
+</fieldset>
 
-    <fieldset>
-        <legend>Room</legend>
-        <div>
-            <label for="${id}-roomTypeChooser">Choose room type:</label>
-            <input id="${id}-roomTypeChooser" data-dojo-attach-point="roomTypeChooser" name="room-type"
-                   data-dojo-type="dijit/form/FilteringSelect"
-                   data-dojo-props="placeHolder: 'Select room type', searchAttr:'id'"/>
-        </div>
-        <label for="${id}-roomChooser">Choose room:</label>
-        <input id="${id}-roomChooser" data-dojo-attach-point="roomChooser" name="room-name"
+<fieldset>
+    <legend>Room</legend>
+    <div>
+        <label for="${id}-roomTypeChooser">Choose room type:</label>
+        <input id="${id}-roomTypeChooser" data-dojo-attach-point="roomTypeChooser" name="room-type"
                data-dojo-type="dijit/form/FilteringSelect"
-               data-dojo-props="placeHolder: 'Select room', searchAttr:'id', disabled:true, query: {id: /.*/}"
-                />
+               data-dojo-props="placeHolder: 'Select room type', searchAttr:'id'"/>
+    </div>
+    <label for="${id}-roomChooser">Choose room:</label>
+    <input id="${id}-roomChooser" data-dojo-attach-point="roomChooser" name="room-name"
+           data-dojo-type="dijit/form/FilteringSelect"
+           data-dojo-props="placeHolder: 'Select room', searchAttr:'id', disabled:true, query: {id: /.*/}"
+            />
 
-        <div>
-            <div data-dojo-type="dojo/store/Memory"
-                 data-dojo-id="extraBedsStore"
-                 data-dojo-attach-point="extraBedsStore"
-                 data-dojo-props="data: { identifier: 'extraBed', items:[{ extraBed: 0 },{extraBed: 1},{extraBed:2}, {extraBed:3},
+    <div>
+        <div data-dojo-type="dojo/store/Memory"
+             data-dojo-id="extraBedsStore"
+             data-dojo-attach-point="extraBedsStore"
+             data-dojo-props="data: { identifier: 'extraBed', items:[{ extraBed: 0 },{extraBed: 1},{extraBed:2}, {extraBed:3},
                                              { extraBed: 4 },{extraBed: 5},{extraBed:6}, {extraBed:7},
                                              { extraBed: 8 },{extraBed: 9},{extraBed:10}, {extraBed:11}
               ]}"></div>
-            <label for="${id}-extraBedChooser">Extra beds:</label>
-            <input id="${id}-extraBedChooser" data-dojo-attach-point="extraBedsChooser" name="room-extra-bed"
-                   data-dojo-type="dijit/form/FilteringSelect"
-                   data-dojo-props="store: extraBedsStore, searchAttr:'extraBed', disabled:true" value="0"/>
-        </div>
-    </fieldset>
+        <label for="${id}-extraBedChooser">Extra beds:</label>
+        <input id="${id}-extraBedChooser" data-dojo-attach-point="extraBedsChooser" name="room-extra-bed"
+               data-dojo-type="dijit/form/FilteringSelect"
+               data-dojo-props="store: extraBedsStore, searchAttr:'extraBed', disabled:true" value="0"/>
+    </div>
+</fieldset>
 
-    <fieldset>
-        <legend>Rate</legend>
+<fieldset>
+    <legend>Rate</legend>
+    <div>
+        <label for="${id}-rateType">Type:</label>
+        <input id="${id}-rateType" data-dojo-attach-point="rateType" name="rate-type"
+               data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="disabled:true"/>
+    </div>
+    <div>
+        <p>Amount</p>
+
+        <div id="${id}-rateCharge" data-dojo-attach-point="rateCharge" name="rate-charge"
+             data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>Reservation owner details</legend>
+    <div id="${id}-find-guest" data-dojo-attach-point="findGuest" name="findGuest"
+         data-dojo-type="hotelms/GuestLookup"
+         data-dojo-props="trim:true, placeHolder:'type to search', url:'/rest/guests'">
+
+    </div>
+    <div>
+        <p>Guest information</p>
+        <label for="${id}-vip">VIP</label>
+        <input id="${id}-vip" name="vip" data-dojo-type="dijit/form/CheckBox" value="vip">
+
         <div>
-            <label for="${id}-rateType">Type:</label>
-            <input id="${id}-rateType" data-dojo-attach-point="rateType" name="rate-type"
-                   data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="disabled:true"/>
+            <label for="${id}-socialTitle">Name</label>
+            <select id="${id}-socialTitle" name="socialTitle" data-dojo-type="dijit/form/ComboBox" placeholder="title">
+                <option value="Mr">Mr</option>
+                <option value="Ms">Ms</option>
+                <option value="Miss">Miss</option>
+            </select>
+
+            <input id="${id}-firstname" name="firstName" placeholder="first name"
+                   data-dojo-type="dijit/form/TextBox"/>
+            <input id="${id}-surname" name="surname" placeholder="surname" data-dojo-type="dijit/form/TextBox"/>
+
+            <label for="${id}-sex">sex</label>
+            <select id="${id}-sex" name="sex" data-dojo-type="dijit/form/FilteringSelect">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="refused">refused</option>
+            </select>
         </div>
         <div>
-            <p>Amount</p>
-
-            <div id="${id}-rateCharge" data-dojo-attach-point="rateCharge" name="rate-charge"
-                 data-dojo-type="dijit/form/CurrencyTextBox"/>
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <legend>Reservation owner details</legend>
-        <div id="${id}-find-guest" data-dojo-attach-point="findGuest" name="findGuest"
-             data-dojo-type="hotelms/GuestLookup"
-             data-dojo-props="trim:true, placeHolder:'type to search', url:'/rest/guests'">
-
+            <label for="${id}-phone">Phone</label>
+            <input id="${id}-phone" name="phoneNumber" placeholder="phone number" type="tel" required
+                   data-dojo-type="dijit/form/TextBox"/>
         </div>
         <div>
-            <p>Guest information</p>
-            <label for="${id}-vip">VIP</label>
-            <input id="${id}-vip" name="vip" data-dojo-type="dijit/form/CheckBox" value="vip">
-
-            <div>
-                <label for="${id}-socialTitle">Name</label>
-                <select id="${id}-socialTitle" name="socialTitle" data-dojo-type="dijit/form/ComboBox" value="title">
-                    <option value="Mr">Mr</option>
-                    <option value="Ms">Ms</option>
-                    <option value="Miss">Miss</option>
-                </select>
-
-                <input id="${id}-firstname" name="firstName" placeholder="first name"
-                       data-dojo-type="dijit/form/TextBox"/>
-                <input id="${id}-surname" name="surname" placeholder="surname" data-dojo-type="dijit/form/TextBox"/>
-
-                <label for="${id}-sex">sex</label>
-                <select id="${id}-sex" name="sex" data-dojo-type="dijit/form/FilteringSelect">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                    <option value="refused">refused</option>
-                </select>
-            </div>
-            <div>
-                <label for="${id}-phone">Phone</label>
-                <input id="${id}-phone" name="phoneNumber" placeholder="phone number" type="tel" required
-                       data-dojo-type="dijit/form/TextBox"/>
-            </div>
-            <div>
-                <label for="${id}-nationality">Nationality</label>
-                <input id="${id}-nationality" name="nationality" required data-dojo-type="dijit/form/TextBox"/>
-            </div>
-
-            <div>
-                <label for="${id}-id-type">ID type</label>
-                <select id="${id}-id-type" name="idType" required data-dojo-type="dijit/form/FilteringSelect">
-                    <option value="passport">Passport</option>
-                    <option value="personalID">Personal ID</option>
-                    <option value="driverLicense">Drivers License</option>
-                    <option value="other">other</option>
-                </select>
-
-                <label for="${id}-id-number">ID number</label>
-                <input id="${id}-id-number" name="idNumber" required data-dojo-type="dijit/form/TextBox"/>
-
-                <label for="${id}-dateOfBirth">Date of Birth</label>
-                <input id="${id}-dateOfBirth" name="dateOfBirth" data-dojo-type="dijit/form/DateTextBox"/>
-            </div>
-
-            <p>Home address</p>
-
-            <label for="${id}-address">Address</label>
-            <input id="${id}-address" name="address" data-dojo-type="dijit/form/TextBox"/>
-
-            <label for="${id}-country">Country</label>
-            <select id="${id}-country" name="country" data-dojo-type="dijit/form/ComboBox"
-                    data-dojo-attach-point="countrySelect"/>
-
-            <label for="${id}-state">State</label>
-            <select id="${id}-state" name="state" data-dojo-type="dijit/form/ComboBox"
-                    data-dojo-attach-point="stateSelect"/>
-
-            <label for="${id}-city">City</label>
-            <select id="${id}-city" name="city" data-dojo-type="dijit/form/ComboBox"
-                    data-dojo-attach-point="citySelect"/>
-
-            <label for="${id}-zipcode">Zip code</label>
-            <input id="${id}-zipcode" name="zipcode" data-dojo-type="dijit/form/TextBox" placeholder="zipcode"/>
-
-            <div>
-                <label for="${id}-preferences">Preferences</label>
-                <textarea id="${id}-preferences" cols="50" rows="10" name="preferences"
-                          data-dojo-type="dijit/form/SimpleTextarea">
-                </textarea>
-            </div>
+            <label for="${id}-nationality">Nationality</label>
+            <input id="${id}-nationality" name="nationality" required data-dojo-type="dijit/form/TextBox"/>
         </div>
 
-    </fieldset>
+        <div>
+            <label for="${id}-id-type">ID type</label>
+            <select id="${id}-id-type" name="idType" required data-dojo-type="dijit/form/FilteringSelect">
+                <option value="passport">Passport</option>
+                <option value="personalID">Personal ID</option>
+                <option value="driverLicense">Drivers License</option>
+                <option value="other">other</option>
+            </select>
 
-    <fieldset>
-        <legend>Method of payment</legend>
-    </fieldset>
+            <label for="${id}-id-number">ID number</label>
+            <input id="${id}-id-number" name="idNumber" required data-dojo-type="dijit/form/TextBox"/>
 
-    <fieldset>
-        <legend>Payment summary</legend>
-    </fieldset>
+            <label for="${id}-dateOfBirth">Date of Birth</label>
+            <input id="${id}-dateOfBirth" name="dateOfBirth" data-dojo-type="dijit/form/DateTextBox"/>
+        </div>
 
-    <fieldset>
-        <legend>Additional information</legend>
-    </fieldset>
-</form>
+        <p>Home address</p>
+
+        <label for="${id}-address">Address</label>
+        <input id="${id}-address" name="address" data-dojo-type="dijit/form/TextBox"/>
+
+        <label for="${id}-country">Country</label>
+        <select id="${id}-country" name="country" data-dojo-type="dijit/form/ComboBox"
+                data-dojo-attach-point="countrySelect"/>
+
+        <label for="${id}-state">State</label>
+        <select id="${id}-state" name="state" data-dojo-type="dijit/form/ComboBox"
+                data-dojo-attach-point="stateSelect"/>
+
+        <label for="${id}-city">City</label>
+        <select id="${id}-city" name="city" data-dojo-type="dijit/form/ComboBox"
+                data-dojo-attach-point="citySelect"/>
+
+        <label for="${id}-zipcode">Zip code</label>
+        <input id="${id}-zipcode" name="zipcode" data-dojo-type="dijit/form/TextBox" placeholder="zipcode"/>
+
+        <div>
+            <label for="${id}-preferences">Preferences</label>
+            <textarea id="${id}-preferences" cols="50" rows="10" name="preferences"
+                      data-dojo-type="dijit/form/SimpleTextarea"></textarea>
+        </div>
+    </div>
+
+</fieldset>
+
+<fieldset>
+    <legend>Method of payment</legend>
+
+    <label for="${id}-method-of-payment">Choose method</label>
+    <select id="${id}-method-of-payment" name="method-of-payment"
+            data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="methodOfPaymentChooser">
+        <option value="creditCard" selected>Credit card</option>
+        <option value="cash">Cash</option>
+        <option value="bankTransfer">Bank transfer</option>
+    </select>
+
+    <div id="${id}-credit-card-details" data-dojo-type="dijit/layout/ContentPane"
+         data-dojo-attach-point="creditCardDetails">
+        <p>Credit card details</p>
+        <input id="${id}-card-number" name="card-number" data-dojo-type="dijit/form/TextBox" placeholder="card number"/>
+        <label for="${id}-expiry-month">Expiry</label>
+        <input id="${id}-expiry-month" name="expiry-month" data-dojo-type="dijit/form/TextBox" placeholder="mm"/>
+        <input id="${id}-expiry-year" name="expiry-year" data-dojo-type="dijit/form/TextBox" placeholder="yyyy"/>
+        <label for="${id}-cvc">CVC</label>
+        <input id="${id}-cvc" name="cvc" data-dojo-type="dijit/form/TextBox"/>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>Payment summary</legend>
+    <div>
+        <span>Room rate</span>
+            <span id="${id}-payment-summary-room-rate"
+                  data-dojo-attach-point="roomRatePaymentSummary"
+                  data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+    <div>
+        <span>Room tax</span>
+            <span id="${id}-payment-summary-room-tax"
+                  data-dojo-attach-point="roomTaxPaymentSummary"
+                  data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+    <div>
+        <span>Inclusions</span>
+            <span id="${id}-payment-summary-inclusions"
+                  data-dojo-attach-point="inclusionsPaymentSummary"
+                  data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+    <div>
+        <span>Other taxes</span>
+            <span id="${id}-payment-summary-other-taxes"
+                  data-dojo-attach-point="otherTaxesPaymentSummary"
+                  data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+    <div>
+        <span>Other charges</span>
+            <span id="${id}-payment-summary-other-charges"
+                  data-dojo-attach-point="otherChargesPaymentSummary"
+                  data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+    <div>
+        <span>Total</span>
+            <span id="${id}-payment-summary-total"
+                  data-dojo-attach-point="totalPaymentSummary"
+                  data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+    <div>
+        <span>Amount paid</span>
+            <span id="${id}-payment-summary-amount-paid"
+                  data-dojo-attach-point="amountPaidPaymentSummary"
+                  data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+    <div>
+        <span>Discount</span>
+            <span id="${id}-payment-summary-discount"
+                  data-dojo-attach-point="discountPaymentSummary"
+                  data-dojo-type="dijit/form/TextBox"/>
+    </div>
+    <div>
+        <span>Balance</span>
+            <span id="${id}-payment-summary-balance"
+                  data-dojo-attach-point="balancePaymentSummary"
+                  data-dojo-type="dijit/form/CurrencyTextBox"/>
+    </div>
+
+</fieldset>
+
+<fieldset>
+    <legend>Additional information</legend>
+    <p>Room sharers</p>
+    <button data-dojo-type="dijit/form/Button"
+            data-dojo-attach-point="addRoomSharer">Add room sharer
+    </button>
+
+    <p>Arrival</p>
+    <label for="${id}-arrival-mode">Mode</label>
+    <select id="${id}-arrival-mode" name="arrivalMode"
+            data-dojo-type="dijit/form/FilteringSelect">
+        <option value="car" selected>Car</option>
+        <option value="flight">Flight</option>
+        <option value="other">Other</option>
+    </select>
+
+    <label for="${id}-arrival-time">Arrival time</label>
+    <input id="${id}-arrival-time" name="arrivalTime"
+           data-dojo-type="dijit/form/TimeTextBox"/>
+
+    <p>Departure</p>
+    <label for="${id}-departure-mode">Mode</label>
+    <select id="${id}-departure-mode" name="departureMode"
+            data-dojo-type="dijit/form/FilteringSelect">
+        <option value="car" selected>Car</option>
+        <option value="flight">Flight</option>
+        <option value="other">Other</option>
+    </select>
+
+    <label for="${id}-departure-time">Departure time</label>
+    <input id="${id}-departure-time" name="departureTime"
+           data-dojo-type="dijit/form/TimeTextBox"/>
+
+    <p>Other</p>
+    <label for="${id}-stay-purpose">Stay purpose</label>
+    <input id="${id}-stay-purpose" name="stayPurpose"
+           data-dojo-type="dijit/form/TextBox"/>
+</fieldset>
+
+<button type="submit" data-dojo-type="dijit/form/Button">Create new reservation</button>
+</div>
+</div>
