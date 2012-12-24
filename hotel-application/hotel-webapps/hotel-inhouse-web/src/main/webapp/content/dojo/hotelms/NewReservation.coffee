@@ -21,11 +21,14 @@ define [
   "dijit/form/CheckBox"
   "dijit/form/ComboBox"
   "dijit/form/SimpleTextarea"
+  "dijit/layout/ContentPane"
+  "dijit/form/TimeTextBox"
 ],
 (declare, _WidgetBase, _OnDijitClickMixin, _TemplatedMixin,
 _WidgetsInTemplateMixin,Button, template, Form, FilteringSelect, DateTextBox,
  NumberTextBox, CurrencyTextBox, Memory, request, lang, dojoOn, locale,
-TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea) ->
+TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea, ContentPane,
+TimeTextBox) ->
   declare "hotelms.NewReservation",
   [
     _WidgetBase
@@ -33,6 +36,8 @@ TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea) ->
     _TemplatedMixin
     _WidgetsInTemplateMixin
   ],
+
+  reservationForm : null
 
   templateString: template
 
@@ -57,6 +62,10 @@ TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea) ->
   checkoutDate : null
 
   findGuest : null
+
+  methodOfPaymentChooser : null
+
+  creditCardDetails : null
 
   postCreate : ->
     console.log("postCreate was called")
@@ -116,6 +125,20 @@ TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea) ->
         (err) -> console.log("error occured #{err}")
         (event) -> console.log("event occured #{event}")
       )
+
+    dojoOn @methodOfPaymentChooser, "change", =>
+      chosenMethod = @methodOfPaymentChooser.get "value"
+      @creditCardDetails.domNode.style.display = if chosenMethod is "creditCard" then "block" else "none"
+
+    @reservationForm.onSubmit = (event) =>
+      console.log "submit event triggered"
+      event.preventDefault()
+      return false unless @reservationForm.validate()
+      console.log "form is valid and can be submitted further"
+      formData = @reservationForm.get 'value'
+      console.log formData
+      console.log "now it is time to send xhr"
+      return false
 
     @findGuest.startup()
     return null
