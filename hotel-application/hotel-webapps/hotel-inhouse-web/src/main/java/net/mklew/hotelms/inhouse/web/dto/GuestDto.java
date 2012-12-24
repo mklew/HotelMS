@@ -1,7 +1,10 @@
 package net.mklew.hotelms.inhouse.web.dto;
 
+import net.mklew.hotelms.domain.guests.DocumentType;
 import net.mklew.hotelms.domain.guests.Guest;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,12 +17,20 @@ import java.util.Collection;
 @XmlRootElement(name = "guestdto")
 public class GuestDto
 {
-    // TODO add fields
     public String id;
     public String firstName;
     public String middleName;
     public String surname;
     public String displayed;
+    public String socialTitle;
+    public String sex;
+    public String phoneNumber;
+    public String nationality;
+    @JsonIgnore
+    public transient DocumentType idType;
+    public String idNumber;
+    public String dateOfBirth;
+    public String preferences;
 
     public GuestDto()
     {
@@ -39,5 +50,67 @@ public class GuestDto
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    public static GuestDto fromReservationForm(MultivaluedMap<String, String> formData) throws MissingGuestInformation
+    {
+        validateRequiredInformation(formData);
+        GuestDto dto = new GuestDto();
+        // populate required properties
+        dto.socialTitle = formData.getFirst("socialTitle");
+        dto.firstName = formData.getFirst("firstName");
+        //dto.middleName;
+        dto.surname = formData.getFirst("surname");
+        dto.sex = formData.getFirst("sex");
+        dto.phoneNumber = formData.getFirst("phoneNumber");
+        dto.nationality = formData.getFirst("nationality");
+        dto.idType = DocumentType.fromString(formData.getFirst("idType"));
+        dto.idNumber = formData.getFirst("idNumber");
+
+        // populate optional properties
+        dto.dateOfBirth = formData.getFirst("dateOfBirth") != null ? formData.getFirst("dateOfBirth") : "";
+        dto.preferences = formData.getFirst("preferences") != null ? formData.getFirst("preferences") : "";
+
+        // TODO create home address from data provided
+        // TODO AddressDTO
+
+        return dto;
+    }
+
+
+    private static void validateRequiredInformation(MultivaluedMap<String, String> formData) throws MissingGuestInformation
+    {
+        if (!(formData.getFirst("socialTitle") != null))
+        {
+            throw new MissingGuestInformation("Missing socialTitle");
+        }
+        if (!(formData.getFirst("firstName") != null))
+        {
+            throw new MissingGuestInformation("Missing first name");
+        }
+        if (!(formData.getFirst("surname") != null))
+        {
+            throw new MissingGuestInformation("Missing surname");
+        }
+        if (!(formData.getFirst("sex") != null))
+        {
+            throw new MissingGuestInformation("Missing sex");
+        }
+        if (!(formData.getFirst("phoneNumber") != null))
+        {
+            throw new MissingGuestInformation("Missing phone number");
+        }
+        if (!(formData.getFirst("nationality") != null))
+        {
+            throw new MissingGuestInformation("Missing nationality");
+        }
+        if (!(formData.getFirst("idType") != null))
+        {
+            throw new MissingGuestInformation("Missing id type");
+        }
+        if (!(formData.getFirst("idNumber") != null))
+        {
+            throw new MissingGuestInformation("Missing id number");
+        }
     }
 }
