@@ -122,8 +122,8 @@ TimeTextBox) ->
         lang.hitch this, (data) ->
           @rateCharge.set "currency", data.currency
           @rateCharge.set "value", data.amount
-        (err) -> console.log("error occured #{err}")
-        (event) -> console.log("event occured #{event}")
+        (err) -> console.log "error occured #{err}"
+        (event) -> console.log "event occured #{event}"
       )
 
     dojoOn @methodOfPaymentChooser, "change", =>
@@ -138,6 +138,16 @@ TimeTextBox) ->
       formData = @reservationForm.get 'value'
       console.log formData
       console.log "now it is time to send xhr"
+      request "/rest/reservations/", 
+        method : "POST"
+        data : formData
+      .then(
+        (response) ->
+          console.log "got response"
+          console.log response 
+        (err) -> console.log "error occured #{err}"
+        (event) -> console.log "event occured #{event}"
+      )
       return false
 
     @findGuest.startup()
