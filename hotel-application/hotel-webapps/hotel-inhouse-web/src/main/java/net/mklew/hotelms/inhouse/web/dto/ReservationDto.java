@@ -1,5 +1,6 @@
 package net.mklew.hotelms.inhouse.web.dto;
 
+import net.mklew.hotelms.domain.booking.reservation.Reservation;
 import net.mklew.hotelms.inhouse.web.dto.dates.DateParser;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.DateTime;
@@ -15,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "reservationdto")
 public class ReservationDto
 {
+    private String reservationId;
     private String reservationType;
     private String checkin;
     private String checkout;
@@ -47,6 +49,25 @@ public class ReservationDto
         // none so far
         dto.checkinDate = DateParser.fromString(formParams.getFirst("checkin"));
         dto.checkoutDate = DateParser.fromString(formParams.getFirst("checkout"));
+
+        return dto;
+    }
+
+    public static ReservationDto fromReservation(Reservation reservation)
+    {
+        ReservationDto dto = new ReservationDto();
+
+        dto.reservationId = reservation.getReservationId().toString();
+        dto.reservationType = reservation.getReservationType().getName();
+        dto.checkin = DateParser.fromDate(reservation.getCheckIn());
+        dto.checkout = DateParser.fromDate(reservation.getCheckOut());
+        dto.numberOfAdults = String.valueOf(reservation.getNumberOfAdults());
+        dto.numberOfChildren = String.valueOf(reservation.getNumberOfChildren());
+        dto.roomType = reservation.getRoom().roomTypeName();
+        dto.roomName = reservation.getRoom().fullRoomName();
+        dto.roomExtraBed = String.valueOf(reservation.getExtraBeds());
+        // TODO refactor rateType into rateName, changes in markup are needed
+        dto.rateType = reservation.getRate().getRateName();
 
         return dto;
     }
@@ -149,5 +170,10 @@ public class ReservationDto
     public DateTime getCheckoutDate()
     {
         return checkoutDate;
+    }
+
+    public String getReservationId()
+    {
+        return reservationId;
     }
 }
