@@ -29,6 +29,7 @@ public class Reservation
     private int numberOfAdults;
     private int numberOfChildren;
     private int extraBeds;
+    private ReservationStatus reservationStatus;
 
     public Reservation(Interval stay)
     {
@@ -36,7 +37,8 @@ public class Reservation
     }
 
     public Reservation(ReservationId reservationId, Guest reservationOwner, Room room, Rate rate, DateTime checkIn,
-                       DateTime checkOut, int numberOfAdults, int numberOfChildren, int extraBeds)
+                       DateTime checkOut, int numberOfAdults, int numberOfChildren, int extraBeds,
+                       ReservationStatus reservationStatus)
     {
         this.reservationId = reservationId;
         this.reservationOwner = reservationOwner;
@@ -47,6 +49,7 @@ public class Reservation
         this.numberOfAdults = numberOfAdults;
         this.numberOfChildren = numberOfChildren;
         this.extraBeds = extraBeds;
+        this.reservationStatus = reservationStatus;
     }
 
     public void moveToRoom(RoomId roomId)
@@ -59,6 +62,14 @@ public class Reservation
     {
         // todo
         throw new NotImplementedException();
+    }
+
+    /**
+     * Changes reservation status to reserved
+     */
+    public void reserve()
+    {
+        reservationStatus = ReservationStatus.RESERVED;
     }
 
     public boolean isCheckIn(LocalDate date)
@@ -130,5 +141,23 @@ public class Reservation
         throw new NotImplementedException();
     }
 
+    public Room getRoom()
+    {
+        return room;
+    }
 
+    public DateTime getCheckIn()
+    {
+        return checkIn;
+    }
+
+    public DateTime getCheckOut()
+    {
+        return checkOut;
+    }
+
+    public ReservationStatus getReservationStatus()
+    {
+        return reservationStatus;
+    }
 }
