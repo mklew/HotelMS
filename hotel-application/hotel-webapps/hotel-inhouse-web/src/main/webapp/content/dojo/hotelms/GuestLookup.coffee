@@ -27,6 +27,10 @@ FilteringSelect, lang, dojoOn, JsonRest, Memory) ->
 
   _debugBtn : null
 
+  _chooseGuest : null
+
+  callbackWhenGuestFound : null
+
   constructor : (args) ->
     declare.safeMixin this, args
 
@@ -46,6 +50,7 @@ FilteringSelect, lang, dojoOn, JsonRest, Memory) ->
     dojoOn @_debugBtn, "click", =>
       console.log "debug button clicked"
       console.log @store
+      console.log @_findGuestSelect
 
     dojoOn @_findGuestSelect, "keydown", =>
       console.log "ktos cos wpisal"
@@ -54,5 +59,15 @@ FilteringSelect, lang, dojoOn, JsonRest, Memory) ->
         console.log results
         memStore = new Memory { idProperty : "id", data : results }
         @_findGuestSelect.set "store", memStore
+        guest = @_findGuestSelect.item
+        #console.log guest?
+        #if guest? then @_chooseGuest.set "disabled", false else @_chooseGuest.set "disabled", true
+
+    dojoOn @_chooseGuest, "click", =>
+      console.log "choose guest button clicked"
+      @callbackWhenGuestFound @_findGuestSelect.item if @callbackWhenGuestFound? and @_findGuestSelect.item?
+
 
     return null
+
+  
