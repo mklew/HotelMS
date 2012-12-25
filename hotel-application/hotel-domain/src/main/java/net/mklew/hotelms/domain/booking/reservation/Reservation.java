@@ -5,6 +5,8 @@ import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.room.Room;
 import net.mklew.hotelms.domain.room.RoomId;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -19,7 +21,6 @@ import java.util.List;
  */
 public class Reservation
 {
-    private Interval stay;
     private ReservationId reservationId;
     private Guest reservationOwner;
     private Room room;
@@ -30,11 +31,6 @@ public class Reservation
     private int numberOfChildren;
     private int extraBeds;
     private ReservationStatus reservationStatus;
-
-    public Reservation(Interval stay)
-    {
-        this.stay = stay;
-    }
 
     public Reservation(ReservationId reservationId, Guest reservationOwner, Room room, Rate rate, DateTime checkIn,
                        DateTime checkOut, int numberOfAdults, int numberOfChildren, int extraBeds,
@@ -74,7 +70,7 @@ public class Reservation
 
     public boolean isCheckIn(LocalDate date)
     {
-        return stay.getStart().toLocalDate().equals(date);
+        return checkIn.toLocalDate().equals(date);
     }
 
     public boolean isCheckIn()
@@ -84,7 +80,7 @@ public class Reservation
 
     public boolean isCheckOut(LocalDate date)
     {
-        return stay.getEnd().toLocalDate().equals(date);
+        return checkOut.toLocalDate().equals(date);
     }
 
     public boolean isCheckOut()
@@ -132,7 +128,7 @@ public class Reservation
 
     public int lengthOfStay()
     {
-        return (int) stay.toDuration().getStandardDays() + 1;
+        return (int) new Interval(checkIn, checkOut).toDuration().getStandardDays() + 1;
     }
 
     private ReservationStatus getStatus()
@@ -159,5 +155,69 @@ public class Reservation
     public ReservationStatus getReservationStatus()
     {
         return reservationStatus;
+    }
+
+    public ReservationId getReservationId()
+    {
+        return reservationId;
+    }
+
+    public Guest getReservationOwner()
+    {
+        return reservationOwner;
+    }
+
+    public Rate getRate()
+    {
+        return rate;
+    }
+
+    public int getNumberOfAdults()
+    {
+        return numberOfAdults;
+    }
+
+    public int getNumberOfChildren()
+    {
+        return numberOfChildren;
+    }
+
+    public int getExtraBeds()
+    {
+        return extraBeds;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (obj == this)
+        {
+            return true;
+        }
+        if (obj.getClass() != getClass())
+        {
+            return false;
+        }
+        Reservation rhs = (Reservation) obj;
+        return new EqualsBuilder()
+                .append(reservationId, rhs.reservationId)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(13, 47)
+                .append(reservationId)
+                .toHashCode();
+    }
+
+    public ReservationType getReservationType()
+    {
+        return ReservationType.SINGLE;
     }
 }
