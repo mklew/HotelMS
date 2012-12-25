@@ -24,12 +24,18 @@ public class SingleReservationId extends ReservationId
     }
 
     /**
-     * @inheritDoc
      * @return Id of single reservation
+     * @inheritDoc
      */
     @Override
     public Id getId()
     {
         return new Id(id.toString());
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.valueOf(id);
     }
 }
