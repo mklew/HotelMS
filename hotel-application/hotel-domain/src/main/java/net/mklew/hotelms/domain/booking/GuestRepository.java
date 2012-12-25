@@ -11,5 +11,9 @@ import java.util.Collection;
  */
 public interface GuestRepository
 {
-   public Collection<Guest> findAllWhereNameLike(String firstName, String surname);
+    public Collection<Guest> findAllWhereNameLike(String firstName, String surname);
+
+    public Guest findGuestById(Long id);
+
+    void saveGuest(Guest guest);
 }
