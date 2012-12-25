@@ -8,6 +8,7 @@ import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.booking.reservation.rates.RateRepository;
 import net.mklew.hotelms.domain.room.Room;
 import net.mklew.hotelms.domain.room.RoomName;
+import net.mklew.hotelms.domain.room.RoomNotFoundException;
 import net.mklew.hotelms.domain.room.RoomRepository;
 import net.mklew.hotelms.inhouse.web.dto.MoneyDto;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
@@ -17,7 +18,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.Collection;
 
@@ -33,7 +36,8 @@ public class ChargeCalculatorResource
     private final RateRepository rateRepository;
     private final RoomRepository roomRepository;
     private final HibernateSessionFactory hibernateSessionFactory;
-    private final DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd").toFormatter();
+    private final DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd")
+            .toFormatter();
 
     public ChargeCalculatorResource(RateRepository rateRepository, RoomRepository roomRepository,
                                     HibernateSessionFactory hibernateSessionFactory)
@@ -49,14 +53,24 @@ public class ChargeCalculatorResource
     public MoneyDto chargeForRoomAccordingToRate(@PathParam("roomName") final String roomName,
                                                  @PathParam("rateName") final String rateName,
                                                  @QueryParam("checkin") final String checkin,
-                                                 @QueryParam("checkout") final String checkout)
+                                                 @QueryParam("checkout") final String checkout,
+                                                 @Context HttpServletResponse httpServletResponse)
     {
         // TODO implement inclusions because so far they are ignored
         Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         RoomName name = new RoomName(roomName);
-        Room room = roomRepository.getRoomByName(name);
+        Room room = null;
+        try
+        {
+            room = roomRepository.getRoomByName(name);
+        }
+        catch (RoomNotFoundException e)
+        {
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return null;
+        }
         Collection<Rate> rates = rateRepository.getAllRatesForRoom(room);
 
         Rate rate = Iterators.find(rates.iterator(), new Predicate<Rate>()
