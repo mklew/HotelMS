@@ -41,10 +41,26 @@ public class GuestRepositoryHibernate extends HibernateRepository implements Gue
         final Session session = getCurrentSession();
         String surnameLike = surname + "%";
         String firstNameLike = firstName + "%";
-        @SuppressWarnings("unchecked") final Collection<Guest> guests = session.createQuery(FIND_ALL_WHERE_NAME_LIKE).setParameter("firstName",
+        @SuppressWarnings("unchecked") final Collection<Guest> guests = session.createQuery(FIND_ALL_WHERE_NAME_LIKE)
+                .setParameter("firstName",
                 firstNameLike).setParameter("surname", surnameLike).setMaxResults
-                (GUEST_LOOK_UP_BY_NAME_LIMIT_DEFAULT).list();
+                (guestLookupByNameLimit).list();
         return guests;
 
+    }
+
+    @Override
+    public Guest findGuestById(Long id)
+    {
+        final Session session = getCurrentSession();
+        Guest guest = (Guest) session.byId(Guest.class).load(id);
+        return guest;
+    }
+
+    @Override
+    public void saveGuest(Guest guest)
+    {
+        final Session session = getCurrentSession();
+        session.save(guest);
     }
 }
