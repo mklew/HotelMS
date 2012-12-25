@@ -10,7 +10,38 @@ import java.util.Map;
  */
 public enum ReservationType
 {
-    SINGLE, GROUP, CORPORATE, AGENT;
+    SINGLE
+            {
+                @Override
+                public String getName()
+                {
+                    return "single";
+                }
+            },
+    GROUP
+            {
+                @Override
+                public String getName()
+                {
+                    return "group";
+                }
+            },
+    CORPORATE
+            {
+                @Override
+                public String getName()
+                {
+                    return "corporate";
+                }
+            },
+    AGENT
+            {
+                @Override
+                public String getName()
+                {
+                    return "agent";
+                }
+            };
 
     private final static Map<String, ReservationType> nameToType;
 
@@ -32,4 +63,6 @@ public enum ReservationType
         }
         return reservationType;
     }
+
+    public abstract String getName();
 }
