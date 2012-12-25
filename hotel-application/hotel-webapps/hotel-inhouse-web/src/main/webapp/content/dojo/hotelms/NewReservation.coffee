@@ -67,6 +67,14 @@ TimeTextBox) ->
 
   creditCardDetails : null
 
+  # Reservation owner details
+
+  ownerId : null
+
+  firstName : null
+
+  surname : null
+
   postCreate : ->
     console.log("postCreate was called")
     # Run any parent postCreate processes - can be done at any point
@@ -136,8 +144,14 @@ TimeTextBox) ->
       return false unless @reservationForm.validate()
       console.log "form is valid and can be submitted further"
       formData = @reservationForm.get 'value'
+      # formData has dates as objects and not strings, need to change that.
+      formData.checkin = @checkinDate.valueNode.value
+      formData.checkout = @checkoutDate.valueNode.value
+      console.log "DateTextBox widget, checkinDate"
+      console.log @checkinDate
       console.log formData
       console.log "now it is time to send xhr"
+
       request "/rest/reservations/", 
         method : "POST"
         data : formData
@@ -149,6 +163,14 @@ TimeTextBox) ->
         (event) -> console.log "event occured #{event}"
       )
       return false
+
+    @findGuest.callbackWhenGuestFound = (guest) =>
+      console.log "Found guest, time to populate form with his details"
+      console.log guest
+      @firstName.set "value", guest.firstName
+      @surname.set "value", guest.surname
+      @ownerId.set "value", guest.id
+      # TODO populate rest of guest details
 
     @findGuest.startup()
     return null
