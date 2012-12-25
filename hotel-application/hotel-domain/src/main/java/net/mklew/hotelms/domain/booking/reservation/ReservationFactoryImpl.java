@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
+import net.mklew.hotelms.domain.booking.ReservationStatus;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.room.Room;
@@ -23,7 +24,8 @@ public class ReservationFactoryImpl implements ReservationFactory
         Validate.notNull(checkOut, "CheckOut date cannot be undefined");
         Reservation reservation = new Reservation(new NotDefinedYetReservationId(Group.NO_GROUP), reservationOwner,
                 room,
-                rate, checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds);
+                rate, checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds, ReservationStatus.TECHNICAL);
+
 
         return reservation;
     }
