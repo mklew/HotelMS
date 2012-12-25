@@ -77,19 +77,10 @@ public class ReservationDto
         return reservationType;
     }
 
-    public void setReservationType(String reservationType)
-    {
-        this.reservationType = reservationType;
-    }
 
     public String getCheckin()
     {
         return checkin;
-    }
-
-    public void setCheckin(String checkin)
-    {
-        this.checkin = checkin;
     }
 
     public String getCheckout()
@@ -97,19 +88,9 @@ public class ReservationDto
         return checkout;
     }
 
-    public void setCheckout(String checkout)
-    {
-        this.checkout = checkout;
-    }
-
     public String getNumberOfAdults()
     {
         return numberOfAdults;
-    }
-
-    public void setNumberOfAdults(String numberOfAdults)
-    {
-        this.numberOfAdults = numberOfAdults;
     }
 
     public String getNumberOfChildren()
@@ -117,29 +98,9 @@ public class ReservationDto
         return numberOfChildren;
     }
 
-    public void setNumberOfChildren(String numberOfChildren)
-    {
-        this.numberOfChildren = numberOfChildren;
-    }
-
-    public String getRoomType()
-    {
-        return roomType;
-    }
-
-    public void setRoomType(String roomType)
-    {
-        this.roomType = roomType;
-    }
-
     public String getRoomName()
     {
         return roomName;
-    }
-
-    public void setRoomName(String roomName)
-    {
-        this.roomName = roomName;
     }
 
     public String getRoomExtraBed()
@@ -147,19 +108,9 @@ public class ReservationDto
         return roomExtraBed;
     }
 
-    public void setRoomExtraBed(String roomExtraBed)
-    {
-        this.roomExtraBed = roomExtraBed;
-    }
-
     public String getRateType()
     {
         return rateType;
-    }
-
-    public void setRateType(String rateType)
-    {
-        this.rateType = rateType;
     }
 
     public DateTime getCheckinDate()
