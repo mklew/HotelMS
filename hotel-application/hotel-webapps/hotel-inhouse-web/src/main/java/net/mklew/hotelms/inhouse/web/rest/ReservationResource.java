@@ -2,9 +2,13 @@ package net.mklew.hotelms.inhouse.web.rest;
 
 import com.sun.jersey.spi.resource.Singleton;
 import net.mklew.hotelms.domain.booking.GuestRepository;
-import net.mklew.hotelms.domain.booking.reservation.ReservationFactory;
+import net.mklew.hotelms.domain.booking.reservation.*;
+import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
+import net.mklew.hotelms.domain.booking.reservation.rates.RateRepository;
 import net.mklew.hotelms.domain.guests.Guest;
+import net.mklew.hotelms.domain.room.Room;
 import net.mklew.hotelms.domain.room.RoomName;
+import net.mklew.hotelms.domain.room.RoomNotFoundException;
 import net.mklew.hotelms.domain.room.RoomRepository;
 import net.mklew.hotelms.inhouse.web.dto.GuestDto;
 import net.mklew.hotelms.inhouse.web.dto.MissingGuestInformation;
@@ -13,7 +17,10 @@ import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFac
 import org.hibernate.Session;
 import org.jcontainer.dna.Logger;
 
+import javax.naming.OperationNotSupportedException;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.Collection;
@@ -32,15 +39,20 @@ public class ReservationResource
     private final GuestRepository guestRepository;
     private final HibernateSessionFactory hibernateSessionFactory;
     private final RoomRepository roomRepository;
+    private final RateRepository rateRepository;
+    private final BookingService bookingService;
 
     public ReservationResource(Logger logger, ReservationFactory reservationFactory, GuestRepository guestRepository,
-                               HibernateSessionFactory hibernateSessionFactory, RoomRepository roomRepository)
+                               HibernateSessionFactory hibernateSessionFactory, RoomRepository roomRepository,
+                               RateRepository rateRepository, BookingService bookingService)
     {
         this.logger = logger;
         this.reservationFactory = reservationFactory;
         this.guestRepository = guestRepository;
         this.hibernateSessionFactory = hibernateSessionFactory;
         this.roomRepository = roomRepository;
+        this.rateRepository = rateRepository;
+        this.bookingService = bookingService;
     }
 
     @GET
@@ -54,7 +66,8 @@ public class ReservationResource
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public ReservationDto createNewReservation(MultivaluedMap<String, String> formParams)
+    public ReservationDto createNewReservation(MultivaluedMap<String, String> formParams,
+                                               @Context HttpServletResponse httpServletResponse)
     {
         Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -83,12 +96,28 @@ public class ReservationResource
 
             // get room
             RoomName roomName = RoomName.getNameWithoutPrefix(reservationDto.getRoomName());
-            //roomRepository.getRoomByName(roomName);
-            // get rate
+            final Room room = roomRepository.getRoomByName(roomName);
+            // find rate
+            Collection<Rate> rates = rateRepository.getAllRatesForRoom(room);
+            Rate rate = getChosenRate(reservationDto, rates);
 
             // create reservation using factory
+            Reservation reservation = null;
+            if (ReservationType.fromName(reservationDto.getReservationType()).equals(ReservationType.SINGLE))
+            {
+                reservation = reservationFactory.createSingleReservation(owner, room, rate,
+                        reservationDto.getCheckinDate(),
+                        reservationDto.getCheckoutDate(), Integer.parseInt(reservationDto.getNumberOfAdults()),
+                        Integer.parseInt(reservationDto.getNumberOfChildren()), Integer.parseInt(reservationDto
+                        .getRoomExtraBed()));
+            }
+            else
+            {
+                throw new OperationNotSupportedException("Other reservation types are not supported ");
+            }
 
             // validate that reservation can be booked - room is available at that time
+            bookingService.bookReservation(reservation);
 
             // persist reservation
 
@@ -100,8 +129,36 @@ public class ReservationResource
         catch (MissingGuestInformation missingGuestInformation)
         {
             logger.error("Reservation owner has no sufficient information", missingGuestInformation);
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return null;
         }
+        catch (RoomNotFoundException e)
+        {
+            logger.error("Room not found exception", e);
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return null;
+        }
+        catch (OperationNotSupportedException e)
+        {
+            logger.error("Operation not supported", e);
+            httpServletResponse.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
+        }
+        catch (RoomIsUnavailableException e)
+        {
+            httpServletResponse.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+        }
         return null;
+    }
+
+    private Rate getChosenRate(ReservationDto reservationDto, Collection<Rate> rates)
+    {
+        for (Rate rate : rates)
+        {
+            if (reservationDto.getRateType().equals(rate.getRateName()))
+            {
+                return rate;
+            }
+        }
+        throw new RuntimeException("Rate not found");
     }
 }
