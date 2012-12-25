@@ -77,7 +77,7 @@ public class ReservationResource
             GuestDto reservationOwner = GuestDto.fromReservationForm(formParams);
             ReservationDto reservationDto = ReservationDto.fromReservationForm(formParams);
 
-            Guest owner = null;
+            Guest owner;
             if (reservationOwner.exists())
             {
                 owner = guestRepository.findGuestById(Long.parseLong(reservationOwner.id));
@@ -102,7 +102,7 @@ public class ReservationResource
             Rate rate = getChosenRate(reservationDto, rates);
 
             // create reservation using factory
-            Reservation reservation = null;
+            Reservation reservation;
             if (ReservationType.fromName(reservationDto.getReservationType()).equals(ReservationType.SINGLE))
             {
                 reservation = reservationFactory.createSingleReservation(owner, room, rate,
