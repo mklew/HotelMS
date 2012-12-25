@@ -1,8 +1,11 @@
 package net.mklew.hotelms.persistance;
 
+import net.mklew.hotelms.domain.booking.reservation.Reservation;
+import net.mklew.hotelms.domain.booking.reservation.ReservationRepository;
 import net.mklew.hotelms.domain.room.*;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
+import org.joda.time.DateTime;
 
 import java.util.Collection;
 
@@ -13,10 +16,13 @@ import java.util.Collection;
  */
 public class RoomRepositoryHibernate extends HibernateRepository implements RoomRepository
 {
+    private final ReservationRepository reservationRepository;
 
-    public RoomRepositoryHibernate(HibernateSessionFactory hibernateSessionFactory)
+    public RoomRepositoryHibernate(HibernateSessionFactory hibernateSessionFactory,
+                                   ReservationRepository reservationRepository)
     {
         super(hibernateSessionFactory);
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
@@ -45,5 +51,21 @@ public class RoomRepositoryHibernate extends HibernateRepository implements Room
         Session session = getCurrentSession();
         Collection<Room> allRooms = session.createQuery("from Room").list();
         return allRooms;
+    }
+
+    @Override
+    public boolean isRoomAvailableBetweenDates(Room room, DateTime checkIn, DateTime checkOut)
+    {
+        // TODO change it into single exists query
+        Collection<Reservation> reservations = reservationRepository
+                .findAllReservationsAroundDates(checkIn, checkOut);
+        for (Reservation reservation : reservations)
+        {
+            if (reservation.getRoom().equals(room))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
