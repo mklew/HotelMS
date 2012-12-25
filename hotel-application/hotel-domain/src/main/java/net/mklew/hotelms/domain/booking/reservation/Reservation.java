@@ -1,7 +1,9 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
 import net.mklew.hotelms.domain.booking.ReservationStatus;
+import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.guests.Guest;
+import net.mklew.hotelms.domain.room.Room;
 import net.mklew.hotelms.domain.room.RoomId;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -19,10 +21,32 @@ public class Reservation
 {
     private Interval stay;
     private ReservationId reservationId;
+    private Guest reservationOwner;
+    private Room room;
+    private Rate rate;
+    private DateTime checkIn;
+    private DateTime checkOut;
+    private int numberOfAdults;
+    private int numberOfChildren;
+    private int extraBeds;
 
     public Reservation(Interval stay)
     {
         this.stay = stay;
+    }
+
+    public Reservation(ReservationId reservationId, Guest reservationOwner, Room room, Rate rate, DateTime checkIn,
+                       DateTime checkOut, int numberOfAdults, int numberOfChildren, int extraBeds)
+    {
+        this.reservationId = reservationId;
+        this.reservationOwner = reservationOwner;
+        this.room = room;
+        this.rate = rate;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.numberOfAdults = numberOfAdults;
+        this.numberOfChildren = numberOfChildren;
+        this.extraBeds = extraBeds;
     }
 
     public void moveToRoom(RoomId roomId)
@@ -71,7 +95,8 @@ public class Reservation
 
     public void checkOut()
     {
-        // todo check if its not early checkout according and do it right according to policy about early checkouts, change status of reservation
+        // todo check if its not early checkout according and do it right according to policy about early checkouts,
+        // change status of reservation
         throw new NotImplementedException();
     }
 
