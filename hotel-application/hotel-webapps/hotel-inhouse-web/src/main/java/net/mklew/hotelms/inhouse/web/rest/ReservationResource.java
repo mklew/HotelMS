@@ -122,7 +122,7 @@ public class ReservationResource
 
 
             session.getTransaction().commit();
-            // return dto;
+            return bookedDto;
         }
         catch (MissingGuestInformation missingGuestInformation)
         {
