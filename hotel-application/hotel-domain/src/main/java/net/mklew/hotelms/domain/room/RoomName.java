@@ -9,9 +9,9 @@ import java.io.Serializable;
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 9/27/12
  *        Time: 11:39 AM
- *
- *  Room name consists of some kind of prefix, delimeter (or not - can be empty ) and actual name where
- *  name can be room number or some other sort of business identification
+ *        <p/>
+ *        Room name consists of some kind of prefix, delimeter (or not - can be empty ) and actual name where
+ *        name can be room number or some other sort of business identification
  */
 public class RoomName implements Serializable
 {
@@ -54,9 +54,16 @@ public class RoomName implements Serializable
     @Override
     public boolean equals(Object obj)
     {
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
-        if (obj.getClass() != getClass()) {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (obj == this)
+        {
+            return true;
+        }
+        if (obj.getClass() != getClass())
+        {
             return false;
         }
         RoomName rhs = (RoomName) obj;
@@ -71,5 +78,11 @@ public class RoomName implements Serializable
         return new HashCodeBuilder(17, 37).
                 append(name).
                 toHashCode();
+    }
+
+    public static RoomName getNameWithoutPrefix(String roomName)
+    {
+        String name = roomName.replaceFirst(".*" + DELIMETER, "");
+        return new RoomName(name);
     }
 }
