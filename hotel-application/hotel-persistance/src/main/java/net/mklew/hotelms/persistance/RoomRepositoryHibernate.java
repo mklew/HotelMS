@@ -1,9 +1,6 @@
 package net.mklew.hotelms.persistance;
 
-import net.mklew.hotelms.domain.room.Room;
-import net.mklew.hotelms.domain.room.RoomName;
-import net.mklew.hotelms.domain.room.RoomRepository;
-import net.mklew.hotelms.domain.room.RoomType;
+import net.mklew.hotelms.domain.room.*;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
 
@@ -23,11 +20,14 @@ public class RoomRepositoryHibernate extends HibernateRepository implements Room
     }
 
     @Override
-    public Room getRoomByName(RoomName name)
+    public Room getRoomByName(RoomName name) throws RoomNotFoundException
     {
         Session session = getCurrentSession();
-        Room retrievedRoom = (Room)session.byId(Room.class).load(name);
-        // TODO if retrievedRoom is null then throw some meaningful exception?
+        Room retrievedRoom = (Room) session.byId(Room.class).load(name);
+        if (retrievedRoom == null)
+        {
+            throw new RoomNotFoundException("Room named " + name + " has not been found");
+        }
         return retrievedRoom;
     }
 

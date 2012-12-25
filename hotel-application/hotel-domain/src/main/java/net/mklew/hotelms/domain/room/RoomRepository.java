@@ -9,7 +9,7 @@ import java.util.Collection;
  */
 public interface RoomRepository
 {
-    Room getRoomByName(RoomName name);
+    Room getRoomByName(RoomName name) throws RoomNotFoundException;
 
     Collection<RoomType> getAllRoomTypes();
 
