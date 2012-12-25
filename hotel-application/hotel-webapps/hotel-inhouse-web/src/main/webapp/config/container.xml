@@ -33,9 +33,15 @@
     <component class-key="net.mklew.hotelms.domain.booking.GuestRepository"
                class="net.mklew.hotelms.persistance.GuestRepositoryHibernate"/>
 
+    <component class-key="net.mklew.hotelms.domain.booking.reservation.ReservationRepository"
+               class="net.mklew.hotelms.persistance.ReservationRepositoryHibernate"/>
+
     <!-- Business -->
     <component class-key="net.mklew.hotelms.domain.booking.reservation.ReservationFactory"
                class="net.mklew.hotelms.domain.booking.reservation.ReservationFactoryImpl"/>
+
+    <component class="net.mklew.hotelms.domain.booking.reservation.BookingService"/>
+
     <!-- // valves ////////////////////////////////////////////////////////////////////// -->
 
     <component class="org.objectledge.web.ContentTypeInitializerValve"/>
