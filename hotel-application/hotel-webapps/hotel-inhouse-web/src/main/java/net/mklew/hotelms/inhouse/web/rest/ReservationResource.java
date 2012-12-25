@@ -116,12 +116,10 @@ public class ReservationResource
                 throw new OperationNotSupportedException("Other reservation types are not supported ");
             }
 
-            // validate that reservation can be booked - room is available at that time
+            // book reservation or fail on exception
             bookingService.bookReservation(reservation);
+            ReservationDto bookedDto = ReservationDto.fromReservation(reservation);
 
-            // persist reservation
-
-            // return persisted reservation dto
 
             session.getTransaction().commit();
             // return dto;
