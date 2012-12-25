@@ -5,7 +5,7 @@
     <legend>Reservation type</legend>
     <div>
         <label for="${id}-reservationType">Choose reservation type:</label>
-        <select id="${id}-reservationType" name="reservation-type" data-dojo-type="dijit/form/FilteringSelect"
+        <select id="${id}-reservationType" required name="reservationType" data-dojo-type="dijit/form/FilteringSelect"
                 data-dojo-props="
                         value: '',
                         placeHolder: 'Select reservation type'" autofocus>
@@ -21,22 +21,23 @@
     <legend>Stay details</legend>
     <div>
         <label for="${id}-checkin">Check-in:</label>
-        <input id="${id}-checkin" name="checkin" data-dojo-type='dijit/form/DateTextBox'
+        <input id="${id}-checkin" name="checkin" required data-dojo-type='dijit/form/DateTextBox'
                data-dojo-attach-point="checkinDate"/>
     </div>
     <div>
         <label for="${id}-checkout">Check-out:</label>
-        <input id="${id}-checkout" name="checkout" data-dojo-type='dijit/form/DateTextBox'
+        <input id="${id}-checkout" name="checkout" required data-dojo-type='dijit/form/DateTextBox'
                data-dojo-attach-point="checkoutDate"/>
     </div>
     <div>
         <label for="${id}-number-of-adults">Number of adults:</label>
-        <input id="${id}-number-of-adults" name="number-of-adults" data-dojo-type='dijit/form/NumberTextBox'
+        <input id="${id}-number-of-adults" required name="numberOfAdults" data-dojo-type='dijit/form/NumberTextBox'
                data-dojo-props="constraints:{min:0,max:20,places:0}">
     </div>
     <div>
         <label for="${id}-number-of-children">Number of children:</label>
-        <input id="${id}-number-of-children" name="number-of-children" data-dojo-type='dijit/form/NumberTextBox'
+        <input id="${id}-number-of-children" required value="0" name="numberOfChildren"
+               data-dojo-type='dijit/form/NumberTextBox'
                data-dojo-props="constraints:{min:0,max:20,places:0}">
     </div>
 </fieldset>
@@ -45,12 +46,12 @@
     <legend>Room</legend>
     <div>
         <label for="${id}-roomTypeChooser">Choose room type:</label>
-        <input id="${id}-roomTypeChooser" data-dojo-attach-point="roomTypeChooser" name="room-type"
+        <input id="${id}-roomTypeChooser" required data-dojo-attach-point="roomTypeChooser" name="roomType"
                data-dojo-type="dijit/form/FilteringSelect"
                data-dojo-props="placeHolder: 'Select room type', searchAttr:'id'"/>
     </div>
     <label for="${id}-roomChooser">Choose room:</label>
-    <input id="${id}-roomChooser" data-dojo-attach-point="roomChooser" name="room-name"
+    <input id="${id}-roomChooser" required data-dojo-attach-point="roomChooser" name="roomName"
            data-dojo-type="dijit/form/FilteringSelect"
            data-dojo-props="placeHolder: 'Select room', searchAttr:'id', disabled:true, query: {id: /.*/}"
             />
@@ -64,7 +65,7 @@
                                              { extraBed: 8 },{extraBed: 9},{extraBed:10}, {extraBed:11}
               ]}"></div>
         <label for="${id}-extraBedChooser">Extra beds:</label>
-        <input id="${id}-extraBedChooser" data-dojo-attach-point="extraBedsChooser" name="room-extra-bed"
+        <input id="${id}-extraBedChooser" data-dojo-attach-point="extraBedsChooser" required name="roomExtraBed"
                data-dojo-type="dijit/form/FilteringSelect"
                data-dojo-props="store: extraBedsStore, searchAttr:'extraBed', disabled:true" value="0"/>
     </div>
@@ -74,7 +75,7 @@
     <legend>Rate</legend>
     <div>
         <label for="${id}-rateType">Type:</label>
-        <input id="${id}-rateType" data-dojo-attach-point="rateType" name="rate-type"
+        <input id="${id}-rateType" data-dojo-attach-point="rateType" required name="rateType"
                data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="disabled:true"/>
     </div>
     <div>
@@ -99,18 +100,21 @@
 
         <div>
             <label for="${id}-socialTitle">Name</label>
-            <select id="${id}-socialTitle" name="socialTitle" data-dojo-type="dijit/form/ComboBox" placeholder="title">
+            <select id="${id}-socialTitle" name="socialTitle" required data-dojo-type="dijit/form/ComboBox"
+                    placeholder="title">
                 <option value="Mr">Mr</option>
                 <option value="Ms">Ms</option>
                 <option value="Miss">Miss</option>
             </select>
-
-            <input id="${id}-firstname" name="firstName" placeholder="first name"
-                   data-dojo-type="dijit/form/TextBox"/>
-            <input id="${id}-surname" name="surname" placeholder="surname" data-dojo-type="dijit/form/TextBox"/>
+            <input type="hidden" name="ownerId" data-dojo-attach-point="ownerId" data-dojo-type="dijit/form/TextBox"/>
+            <input id="${id}-firstname" name="firstName" required placeholder="first name"
+                   data-dojo-type="dijit/form/TextBox"
+                   data-dojo-attach-point="firstName"/>
+            <input id="${id}-surname" name="surname" required placeholder="surname" data-dojo-type="dijit/form/TextBox"
+                   data-dojo-attach-point="surname"/>
 
             <label for="${id}-sex">sex</label>
-            <select id="${id}-sex" name="sex" data-dojo-type="dijit/form/FilteringSelect">
+            <select id="${id}-sex" name="sex" required data-dojo-type="dijit/form/FilteringSelect">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
