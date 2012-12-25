@@ -5,7 +5,7 @@ package net.mklew.hotelms.domain.booking;
  *
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 9/9/12
- * time 9:04 PM
+ *        time 9:04 PM
  */
 public enum ReservationStatus
 {
@@ -35,13 +35,14 @@ public enum ReservationStatus
      */
     RESERVED,
     /**
-     *  No show is when guest has not checked-in in check-in day
+     * No show is when guest has not checked-in in check-in day
      */
     NOSHOW,
     /**
      * Temporary reservation is the one which is valid only to some hour, for example to 4 pm day it's made
      */
-    TEMPORARY
+    TEMPORARY,
 
+    TECHNICAL
 
 }
