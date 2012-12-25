@@ -2,6 +2,7 @@ package net.mklew.hotelms.inhouse.web.dto.dates;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -37,14 +38,14 @@ public class DateParserTest
         assertThat(parsed).isEqualTo(expectedString);
     }
 
-    @SuppressWarnings("unused")
+    @DataProvider
     private Object[][] getValidDateStrings()
     {
         return new Object[][]
                 {
-                        {"2012-12-01", new DateMidnight(2012, 12, 1)},
-                        {"2012-11-24", new DateMidnight(2012, 11, 24)},
-                        {"2012-01-01", new DateMidnight(2012, 1, 1)}
+                        {"2012-12-01", new DateTime(new DateMidnight(2012, 12, 1))},
+                        {"2012-11-24", new DateTime(new DateMidnight(2012, 11, 24))},
+                        {"2012-01-01", new DateTime(new DateMidnight(2012, 1, 1))}
                 };
     }
 
