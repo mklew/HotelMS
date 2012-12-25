@@ -43,7 +43,6 @@ public class ReservationDto
         dto.roomName = formParams.getFirst("roomName");
         dto.roomExtraBed = formParams.getFirst("roomExtraBed");
         dto.rateType = formParams.getFirst("rateType");
-
         // optional
         // none so far
         dto.checkinDate = DateParser.fromString(formParams.getFirst("checkin"));
@@ -140,5 +139,15 @@ public class ReservationDto
     public void setRateType(String rateType)
     {
         this.rateType = rateType;
+    }
+
+    public DateTime getCheckinDate()
+    {
+        return checkinDate;
+    }
+
+    public DateTime getCheckoutDate()
+    {
+        return checkoutDate;
     }
 }
