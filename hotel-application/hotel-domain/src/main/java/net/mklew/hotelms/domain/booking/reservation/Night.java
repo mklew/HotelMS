@@ -47,4 +47,44 @@ public class Night implements Chargeable
     {
         return date;
     }
+
+    public Reservation getReservation()
+    {
+        return reservation;
+    }
+
+    public Money getPrice()
+    {
+        return price;
+    }
+
+    public NightStatus getNightStatus()
+    {
+        return nightStatus;
+    }
+
+    private void setReservation(Reservation reservation)
+    {
+        this.reservation = reservation;
+    }
+
+    private void setDate(DateTime date)
+    {
+        this.date = date;
+    }
+
+    public void setPrice(Money price)
+    {
+        this.price = price;
+    }
+
+    public void setNightStatus(NightStatus nightStatus)
+    {
+        this.nightStatus = nightStatus;
+    }
+
+    private void setRate(Rate rate)
+    {
+        this.rate = rate;
+    }
 }
