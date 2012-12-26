@@ -127,4 +127,9 @@ public class ReservationDto
     {
         return reservationId;
     }
+
+    public String getRoomType()
+    {
+        return roomType;
+    }
 }
