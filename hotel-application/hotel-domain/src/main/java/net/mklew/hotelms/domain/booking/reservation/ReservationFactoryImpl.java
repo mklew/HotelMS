@@ -24,7 +24,6 @@ public class ReservationFactoryImpl implements ReservationFactory
         Validate.notNull(checkIn, "CheckIn date cannot be undefined");
         Validate.notNull(checkOut, "CheckOut date cannot be undefined");
         Reservation reservation = new Reservation(Id.NO_ID, reservationOwner,
-                room,
                 rate, checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds, ReservationStatus.TECHNICAL);
 
 
