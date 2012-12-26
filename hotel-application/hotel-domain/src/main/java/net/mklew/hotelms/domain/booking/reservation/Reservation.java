@@ -13,17 +13,15 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 9/2/12
  *        time 5:00 PM
  */
-public class Reservation
+public class Reservation implements Serializable
 {
     private Id reservationId;
     private Guest reservationOwner;
@@ -48,8 +46,8 @@ public class Reservation
 
     private void createNights(DateTime checkIn, DateTime checkOut, Rate rate)
     {
-        nights = new TreeSet<>();
-        for (int i = 0; !checkIn.plusDays(i).equals(checkOut.plus(1)); ++i)
+        nights = new HashSet<>();
+        for (int i = 0; !checkIn.plusDays(i).equals(checkOut.plusDays(1)); ++i)
         {
             nights.add(new Night(this, checkIn.plusDays(i), NightStatus.NOT_USED, rate.standardPrice(), rate));
         }
@@ -230,5 +228,49 @@ public class Reservation
     public ReservationType getReservationType()
     {
         return ReservationType.SINGLE;
+    }
+
+    private void setReservationId(Id reservationId)
+    {
+        this.reservationId = reservationId;
+    }
+
+    private void setReservationOwner(Guest reservationOwner)
+    {
+        this.reservationOwner = reservationOwner;
+    }
+
+    private void setNights(Set<Night> nights)
+    {
+        this.nights = nights;
+    }
+
+    private void setNumberOfAdults(int numberOfAdults)
+    {
+        this.numberOfAdults = numberOfAdults;
+    }
+
+    private void setNumberOfChildren(int numberOfChildren)
+    {
+        this.numberOfChildren = numberOfChildren;
+    }
+
+    private void setExtraBeds(int extraBeds)
+    {
+        this.extraBeds = extraBeds;
+    }
+
+    private void setReservationStatus(ReservationStatus reservationStatus)
+    {
+        this.reservationStatus = reservationStatus;
+    }
+
+    private Set<Night> getNights()
+    {
+        return nights;
+    }
+
+    Reservation()
+    {
     }
 }
