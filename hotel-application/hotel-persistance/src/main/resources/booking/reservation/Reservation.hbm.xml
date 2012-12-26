@@ -9,9 +9,9 @@
     <class name="Reservation" table="RESERVATIONS">
         <composite-id name="reservationId" class="net.mklew.hotelms.domain.booking.Id">
             <key-property name="id"/>
-            <generator class="sequence">
-                <param name="sequence">reservations_sequence</param>
-            </generator>
+            <!--<generator class="sequence">-->
+            <!--<param name="sequence">reservations_sequence</param>-->
+            <!--</generator>-->
         </composite-id>
         <many-to-one name="reservationOwner" class="net.mklew.hotelms.domain.guests.Guest"/>
         <set name="nights" inverse="true">
@@ -32,7 +32,7 @@
 
     <class name="Night" table="NIGHTS">
         <composite-id>
-            <key-many-to-one name="reservation" class="Reservation" column="reservation"/>
+            <key-many-to-one name="reservation" column="reservation"/>
             <key-property name="date"/>
         </composite-id>
         <property name="price"/>
@@ -60,11 +60,11 @@
     </class>
 
     <class name="GroupReservation" table="GROUP_RESERVATIONS">
-        <composite-id>
+        <composite-id name="groupReservationId" class="GroupReservationId">
             <key-many-to-one name="group" class="Group"/>
             <key-property name="sequence"/>
         </composite-id>
-        <one-to-one name="reservation" class="Reservation" outer-join="true"/>
+        <many-to-one name="reservation" class="Reservation" outer-join="true"/>
     </class>
 </hibernate-mapping>
 
