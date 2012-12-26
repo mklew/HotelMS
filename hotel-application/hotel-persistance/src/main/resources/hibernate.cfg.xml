@@ -47,6 +47,7 @@
         <mapping resource="guests/Country.hbm.xml"/>
         <mapping resource="guests/Person.hbm.xml"/>
         <mapping resource="guests/Address.hbm.xml"/>
+        <mapping resource="booking/reservation/Reservation.hbm.xml"/>
 
     </session-factory>
 
