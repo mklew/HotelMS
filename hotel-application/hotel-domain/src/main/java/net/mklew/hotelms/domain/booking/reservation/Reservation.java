@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
+import net.mklew.hotelms.domain.booking.Id;
 import net.mklew.hotelms.domain.booking.ReservationStatus;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.guests.Guest;
@@ -15,13 +16,13 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.List;
 
 /**
- * @author: Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since: 9/2/12
- * time 5:00 PM
+ * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
+ * @since 9/2/12
+ *        time 5:00 PM
  */
 public class Reservation
 {
-    private ReservationId reservationId;
+    private Id reservationId;
     private Guest reservationOwner;
     private Room room;
     private Rate rate;
@@ -32,7 +33,7 @@ public class Reservation
     private int extraBeds;
     private ReservationStatus reservationStatus;
 
-    public Reservation(ReservationId reservationId, Guest reservationOwner, Room room, Rate rate, DateTime checkIn,
+    public Reservation(Id reservationId, Guest reservationOwner, Room room, Rate rate, DateTime checkIn,
                        DateTime checkOut, int numberOfAdults, int numberOfChildren, int extraBeds,
                        ReservationStatus reservationStatus)
     {
@@ -157,11 +158,6 @@ public class Reservation
         return reservationStatus;
     }
 
-    public ReservationId getReservationId()
-    {
-        return reservationId;
-    }
-
     public Guest getReservationOwner()
     {
         return reservationOwner;
@@ -185,6 +181,11 @@ public class Reservation
     public int getExtraBeds()
     {
         return extraBeds;
+    }
+
+    public Id getReservationId()
+    {
+        return reservationId;
     }
 
     @Override
