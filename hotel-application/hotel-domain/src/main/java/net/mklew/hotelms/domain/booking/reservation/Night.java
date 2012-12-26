@@ -1,6 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
-import net.mklew.hotelms.domain.money.Discount;
+import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
+import net.mklew.hotelms.domain.room.Room;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 
@@ -9,18 +10,41 @@ import org.joda.time.DateTime;
  * @since 9/27/12
  *        Time: 11:59 AM
  */
-public class Night
+public class Night implements Chargeable
 {
-    private final DateTime date;
-    private boolean isUsed;
+    private Reservation reservation;
+    private DateTime date;
     private Money price;
-    private Discount discount;
+    private NightStatus nightStatus;
+    private Rate rate;
 
-    public Night(DateTime date, boolean used, Money price, Discount discount)
+    public Night(Reservation reservation, DateTime date, NightStatus nightStatus, Money price, Rate rate)
     {
+        this.reservation = reservation;
         this.date = date;
-        isUsed = used;
         this.price = price;
-        this.discount = discount;
+        this.nightStatus = nightStatus;
+        this.rate = rate;
+    }
+
+    Room getRoom()
+    {
+        return rate.getRoom();
+    }
+
+    @Override
+    public Money charge()
+    {
+        return price;
+    }
+
+    public Rate getRate()
+    {
+        return rate;
+    }
+
+    public DateTime getDate()
+    {
+        return date;
     }
 }
