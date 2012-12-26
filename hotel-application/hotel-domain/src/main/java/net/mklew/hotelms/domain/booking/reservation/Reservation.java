@@ -14,6 +14,9 @@ import org.joda.time.LocalDate;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -24,29 +27,32 @@ public class Reservation
 {
     private Id reservationId;
     private Guest reservationOwner;
-    private Room room;
-    private Rate rate;
-    private DateTime checkIn;
-    private DateTime checkOut;
+    private Set<Night> nights;
     private int numberOfAdults;
     private int numberOfChildren;
     private int extraBeds;
     private ReservationStatus reservationStatus;
 
-    public Reservation(Id reservationId, Guest reservationOwner, Room room, Rate rate, DateTime checkIn,
+    public Reservation(Id reservationId, Guest reservationOwner, Rate rate, DateTime checkIn,
                        DateTime checkOut, int numberOfAdults, int numberOfChildren, int extraBeds,
                        ReservationStatus reservationStatus)
     {
         this.reservationId = reservationId;
         this.reservationOwner = reservationOwner;
-        this.room = room;
-        this.rate = rate;
-        this.checkIn = checkIn;
-        this.checkOut = checkOut;
         this.numberOfAdults = numberOfAdults;
         this.numberOfChildren = numberOfChildren;
         this.extraBeds = extraBeds;
         this.reservationStatus = reservationStatus;
+        createNights(checkIn, checkOut, rate);
+    }
+
+    private void createNights(DateTime checkIn, DateTime checkOut, Rate rate)
+    {
+        nights = new TreeSet<>();
+        for (int i = 0; !checkIn.plusDays(i).equals(checkOut.plus(1)); ++i)
+        {
+            nights.add(new Night(this, checkIn.plusDays(i), NightStatus.NOT_USED, rate.standardPrice(), rate));
+        }
     }
 
     public void moveToRoom(RoomId roomId)
@@ -71,22 +77,12 @@ public class Reservation
 
     public boolean isCheckIn(LocalDate date)
     {
-        return checkIn.toLocalDate().equals(date);
-    }
-
-    public boolean isCheckIn()
-    {
-        return isCheckIn(LocalDate.now());
+        return getCheckIn().toLocalDate().equals(date);
     }
 
     public boolean isCheckOut(LocalDate date)
     {
-        return checkOut.toLocalDate().equals(date);
-    }
-
-    public boolean isCheckOut()
-    {
-        return isCheckOut(LocalDate.now());
+        return getCheckOut().toLocalDate().equals(date);
     }
 
     public List<Guest> listGuests()
@@ -129,7 +125,7 @@ public class Reservation
 
     public int lengthOfStay()
     {
-        return (int) new Interval(checkIn, checkOut).toDuration().getStandardDays() + 1;
+        return (int) new Interval(getCheckIn(), getCheckOut()).toDuration().getStandardDays() + 1;
     }
 
     private ReservationStatus getStatus()
@@ -138,19 +134,33 @@ public class Reservation
         throw new NotImplementedException();
     }
 
+    // TODO current data structure allows for reservation to have more than one room but current implementation
+    // limits it to just one
     public Room getRoom()
     {
-        return room;
+        return nights.iterator().next().getRoom();
     }
 
     public DateTime getCheckIn()
     {
-        return checkIn;
+        SortedSet<DateTime> dates = getDates();
+        return dates.first();
+    }
+
+    private SortedSet<DateTime> getDates()
+    {
+        SortedSet<DateTime> dates = new TreeSet<>();
+        for (Night night : nights)
+        {
+            dates.add(night.getDate());
+        }
+        return dates;
     }
 
     public DateTime getCheckOut()
     {
-        return checkOut;
+        SortedSet<DateTime> dates = getDates();
+        return dates.last();
     }
 
     public ReservationStatus getReservationStatus()
@@ -165,7 +175,7 @@ public class Reservation
 
     public Rate getRate()
     {
-        return rate;
+        return nights.iterator().next().getRate();
     }
 
     public int getNumberOfAdults()
