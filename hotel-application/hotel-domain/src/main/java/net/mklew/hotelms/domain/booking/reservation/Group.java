@@ -2,6 +2,7 @@ package net.mklew.hotelms.domain.booking.reservation;
 
 import net.mklew.hotelms.domain.booking.Id;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Set;
 import java.util.SortedSet;
@@ -12,14 +13,10 @@ import java.util.TreeSet;
  * @since 9/9/12
  *        time 8:27 PM
  */
-public class Group
+public class Group implements Serializable
 {
     private Id groupId;
     private Set<GroupReservation> reservationsInGroup;
-
-    Group()
-    {
-    }
 
     public synchronized void addReservationToGroup(Reservation reservationToAdd)
     {
@@ -56,5 +53,20 @@ public class Group
     public Set<GroupReservation> getReservationsInGroup()
     {
         return Collections.unmodifiableSet(reservationsInGroup);
+    }
+
+    // hibernate
+    private void setGroupId(Id groupId)
+    {
+        this.groupId = groupId;
+    }
+
+    private void setReservationsInGroup(Set<GroupReservation> reservationsInGroup)
+    {
+        this.reservationsInGroup = reservationsInGroup;
+    }
+
+    Group()
+    {
     }
 }
