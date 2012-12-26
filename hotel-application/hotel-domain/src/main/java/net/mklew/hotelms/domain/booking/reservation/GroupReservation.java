@@ -8,9 +8,8 @@ package net.mklew.hotelms.domain.booking.reservation;
  */
 class GroupReservation
 {
-    private Group group;
-    private long sequence;
     private Reservation reservation;
+    private GroupReservationId groupReservationId;
 
     GroupReservation()
     {
@@ -18,29 +17,28 @@ class GroupReservation
 
     public GroupReservation(Group group, long sequence, Reservation reservation)
     {
-        this.group = group;
-        this.sequence = sequence;
+        groupReservationId = new GroupReservationId(group, sequence);
         this.reservation = reservation;
     }
 
     public Group getGroup()
     {
-        return group;
+        return groupReservationId.getGroup();
     }
 
     void setGroup(Group group)
     {
-        this.group = group;
+        this.groupReservationId.setGroup(group);
     }
 
     public long getSequence()
     {
-        return sequence;
+        return groupReservationId.getSequence();
     }
 
     void setSequence(long sequence)
     {
-        this.sequence = sequence;
+        this.groupReservationId.setSequence(sequence);
     }
 
     public Reservation getReservation()
@@ -51,5 +49,17 @@ class GroupReservation
     void setReservation(Reservation reservation)
     {
         this.reservation = reservation;
+    }
+
+    // hibernate
+
+    private GroupReservationId getGroupReservationId()
+    {
+        return groupReservationId;
+    }
+
+    private void setGroupReservationId(GroupReservationId groupReservationId)
+    {
+        this.groupReservationId = groupReservationId;
     }
 }
