@@ -3,30 +3,37 @@ package net.mklew.hotelms.domain.booking;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/**
- * Id class gives special meaning. Better than using String
- *
- * @author: Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since: 9/9/12
- * time 8:32 PM
- */
-public class Id
-{
-    private final String id;
+import java.io.Serializable;
 
-    public Id(String id)
+/**
+ * Id object, identifies Reservation as well as Group
+ *
+ * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
+ * @since 9/9/12
+ *        time 8:32 PM
+ */
+public class Id implements Serializable
+{
+    public static final transient Id NO_ID = new NoId();
+    private long id;
+
+    public Id(long id)
     {
         this.id = id;
     }
 
-    public String getId()
+    Id()
+    {
+    }
+
+    public long getId()
     {
         return id;
     }
 
-    public Id concat(Id id)
+    void setId(long id)
     {
-        return new Id(this.id + '.' + id.getId());
+        this.id = id;
     }
 
     @Override
