@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="net.mklew.hotelms.domain.booking.reservation">
+
+    <class name="Reservation" table="RESERVATIONS">
+        <composite-id name="reservationId" class="net.mklew.hotelms.domain.booking.Id">
+            <key-property name="id"/>
+            <generator class="sequence">
+                <param name="sequence">reservations_sequence</param>
+            </generator>
+        </composite-id>
+        <many-to-one name="reservationOwner" class="net.mklew.hotelms.domain.guests.Guest"/>
+        <set name="nights" inverse="true">
+            <key column="reservation"/>
+            <one-to-many class="Night"/>
+        </set>
+        <property name="numberOfAdults" column="adults" not-null="true"/>
+        <property name="numberOfChildren" column="children" not-null="true"/>
+        <property name="extraBeds" column="extraBeds" not-null="true"/>
+        <property name="reservationStatus">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">net.mklew.hotelms.domain.booking.ReservationStatus</param>
+                <param name="type">12</param>
+                <param name="useNamed"></param>
+            </type>
+        </property>
+    </class>
+
+    <class name="Night" table="NIGHTS">
+        <composite-id>
+            <key-many-to-one name="reservation" class="Reservation" column="reservation"/>
+            <key-property name="date"/>
+        </composite-id>
+        <property name="price"/>
+        <property name="nightStatus">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">net.mklew.hotelms.domain.booking.reservation.NightStatus</param>
+                <param name="type">12</param>
+                <param name="useNamed"></param>
+            </type>
+        </property>
+        <many-to-one name="rate" class="net.mklew.hotelms.domain.booking.reservation.rates.Rate" not-null="true"/>
+    </class>
+
+    <class name="Group" table="GROUPS">
+        <composite-id name="groupId" class="net.mklew.hotelms.domain.booking.Id">
+            <key-property name="id"/>
+            <generator class="sequence">
+                <param name="sequence">reservations_sequence</param>
+            </generator>
+        </composite-id>
+        <set name="reservationsInGroup" inverse="true">
+            <key column="group"/>
+            <one-to-many class="GroupReservation"/>
+        </set>
+    </class>
+
+    <class name="GroupReservation" table="GROUP_RESERVATIONS">
+        <composite-id>
+            <key-many-to-one name="group" class="Group"/>
+            <key-property name="sequence"/>
+        </composite-id>
+        <one-to-one name="reservation" class="Reservation" outer-join="true"/>
+    </class>
+</hibernate-mapping>
+
