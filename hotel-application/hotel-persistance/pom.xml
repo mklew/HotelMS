@@ -1,71 +1,48 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>net.mklew.hotelms</groupId>
-    <artifactId>hotel-application</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.mklew.hotelms</groupId>
+        <artifactId>hotel-application</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-  <artifactId>hotel-persistance</artifactId>
-  <packaging>jar</packaging>
+    <artifactId>hotel-persistance</artifactId>
+    <packaging>jar</packaging>
 
-  <name>Persistance and infrastructure layer</name>
+    <name>Persistance and infrastructure layer</name>
 
-<!--
-<repositories>
-    <repository>
-      <id>jboss</id>
-      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-    </repository>
-  </repositories>
+    <!--
+    <repositories>
+        <repository>
+          <id>jboss</id>
+          <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+      </repositories>
 
 
-	<dependency>
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-core</artifactId>
-	<version>4.1.0.Final</version>
-	</dependency>
--->
-<repositories>
-    <repository>
-        <id>jboss</id>
-        <name>JBoss Hibernate</name>
-        <url>https://repository.jboss.org/nexus/content/groups/public</url>
-        <releases>
-            <enabled>true</enabled>
-        </releases>
-        <snapshots>
-            <enabled>false</enabled>
-            <updatePolicy>never</updatePolicy>
-        </snapshots>
-    </repository>
-</repositories>
+        <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>4.1.0.Final</version>
+        </dependency>
+    -->
+    <repositories>
+        <repository>
+            <id>jboss</id>
+            <name>JBoss Hibernate</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>org.hibernate</groupId>-->
-            <!--<artifactId>hibernate-core</artifactId>-->
-            <!--<version>3.6.0.Final</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.hibernate</groupId>-->
-            <!--<artifactId>hibernate-entitymanager</artifactId>-->
-            <!--<version>3.6.0.Final</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-simple</artifactId>-->
-            <!--<version>1.6.1</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>com.h2database</groupId>-->
-            <!--<artifactId>h2</artifactId>-->
-            <!--<version>1.2.140</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>com.h2database</groupId>
