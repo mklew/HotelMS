@@ -8,9 +8,10 @@ import net.mklew.hotelms.domain.guests.DocumentType;
 import net.mklew.hotelms.domain.guests.Gender;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.room.*;
+import net.mklew.hotelms.persistance.hibernate.configuration.NativelyConfiguredHibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.jcontainer.dna.Logger;
 import org.joda.money.Money;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -20,6 +21,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -33,7 +35,10 @@ public class ReservationPersistanceTest
     @BeforeMethod
     private void before() throws Exception
     {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+        Logger logger = mock(Logger.class);
+        NativelyConfiguredHibernateSessionFactory hibernateSessionFactory = new
+                NativelyConfiguredHibernateSessionFactory(logger);
+        sessionFactory = hibernateSessionFactory.getSessionFactory();
     }
 
     @Test
@@ -59,7 +64,9 @@ public class ReservationPersistanceTest
         final int numberOfChildren = 0;
         final int extraBeds = 0;
 
-        Reservation reservation = new Reservation(new Id(1), guest1,
+        Reservation reservation = new Reservation(Id.NO_ID, guest1,
+                rackRate, checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds, ReservationStatus.TECHNICAL);
+        Reservation reservation2 = new Reservation(Id.NO_ID, guest1,
                 rackRate, checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds, ReservationStatus.TECHNICAL);
 
         Session session = sessionFactory.openSession();
@@ -76,6 +83,7 @@ public class ReservationPersistanceTest
         session.beginTransaction();
 
         session.save(reservation);
+        session.save(reservation2);
 
         session.getTransaction().commit();
         session.close();
@@ -85,8 +93,12 @@ public class ReservationPersistanceTest
 
         final List<Reservation> list = session.createQuery("from Reservation ").list();
         Reservation retrievedReservation = list.get(0);
+        Reservation retrievedReservation2 = list.get(1);
 
         assertThat(retrievedReservation.getNumberOfAdults()).isEqualTo(numberOfAdults);
+        assertThat(String.valueOf(retrievedReservation.getReservationId().getId()).length()).isGreaterThanOrEqualTo(8);
+        assertThat(String.valueOf(retrievedReservation2.getReservationId().getId()).length()).isGreaterThanOrEqualTo(8);
+        assertThat(retrievedReservation.getReservationId()).isNotEqualTo(retrievedReservation2.getReservationId());
 
     }
 }
