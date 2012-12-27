@@ -230,7 +230,12 @@ public class Reservation implements Serializable
         return ReservationType.SINGLE;
     }
 
-    private void setReservationId(Id reservationId)
+    /**
+     * Only for technical use
+     *
+     * @param reservationId
+     */
+    public void setReservationId(Id reservationId)
     {
         this.reservationId = reservationId;
     }
