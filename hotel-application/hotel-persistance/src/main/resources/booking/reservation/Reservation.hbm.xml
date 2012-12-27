@@ -9,9 +9,9 @@
     <class name="Reservation" table="RESERVATIONS">
         <composite-id name="reservationId" class="net.mklew.hotelms.domain.booking.Id">
             <key-property name="id"/>
-            <!--<generator class="sequence">-->
-            <!--<param name="sequence">reservations_sequence</param>-->
-            <!--</generator>-->
+            <generator class="assigned">
+                <!-- Assigned by ReservationSaveListener -->
+            </generator>
         </composite-id>
         <many-to-one name="reservationOwner" class="net.mklew.hotelms.domain.guests.Guest"/>
         <set name="nights" inverse="true">
