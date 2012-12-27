@@ -6,6 +6,7 @@ import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFac
 import org.hibernate.Session;
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
 {
     private static final String FIND_ALL_RESERVATIONS_FOR_ROOM_AROUND_DATES_QUERY = "select reservation from " +
             "Reservation " +
-            "reservation where checkIn between :start and :end or checkOut between :start and :end";
+            "reservation join reservation.nights as night where night.date in (:dates) group by reservation";
 
     public ReservationRepositoryHibernate(HibernateSessionFactory hibernateSessionFactory)
     {
@@ -29,10 +30,15 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
     public Collection<Reservation> findAllReservationsAroundDates(DateTime checkIn, DateTime checkOut)
     {
         final Session session = getCurrentSession();
+        Collection<DateTime> dates = new ArrayList<>();
+        for (int i = 0; !checkIn.plusDays(i).equals(checkOut.plusDays(1)); ++i)
+        {
+            dates.add(checkIn.plusDays(i));
+        }
         @SuppressWarnings("unchecked")
         List<Reservation> reservations = (List<Reservation>) session.createQuery
-                (FIND_ALL_RESERVATIONS_FOR_ROOM_AROUND_DATES_QUERY).setParameter("start",
-                checkIn).setParameter("end", checkOut).list();
+                (FIND_ALL_RESERVATIONS_FOR_ROOM_AROUND_DATES_QUERY).setParameterList("dates",
+                dates).list();
         return reservations;
     }
 
