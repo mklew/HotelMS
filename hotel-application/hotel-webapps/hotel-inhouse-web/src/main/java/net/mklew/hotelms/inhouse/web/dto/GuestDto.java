@@ -63,7 +63,7 @@ public class GuestDto
 
     public boolean exists()
     {
-        return id != "";
+        return !id.equals("");
     }
 
     public static GuestDto fromReservationForm(MultivaluedMap<String, String> formData) throws MissingGuestInformation
