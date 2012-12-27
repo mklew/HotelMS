@@ -6,7 +6,6 @@
 <hibernate-configuration>
 
     <session-factory>
-
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.h2.Driver</property>
         <property name="connection.url">jdbc:h2:mem:db1;DB_CLOSE_DELAY=0;MVCC=true</property>
@@ -35,7 +34,6 @@
         <property name="jadira.usertype.autoRegisterUserTypes">true</property>
         <property name="jadira.usertype.currencyCode">USD</property>
         <property name="jadira.usertype.seed">org.jadira.usertype.spi.shared.DbTimestampSeed</property>
-
         <!--<mapping resource="org/hibernate/tutorial/hbm/Event.hbm.xml"/>-->
         <!--<mapping resource="rates/TimePeriod.hbm.xml"/>-->
         <mapping resource="rates/Season.hbm.xml"/>
@@ -48,6 +46,7 @@
         <mapping resource="guests/Person.hbm.xml"/>
         <mapping resource="guests/Address.hbm.xml"/>
         <mapping resource="booking/reservation/Reservation.hbm.xml"/>
+        <mapping class="net.mklew.hotelms.persistance.identity.ReservationSequenceFetcher"/>
 
     </session-factory>
 
