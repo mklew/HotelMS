@@ -1,5 +1,6 @@
 package net.mklew.hotelms.persistance;
 
+import net.mklew.hotelms.domain.booking.Id;
 import net.mklew.hotelms.domain.booking.reservation.Reservation;
 import net.mklew.hotelms.domain.booking.reservation.ReservationRepository;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
@@ -55,5 +56,12 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
         final Session session = getCurrentSession();
         final List reservations = session.createQuery("from Reservation").list();
         return (Collection<Reservation>) reservations;
+    }
+
+    @Override
+    public Reservation lookup(Id id)
+    {
+        final Session session = getCurrentSession();
+        return (Reservation) session.load(Reservation.class, id);
     }
 }
