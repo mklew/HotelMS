@@ -91,15 +91,17 @@ public class Reservation implements Serializable
 
     public void checkIn()
     {
-        // todo
-        throw new NotImplementedException();
+        reservationStatus = ReservationStatus.INHOUSE;
     }
 
     public void checkOut()
     {
-        // todo check if its not early checkout according and do it right according to policy about early checkouts,
-        // change status of reservation
-        throw new NotImplementedException();
+        reservationStatus = ReservationStatus.CHECKED_OUT;
+    }
+
+    public void cancel()
+    {
+        reservationStatus = ReservationStatus.CANCELLED;
     }
 
     public void addGuest(Guest guest)
