@@ -75,6 +75,8 @@ TimeTextBox) ->
 
   surname : null
 
+  messageLabel : null # dom node
+
   postCreate : ->
     console.log("postCreate was called")
     # Run any parent postCreate processes - can be done at any point
@@ -152,14 +154,26 @@ TimeTextBox) ->
       console.log formData
       console.log "now it is time to send xhr"
 
-      request "/rest/reservations/", 
+      promise = request "/rest/reservations/", 
         method : "POST"
         data : formData
-      .then(
-        (response) ->
+      promise.then(
+        (resp) ->
           console.log "got response"
-          console.log response 
-        (err) -> console.log "error occured #{err}"
+          console.log "promise"
+          console.log promise
+          console.log "reponse"
+          console.log resp 
+          headers = promise.response.getHeaders "ERROR-MESSAGE"
+          console.log "headers"
+          console.log headers
+
+        (err) -> 
+          console.log "error occured #{err}"
+          console.log "promise"
+          console.log promise
+          # headers = promise.response.getHeaders()
+          # console.log headers
         (event) -> console.log "event occured #{event}"
       )
       return false
