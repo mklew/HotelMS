@@ -48,4 +48,12 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
         final Session session = getCurrentSession();
         session.save(reservation);
     }
+
+    @Override
+    public Collection<Reservation> getAll()
+    {
+        final Session session = getCurrentSession();
+        final List reservations = session.createQuery("from Reservation").list();
+        return (Collection<Reservation>) reservations;
+    }
 }

@@ -21,4 +21,6 @@ public interface ReservationRepository
     Collection<Reservation> findAllReservationsAroundDates(DateTime checkIn, DateTime checkOut);
 
     void bookNewReservation(Reservation reservation);
+
+    Collection<Reservation> getAll();
 }
