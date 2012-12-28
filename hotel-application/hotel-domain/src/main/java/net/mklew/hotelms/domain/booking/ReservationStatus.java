@@ -42,6 +42,11 @@ public enum ReservationStatus
      * Temporary reservation is the one which is valid only to some hour, for example to 4 pm day it's made
      */
     TEMPORARY,
+    /**
+     * Check-out is the state which is supposed to be triggered automatically when day of the checkout comes. CheckedOut
+     * is the status of the reservation that actually was checked out and guest left hotel.
+     */
+    CHECKED_OUT,
 
     TECHNICAL
 
