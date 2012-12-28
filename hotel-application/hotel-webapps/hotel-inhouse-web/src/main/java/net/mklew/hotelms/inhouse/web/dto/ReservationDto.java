@@ -69,6 +69,7 @@ public class ReservationDto
         dto.roomExtraBed = String.valueOf(reservation.getExtraBeds());
         // TODO refactor rateType into rateName, changes in markup are needed
         dto.rateType = reservation.getRate().getRateName();
+        dto.reservationStatus = reservation.getReservationStatus().getName();
 
         return dto;
     }
