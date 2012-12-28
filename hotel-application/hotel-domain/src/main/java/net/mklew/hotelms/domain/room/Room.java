@@ -4,6 +4,10 @@ import net.mklew.hotelms.domain.booking.reservation.rates.RackRate;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.joda.money.Money;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -13,26 +17,29 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class Room
 {
     private String prefix; // work around Hibernate limits, if id is composite-id then
-                           // all properties of that composite-id class must be used otherwise strange things happen
+    // all properties of that composite-id class must be used otherwise strange things happen
     private RoomName name;
     private RoomType type;
-    private RackRate rackRate;
+    private Set<Rate> rates;
     private HousekeepingStatus housekeepingStatus;
     private RoomAvailability availability;
     private Integer maxExtraBeds;
     private Occupancy occupancy;
 
-    public Room(String prefix, RoomName name, RoomType type, RackRate rackRate, HousekeepingStatus housekeepingStatus,
-                RoomAvailability availability, Integer maxExtraBeds, Occupancy occupancy)
+    public Room(String prefix, RoomName name, RoomType type, HousekeepingStatus housekeepingStatus,
+                RoomAvailability availability, Integer maxExtraBeds, Occupancy occupancy, Money standardPrice, Money
+            upchargeExtraPerson, Money upchargeExtraBed)
     {
         this.prefix = prefix;
         this.name = name;
         this.type = type;
-        this.rackRate = rackRate;
         this.housekeepingStatus = housekeepingStatus;
         this.availability = availability;
         this.maxExtraBeds = maxExtraBeds;
         this.occupancy = occupancy;
+        this.rates = new HashSet<>();
+        final RackRate rackRate = new RackRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, this);
+        rates.add(rackRate);
     }
 
     public boolean isAvailable()
@@ -62,7 +69,14 @@ public class Room
 
     public Rate rackRate()
     {
-        return rackRate;
+        for (Rate rate : rates)
+        {
+            if (rate.getClass().equals(RackRate.class))
+            {
+                return rate;
+            }
+        }
+        return null;
     }
 
     // hibernate
@@ -90,12 +104,32 @@ public class Room
 
     private RackRate getRackRate()
     {
-        return rackRate;
+        return (RackRate) rackRate();
     }
 
     private void setRackRate(RackRate rackRate)
     {
-        this.rackRate = rackRate;
+        final RackRate rate = getRackRate();
+        if (rate != null)
+        {
+            rates.remove(rate);
+        }
+        rates.add(rackRate);
+    }
+
+    public Set<Rate> getRates()
+    {
+        return rates;
+    }
+
+    public void addRate(Rate rate)
+    {
+        rates.add(rate);
+    }
+
+    private void setRates(Set<Rate> rates)
+    {
+        this.rates = rates;
     }
 
     private HousekeepingStatus getHousekeepingStatus()
@@ -151,9 +185,16 @@ public class Room
     @Override
     public boolean equals(Object obj)
     {
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
-        if (obj.getClass() != getClass()) {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (obj == this)
+        {
+            return true;
+        }
+        if (obj.getClass() != getClass())
+        {
             return false;
         }
         Room rhs = (Room) obj;
@@ -161,11 +202,6 @@ public class Room
                 .append(prefix, rhs.prefix)
                 .append(name, rhs.name)
                 .append(type, rhs.type)
-                .append(rackRate, rhs.rackRate)
-                .append(housekeepingStatus, rhs.housekeepingStatus)
-                .append(availability, rhs.availability)
-                .append(maxExtraBeds, rhs.maxExtraBeds)
-                .append(occupancy, rhs.occupancy)
                 .isEquals();
     }
 
@@ -176,11 +212,6 @@ public class Room
                 .append(prefix)
                 .append(name)
                 .append(type)
-                .append(rackRate)
-                .append(housekeepingStatus)
-                .append(availability)
-                .append(maxExtraBeds)
-                .append(occupancy)
                 .toHashCode();
     }
 
