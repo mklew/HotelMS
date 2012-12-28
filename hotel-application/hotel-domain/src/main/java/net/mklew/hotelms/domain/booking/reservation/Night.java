@@ -87,4 +87,8 @@ public class Night implements Chargeable
     {
         this.rate = rate;
     }
+
+    Night()
+    {
+    }
 }
