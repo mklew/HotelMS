@@ -86,17 +86,36 @@ public class ReservationResource
         return dtos;
     }
 
+    @GET
+    @Path("/{id}")
+    public Response getReservation(@PathParam("id") String reservationId)
+    {
+        Id id = Id.of(reservationId);
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
+        if (reservationOptional.isPresent())
+        {
+            final ReservationDto dto = ReservationDto.fromReservation(reservationOptional.get());
+            return Response.ok(dto, MediaType.APPLICATION_JSON_TYPE).status(Response.Status.OK).build();
+        }
+        else
+        {
+            return Response.ok().status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
     @Path("/{id}/checkIn")
     @POST
     public Response checkInReservation(@PathParam("id") String reservationId)
     {
         Id id = Id.of(reservationId);
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
         final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
         if (reservationOptional.isPresent())
         {
             final Reservation reservation = reservationOptional.get();
-            Session session = hibernateSessionFactory.getCurrentSession();
-            session.beginTransaction();
             checkInService.checkIn(reservation);
             session.saveOrUpdate(reservation);
             session.getTransaction().commit();
