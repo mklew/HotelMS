@@ -48,6 +48,11 @@ public abstract class Rate
         return room;
     }
 
+    public void setRoom(Room room)
+    {
+        this.room = room;
+    }
+
     // hibernate
     protected void setStandardPrice(Money standardPrice)
     {
@@ -64,12 +69,6 @@ public abstract class Rate
     protected void setUpchargeExtraBed(Money upchargeExtraBed)
     {
         this.upchargeExtraBed = upchargeExtraBed;
-    }
-
-    // hibernate
-    protected void setRoom(Room room)
-    {
-        this.room = room;
     }
 
     // hibernate
@@ -103,9 +102,16 @@ public abstract class Rate
     @Override
     public boolean equals(Object obj)
     {
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
-        if (obj.getClass() != getClass()) {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (obj == this)
+        {
+            return true;
+        }
+        if (obj.getClass() != getClass())
+        {
             return false;
         }
         Rate rhs = (Rate) obj;
