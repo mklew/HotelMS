@@ -77,6 +77,30 @@ public class ReservationResource
         return dtos;
     }
 
+    @Path("/{id}/checkIn")
+    @POST
+    public Response checkInReservation(@PathParam("id") String reservationId)
+    {
+        // TODO do actual checkIn
+        return Response.ok("checkIn worked, reservationId was " + reservationId).status(Response.Status.OK).build();
+    }
+
+    @Path("/{id}/checkOut")
+    @POST
+    public Response checkOutReservation(@PathParam("id") String reservationId)
+    {
+        // TODO do actual checkOut
+        return Response.ok("checkOut worked, reservationId was " + reservationId).status(Response.Status.OK).build();
+    }
+
+    @Path("/{id}/cancel")
+    @POST
+    public Response cancelReservation(@PathParam("id") String reservationId)
+    {
+        // TODO do actual checkOut
+        return Response.ok("Cancel worked, reservationId was " + reservationId).status(Response.Status.OK).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
