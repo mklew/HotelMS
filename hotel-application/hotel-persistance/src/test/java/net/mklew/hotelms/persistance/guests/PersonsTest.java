@@ -4,11 +4,8 @@ import net.mklew.hotelms.domain.guests.DocumentType;
 import net.mklew.hotelms.domain.guests.Gender;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.guests.Person;
+import net.mklew.hotelms.persistance.IntegrationTest;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
@@ -23,23 +20,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 12/2/12
  *        time 5:17 PM
  */
-public class PersonsTest
+@Test(groups = {"integration"})
+public class PersonsTest extends IntegrationTest
 {
-    private SessionFactory sessionFactory;
-
-    @BeforeMethod
-    private void before() throws Exception
-    {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-    }
-
-    @AfterMethod
-    private void after() throws Exception
-    {
-        sessionFactory.close();
-    }
-
-    @Test
+    @Test(groups = {"integration"})
     public void should_save_and_retrieve_guest_with_basic_information()
     {
         Guest guest = new Guest("Mr", "John", "Doe", Gender.MALE, DocumentType.DRIVER_LICENSE, "123-321", "555123456");

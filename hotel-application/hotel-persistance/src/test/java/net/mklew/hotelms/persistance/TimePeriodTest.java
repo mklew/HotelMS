@@ -4,15 +4,10 @@ import net.mklew.hotelms.domain.booking.reservation.rates.AvailabilityPeriod;
 import net.mklew.hotelms.domain.booking.reservation.rates.BasicSeason;
 import net.mklew.hotelms.domain.booking.reservation.rates.Season;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.joda.time.DateTime;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
-
-import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * Database end test that checks BasicSeason and AvailabilityPeriod
@@ -22,17 +17,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 9/30/12
  *        Time: 12:28 PM
  */
-public class TimePeriodTest
+@Test(groups = {"integration"})
+public class TimePeriodTest extends IntegrationTest
 {
-    private SessionFactory sessionFactory;
-
-    @BeforeMethod
-    private void before() throws Exception
-    {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-    }
-
-    @Test
+    @Test(groups = {"integration"})
     public void should_save_season_and_availability_period_with_unique_identifiers() throws Exception
     {
         // given
@@ -43,7 +31,8 @@ public class TimePeriodTest
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(5), IS_ACTIVE);
+        AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(5),
+                IS_ACTIVE);
 
         AvailabilityPeriod period = new AvailabilityPeriod(from, to, IS_ACTIVE);
         Season season = new BasicSeason(name, period);

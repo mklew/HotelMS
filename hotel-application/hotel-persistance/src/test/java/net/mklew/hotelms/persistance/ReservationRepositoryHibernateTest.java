@@ -8,46 +8,29 @@ import net.mklew.hotelms.domain.guests.DocumentType;
 import net.mklew.hotelms.domain.guests.Gender;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.room.*;
-import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
-import net.mklew.hotelms.persistance.hibernate.configuration.NativelyConfiguredHibernateSessionFactory;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.jcontainer.dna.Logger;
 import org.joda.money.Money;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 12/27/12
  *        time 4:38 PM
  */
-public class ReservationRepositoryHibernateTest
+@Test(groups = {"integration"})
+public class ReservationRepositoryHibernateTest extends IntegrationTest
 {
-    private SessionFactory sessionFactory;
-    private HibernateSessionFactory hibernateSessionFactory;
-
-    @BeforeMethod
-    private void before() throws Exception
-    {
-        Logger logger = mock(Logger.class);
-        hibernateSessionFactory = new
-                NativelyConfiguredHibernateSessionFactory(logger);
-        sessionFactory = hibernateSessionFactory.getSessionFactory();
-        prepareData();
-    }
-
-    @Test
+    @Test(groups = {"integration"})
     public void should_find_reservations_around_dates() throws Exception
     {
         // given prepared data and
+        prepareData();
         final DateTime start = new DateTime(new DateMidnight(2012, 10, 4));
         final DateTime end = new DateTime(new DateMidnight(2012, 10, 8));
         final int NUMBER_OF_RESERVATIONS_BETWEEN_DATES = 2;
@@ -73,11 +56,10 @@ public class ReservationRepositoryHibernateTest
         final Money standardPrice = Money.parse("USD 100");
         final Money upchargeExtraPerson = Money.parse("USD 50");
         final Money upchargeExtraBed = Money.parse("USD 20");
-        final RackRate rackRate = new RackRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, null);
         final int maxExtraBeds = 2;
         final Occupancy occupancy = new Occupancy(4, 2);
-        Room room = new Room("C", roomName, roomType, rackRate, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE,
-                maxExtraBeds, occupancy);
+        Room room = new Room("C", roomName, roomType, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE,
+                maxExtraBeds, occupancy, standardPrice, upchargeExtraPerson, upchargeExtraBed);
         Guest guest1 = new Guest("Mr", "Johnny", "Doe", Gender.MALE, DocumentType.DRIVER_LICENSE, "123-321",
                 "555123456");
 
@@ -100,7 +82,7 @@ public class ReservationRepositoryHibernateTest
         ReservationFactory factory = new ReservationFactoryImpl();
         Reservation reservation = factory.createSingleReservation(guest1, room, seasonRate, checkIn, checkOut,
                 numberOfAdults, numberOfChildren, extraBeds);
-        Reservation reservation2 = factory.createSingleReservation(guest1, room, rackRate, checkIn, checkOut,
+        Reservation reservation2 = factory.createSingleReservation(guest1, room, room.rackRate(), checkIn, checkOut,
                 numberOfAdults, numberOfChildren, extraBeds);
 
         Session session = sessionFactory.openSession();

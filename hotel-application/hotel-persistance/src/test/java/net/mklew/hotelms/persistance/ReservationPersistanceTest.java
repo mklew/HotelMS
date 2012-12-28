@@ -3,58 +3,42 @@ package net.mklew.hotelms.persistance;
 import net.mklew.hotelms.domain.booking.Id;
 import net.mklew.hotelms.domain.booking.ReservationStatus;
 import net.mklew.hotelms.domain.booking.reservation.Reservation;
-import net.mklew.hotelms.domain.booking.reservation.rates.RackRate;
 import net.mklew.hotelms.domain.guests.DocumentType;
 import net.mklew.hotelms.domain.guests.Gender;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.room.*;
-import net.mklew.hotelms.persistance.hibernate.configuration.NativelyConfiguredHibernateSessionFactory;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.jcontainer.dna.Logger;
 import org.joda.money.Money;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 12/26/12
  *        time 9:57 PM
  */
-public class ReservationPersistanceTest
+@Test(groups = {"integration"})
+public class ReservationPersistanceTest extends IntegrationTest
 {
-    private SessionFactory sessionFactory;
-
-    @BeforeMethod
-    private void before() throws Exception
-    {
-        Logger logger = mock(Logger.class);
-        NativelyConfiguredHibernateSessionFactory hibernateSessionFactory = new
-                NativelyConfiguredHibernateSessionFactory(logger);
-        sessionFactory = hibernateSessionFactory.getSessionFactory();
-    }
-
-    @Test
+    @Test(groups = {"integration"})
     public void should_save_reservation_and_retrieve_it() throws Exception
     {
         // given
-        final RoomName roomName = new RoomName("106");
-        final RoomType roomType = new RoomType("cheap");
+        final RoomName roomName = new RoomName("106666123");
+        final RoomType roomType = new RoomType("cheapOne");
         final Money standardPrice = Money.parse("USD 100");
         final Money upchargeExtraPerson = Money.parse("USD 50");
         final Money upchargeExtraBed = Money.parse("USD 20");
-        final RackRate rackRate = new RackRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, null);
+        //final RackRate rackRate = new RackRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, null);
         final int maxExtraBeds = 2;
         final Occupancy occupancy = new Occupancy(4, 2);
-        Room room = new Room("C", roomName, roomType, rackRate, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE,
-                maxExtraBeds, occupancy);
+        Room room = new Room("C", roomName, roomType, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE,
+                maxExtraBeds, occupancy, standardPrice, upchargeExtraPerson, upchargeExtraBed);
         Guest guest1 = new Guest("Mr", "Johnny", "Doe", Gender.MALE, DocumentType.DRIVER_LICENSE, "123-321",
                 "555123456");
 
@@ -65,9 +49,11 @@ public class ReservationPersistanceTest
         final int extraBeds = 0;
 
         Reservation reservation = new Reservation(Id.NO_ID, guest1,
-                rackRate, checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds, ReservationStatus.TECHNICAL);
+                room.rackRate(), checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds,
+                ReservationStatus.TECHNICAL);
         Reservation reservation2 = new Reservation(Id.NO_ID, guest1,
-                rackRate, checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds, ReservationStatus.TECHNICAL);
+                room.rackRate(), checkIn, checkOut, numberOfAdults, numberOfChildren, extraBeds,
+                ReservationStatus.TECHNICAL);
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();

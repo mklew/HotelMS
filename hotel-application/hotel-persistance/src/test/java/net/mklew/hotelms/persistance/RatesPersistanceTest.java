@@ -4,12 +4,8 @@ package net.mklew.hotelms.persistance;
 import net.mklew.hotelms.domain.booking.reservation.rates.*;
 import net.mklew.hotelms.domain.room.*;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -23,24 +19,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 11/6/12
  *        Time: 11:29 PM
  */
-@Test(singleThreaded = true)
-public class RatesPersistanceTest
+@Test(groups = {"integration"})
+public class RatesPersistanceTest extends IntegrationTest
 {
-    private SessionFactory sessionFactory;
-
-    @BeforeMethod
-    private void before() throws Exception
-    {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-    }
-
-    @AfterMethod
-    private void after() throws Exception
-    {
-        sessionFactory.close();
-    }
-
-    @Test
+    @Test(groups = {"integration"})
     public void should_save_rates_and_retrieve_them_with_success()
     {
         Money standardPrice = Money.parse("USD 85");
@@ -49,14 +31,15 @@ public class RatesPersistanceTest
         RoomType roomType = getMeRoomType();
         Room room = getMeRoom(roomType);
 
-        AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(5), true);
+        AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(5),
+                true);
         Season season = new BasicSeason("season name", availabilityPeriod);
         Rate seasonRate = new SeasonRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, room, season);
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-                session.save(roomType);
+        session.save(roomType);
 //        session.save(room);
 
         session.getTransaction().commit();
@@ -84,14 +67,13 @@ public class RatesPersistanceTest
         session = sessionFactory.openSession();
         session.beginTransaction();
         final List<Rate> list = session.createQuery("from Rate").list();
-        assertThat(list.get(0).equals(seasonRate)).isTrue();
-        assertThat(list).contains((Rate)seasonRate); // this does not work
+        assertThat(list).contains(seasonRate);
         session.getTransaction().commit();
         session.close();
 
     }
 
-    @Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
+    @Test(groups = {"integration"}, expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
     public void season_rate_should_violate_db_constraints_when_saved_without_season()
     {
         Money standardPrice = Money.parse("USD 85");
@@ -106,10 +88,12 @@ public class RatesPersistanceTest
         final RackRate rackRate = new RackRate(roomStandardPrice, roomUpchargeExtraPerson, roomUpchargeExtraBed, null);
         final int maxExtraBeds = 2;
         final Occupancy occupancy = new Occupancy(4, 2);
-        Room room = new Room("C", roomName, roomType, rackRate, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, maxExtraBeds, occupancy);
+        Room room = new Room("C", roomName, roomType, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE,
+                maxExtraBeds, occupancy, standardPrice, upchargeExtraPerson, upchargeExtraBed);
 
 
-        AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(5), true);
+        AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(DateTime.now(), DateTime.now().plusDays(5),
+                true);
         Season season = new BasicSeason("season name", availabilityPeriod);
         Rate seasonRate = new SeasonRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, room, null);
 
@@ -132,13 +116,13 @@ public class RatesPersistanceTest
 
     private RoomType getMeRoomType()
     {
-        final RoomType roomType = new RoomType("cheap");
+        final RoomType roomType = new RoomType("cheap" + DateTime.now().toString());
         return roomType;
     }
 
     private Room getMeRoom(RoomType roomType)
     {
-        final RoomName roomName = new RoomName("101");
+        final RoomName roomName = new RoomName("101001" + DateTime.now().toString());
 
         final Money standardPrice = Money.parse("USD 100");
         final Money upchargeExtraPerson = Money.parse("USD 50");
@@ -146,7 +130,8 @@ public class RatesPersistanceTest
         final RackRate rackRate = new RackRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, null);
         final int maxExtraBeds = 2;
         final Occupancy occupancy = new Occupancy(4, 2);
-        return new Room("C", roomName, roomType, rackRate, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, maxExtraBeds, occupancy);
+        return new Room("C", roomName, roomType, HousekeepingStatus.CLEAN, RoomAvailability.AVAILABLE, maxExtraBeds,
+                occupancy, standardPrice, upchargeExtraPerson, upchargeExtraBed);
     }
 
 }
