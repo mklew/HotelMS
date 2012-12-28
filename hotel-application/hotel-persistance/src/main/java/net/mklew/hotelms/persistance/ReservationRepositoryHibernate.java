@@ -1,5 +1,6 @@
 package net.mklew.hotelms.persistance;
 
+import com.google.common.base.Optional;
 import net.mklew.hotelms.domain.booking.Id;
 import net.mklew.hotelms.domain.booking.reservation.Reservation;
 import net.mklew.hotelms.domain.booking.reservation.ReservationRepository;
@@ -59,9 +60,17 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
     }
 
     @Override
-    public Reservation lookup(Id id)
+    public Optional<Reservation> lookup(Id id)
     {
         final Session session = getCurrentSession();
-        return (Reservation) session.load(Reservation.class, id);
+        Reservation reservation = (Reservation) session.get(Reservation.class, id);
+        if (reservation != null)
+        {
+            return Optional.of(reservation);
+        }
+        else
+        {
+            return Optional.absent();
+        }
     }
 }
