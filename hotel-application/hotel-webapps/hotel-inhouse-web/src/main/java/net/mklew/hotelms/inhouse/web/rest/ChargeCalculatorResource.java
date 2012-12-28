@@ -69,6 +69,7 @@ public class ChargeCalculatorResource
         catch (RoomNotFoundException e)
         {
             httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            session.getTransaction().rollback();
             return null;
         }
         Collection<Rate> rates = rateRepository.getAllRatesForRoom(room);
