@@ -64,30 +64,41 @@ public class DbBootstrap implements Startable
         Money standardPrice = Money.parse("USD 100");
         Money upchargeExtraPerson = Money.parse("USD 110");
         Money upchargeExtraBed = Money.parse("USD 120");
-        RackRate rackRate = new RackRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, null);
-        RackRate rackRate1 = new RackRate(standardPrice.plus(10), upchargeExtraPerson.plus(10),
-                upchargeExtraBed.plus(10), null);
-        RackRate rackRate2 = new RackRate(standardPrice.plus(20), upchargeExtraPerson.plus(20),
-                upchargeExtraBed.plus(20), null);
-        RackRate rackRate3 = new RackRate(standardPrice.plus(30), upchargeExtraPerson.plus(30),
-                upchargeExtraBed.plus(30), null);
-        RackRate rackRate4 = new RackRate(standardPrice.plus(40), upchargeExtraPerson.plus(40),
-                upchargeExtraBed.plus(40), null);
-        RackRate rackRate5 = new RackRate(standardPrice.plus(50), upchargeExtraPerson.plus(50),
-                upchargeExtraBed.plus(50), null);
+//        RackRate rackRate = new RackRate(standardPrice, upchargeExtraPerson, upchargeExtraBed, null);
+//        RackRate rackRate1 = new RackRate(standardPrice.plus(10), upchargeExtraPerson.plus(10),
+//                upchargeExtraBed.plus(10), null);
+//        RackRate rackRate2 = new RackRate(standardPrice.plus(20), upchargeExtraPerson.plus(20),
+//                upchargeExtraBed.plus(20), null);
+//        RackRate rackRate3 = new RackRate(standardPrice.plus(30), upchargeExtraPerson.plus(30),
+//                upchargeExtraBed.plus(30), null);
+//        RackRate rackRate4 = new RackRate(standardPrice.plus(40), upchargeExtraPerson.plus(40),
+//                upchargeExtraBed.plus(40), null);
+//        RackRate rackRate5 = new RackRate(standardPrice.plus(50), upchargeExtraPerson.plus(50),
+//                upchargeExtraBed.plus(50), null);
 
-        Room L100 = new Room("L", new RoomName("100"), luxury, rackRate, HousekeepingStatus.CLEAN,
-                RoomAvailability.AVAILABLE, 1, new Occupancy(3, 4));
-        Room L101 = new Room("L", new RoomName("101"), luxury, rackRate1, HousekeepingStatus.CLEAN,
-                RoomAvailability.AVAILABLE, 1, new Occupancy(2, 3));
-        Room L102 = new Room("L", new RoomName("102"), luxury, rackRate2, HousekeepingStatus.CLEAN,
-                RoomAvailability.AVAILABLE, 3, new Occupancy(2, 4));
-        Room C103 = new Room("C", new RoomName("103"), cheap, rackRate3, HousekeepingStatus.CLEAN,
-                RoomAvailability.AVAILABLE, 4, new Occupancy(4, 10));
-        Room C104 = new Room("C", new RoomName("104"), cheap, rackRate4, HousekeepingStatus.CLEAN,
-                RoomAvailability.AVAILABLE, 5, new Occupancy(6, 12));
-        Room N105 = new Room("N", new RoomName("105"), niceOne, rackRate5, HousekeepingStatus.CLEAN,
-                RoomAvailability.AVAILABLE, 2, new Occupancy(2, 5));
+        Room L100 = new Room("L", new RoomName("100"), luxury, HousekeepingStatus.CLEAN,
+                RoomAvailability.AVAILABLE, 1, new Occupancy(3, 4), standardPrice, upchargeExtraPerson,
+                upchargeExtraBed);
+        Room L101 = new Room("L", new RoomName("101"), luxury, HousekeepingStatus.CLEAN,
+                RoomAvailability.AVAILABLE, 1, new Occupancy(2, 3), standardPrice.plus(10),
+                upchargeExtraPerson.plus(10),
+                upchargeExtraBed.plus(10));
+        Room L102 = new Room("L", new RoomName("102"), luxury, HousekeepingStatus.CLEAN,
+                RoomAvailability.AVAILABLE, 3, new Occupancy(2, 4), standardPrice.plus(30),
+                upchargeExtraPerson.plus(30),
+                upchargeExtraBed.plus(30));
+        Room C103 = new Room("C", new RoomName("103"), cheap, HousekeepingStatus.CLEAN,
+                RoomAvailability.AVAILABLE, 4, new Occupancy(4, 10), standardPrice.plus(30),
+                upchargeExtraPerson.plus(30),
+                upchargeExtraBed.plus(30));
+        Room C104 = new Room("C", new RoomName("104"), cheap, HousekeepingStatus.CLEAN,
+                RoomAvailability.AVAILABLE, 5, new Occupancy(6, 12), standardPrice.plus(40),
+                upchargeExtraPerson.plus(40),
+                upchargeExtraBed.plus(40));
+        Room N105 = new Room("N", new RoomName("105"), niceOne, HousekeepingStatus.CLEAN,
+                RoomAvailability.AVAILABLE, 2, new Occupancy(2, 5), standardPrice.plus(50),
+                upchargeExtraPerson.plus(50),
+                upchargeExtraBed.plus(50));
 
         rooms = Arrays.asList(L100, L101, L102, C103, C104, N105);
 
@@ -150,10 +161,12 @@ public class DbBootstrap implements Startable
         Collection<Guest> guests = Arrays.asList(guest1, guest2, guest3, guest4, guest5, guest6, guest7, guest8,
                 guest9, guest10);
 
-        Reservation reservation = new Reservation(Id.NO_ID, guest1, rackRate, new DateTime(new DateMidnight(2012, 12,
+        Reservation reservation = new Reservation(Id.NO_ID, guest1, L100.rackRate(),
+                new DateTime(new DateMidnight(2012, 12,
                 1)),
                 new DateTime(new DateMidnight(2012, 12, 5)), 2, 0, 0, ReservationStatus.RESERVED);
-        Reservation reservation2 = new Reservation(Id.NO_ID, guest2, rackRate2, new DateTime(new DateMidnight(2012,
+        Reservation reservation2 = new Reservation(Id.NO_ID, guest2, L102.rackRate(),
+                new DateTime(new DateMidnight(2012,
                 12, 3)),
                 new DateTime(new DateMidnight(2012, 12, 8)), 2, 0, 0, ReservationStatus.RESERVED);
         Reservation reservation3 = new Reservation(Id.NO_ID, guest2, rate1_C103, new DateTime(new DateMidnight(2012,
