@@ -13,6 +13,7 @@ import net.mklew.hotelms.domain.room.RoomRepository;
 import net.mklew.hotelms.inhouse.web.dto.GuestDto;
 import net.mklew.hotelms.inhouse.web.dto.MissingGuestInformation;
 import net.mklew.hotelms.inhouse.web.dto.ReservationDto;
+import net.mklew.hotelms.inhouse.web.dto.dates.DateParser;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.jcontainer.dna.Logger;
@@ -140,12 +141,16 @@ public class ReservationResource
         {
             logger.error("Operation not supported", e);
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
+            return null;
         }
         catch (RoomIsUnavailableException e)
         {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            httpServletResponse.setHeader("ERROR-MESSAGE", "Room " + e.getRoomName() + " is unavailable between " +
+                    DateParser.fromDate(e.getCheckIn()) + " and " + DateParser.fromDate(e.getCheckOut()));
+            return null;
         }
-        return null;
+//        return null;
     }
 
     private Rate getChosenRate(ReservationDto reservationDto, Collection<Rate> rates)
