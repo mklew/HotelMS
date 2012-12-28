@@ -35,7 +35,8 @@ public class BookingService
         }
         else
         {
-            throw new RoomIsUnavailableException();
+            throw new RoomIsUnavailableException(reservation.getRoom().fullRoomName(), reservation.getCheckIn(),
+                    reservation.getCheckOut());
         }
     }
 }
