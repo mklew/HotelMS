@@ -57,6 +57,16 @@ public class Id implements Serializable
                 .isEquals();
     }
 
+    public static Id of(long id)
+    {
+        return new Id(id);
+    }
+
+    public static Id of(String id)
+    {
+        return new Id(Long.valueOf(id));
+    }
+
     @Override
     public int hashCode()
     {
