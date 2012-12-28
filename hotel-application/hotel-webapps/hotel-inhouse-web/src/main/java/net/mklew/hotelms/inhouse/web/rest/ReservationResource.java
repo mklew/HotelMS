@@ -46,11 +46,15 @@ public class ReservationResource
     private final RateRepository rateRepository;
     private final BookingService bookingService;
     private final ReservationRepository reservationRepository;
+    private final CheckInService checkInService;
+    private final CheckOutService checkOutService;
+    private final CancellationService cancellationService;
 
     public ReservationResource(Logger logger, ReservationFactory reservationFactory, GuestRepository guestRepository,
                                HibernateSessionFactory hibernateSessionFactory, RoomRepository roomRepository,
                                RateRepository rateRepository, BookingService bookingService,
-                               ReservationRepository reservationRepository)
+                               ReservationRepository reservationRepository, CheckInService checkInService,
+                               CheckOutService checkOutService, CancellationService cancellationService)
     {
         this.logger = logger;
         this.reservationFactory = reservationFactory;
@@ -60,6 +64,9 @@ public class ReservationResource
         this.rateRepository = rateRepository;
         this.bookingService = bookingService;
         this.reservationRepository = reservationRepository;
+        this.checkInService = checkInService;
+        this.checkOutService = checkOutService;
+        this.cancellationService = cancellationService;
     }
 
     @GET
