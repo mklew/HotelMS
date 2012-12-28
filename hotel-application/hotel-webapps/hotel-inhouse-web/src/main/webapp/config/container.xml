@@ -41,6 +41,9 @@
                class="net.mklew.hotelms.domain.booking.reservation.ReservationFactoryImpl"/>
 
     <component class="net.mklew.hotelms.domain.booking.reservation.BookingService"/>
+    <component class="net.mklew.hotelms.domain.booking.reservation.CheckInService"/>
+    <component class="net.mklew.hotelms.domain.booking.reservation.CheckOutService"/>
+    <component class="net.mklew.hotelms.domain.booking.reservation.CancellationService"/>
 
     <!-- // valves ////////////////////////////////////////////////////////////////////// -->
 
