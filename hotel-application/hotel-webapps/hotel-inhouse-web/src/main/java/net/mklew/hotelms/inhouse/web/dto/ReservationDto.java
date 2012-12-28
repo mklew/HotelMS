@@ -26,6 +26,7 @@ public class ReservationDto
     private String roomName;
     private String roomExtraBed;
     private String rateType;
+    private String reservationStatus;
 
     @JsonIgnore
     private transient DateTime checkinDate;
@@ -131,5 +132,15 @@ public class ReservationDto
     public String getRoomType()
     {
         return roomType;
+    }
+
+    public String getReservationStatus()
+    {
+        return reservationStatus;
+    }
+
+    public void setReservationStatus(String reservationStatus)
+    {
+        this.reservationStatus = reservationStatus;
     }
 }
