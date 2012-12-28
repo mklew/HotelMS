@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
+import com.google.common.base.Optional;
 import net.mklew.hotelms.domain.booking.Id;
 import org.joda.time.DateTime;
 
@@ -25,5 +26,5 @@ public interface ReservationRepository
 
     Collection<Reservation> getAll();
 
-    Reservation lookup(Id id);
+    Optional<Reservation> lookup(Id id);
 }
