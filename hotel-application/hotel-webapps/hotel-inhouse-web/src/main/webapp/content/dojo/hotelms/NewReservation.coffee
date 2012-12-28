@@ -23,12 +23,13 @@ define [
   "dijit/form/SimpleTextarea"
   "dijit/layout/ContentPane"
   "dijit/form/TimeTextBox"
+  "dojo/json"
 ],
 (declare, _WidgetBase, _OnDijitClickMixin, _TemplatedMixin,
 _WidgetsInTemplateMixin,Button, template, Form, FilteringSelect, DateTextBox,
  NumberTextBox, CurrencyTextBox, Memory, request, lang, dojoOn, locale,
 TextBox, GuestLookup, CheckBox, ComboBox, SimpleTextarea, ContentPane,
-TimeTextBox) ->
+TimeTextBox, json) ->
   declare "hotelms.NewReservation",
   [
     _WidgetBase
@@ -75,7 +76,7 @@ TimeTextBox) ->
 
   surname : null
 
-  messageLabel : null # dom node
+  messageLabel : null 
 
   postCreate : ->
     console.log("postCreate was called")
@@ -158,7 +159,7 @@ TimeTextBox) ->
         method : "POST"
         data : formData
       promise.then(
-        (resp) ->
+        (resp) =>
           console.log "got response"
           console.log "promise"
           console.log promise
@@ -168,10 +169,20 @@ TimeTextBox) ->
           console.log "headers"
           console.log headers
 
-        (err) -> 
+        (err) => 
           console.log "error occured #{err}"
+          console.log err
           console.log "promise"
           console.log promise
+          responseData = err.response.data
+          console.log "responseData"
+          console.log responseData
+          responseObject = json.parse(responseData)
+          console.log responseObject
+          errorMessage = responseObject.message
+          console.log @messageLabel
+          @messageLabel.set "content", errorMessage
+          console.log "Error occured, Message: #{responseObject.message} | Error code: #{responseObject.errorCode}"
           # headers = promise.response.getHeaders()
           # console.log headers
         (event) -> console.log "event occured #{event}"
