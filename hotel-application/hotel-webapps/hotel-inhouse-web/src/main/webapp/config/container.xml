@@ -56,6 +56,7 @@
     <component class="org.objectledge.web.ShiroSubjectValve"/>
     <component class="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
     <component class="net.mklew.hotelms.persistance.valve.EmptyValve"/>
+    <component class="net.mklew.hotelms.persistance.valve.DelayTillCommittedValve"/>
 
     <component class="org.objectledge.web.mvc.builders.ViewEnclosureManager"/>
 
@@ -125,6 +126,7 @@
     <!-- rest pipeline -->
     <component class="org.objectledge.pipeline.SimplePipeline" key="restPipeline">
         <sequence>
+            <parameter class-key="net.mklew.hotelms.persistance.valve.DelayTillCommittedValve"/>
             <parameter class-key="org.objectledge.web.rest.JerseyRestValve"/>
         </sequence>
     </component>
