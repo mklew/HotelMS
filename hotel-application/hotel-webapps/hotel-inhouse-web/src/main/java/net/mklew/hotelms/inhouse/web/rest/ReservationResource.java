@@ -1,7 +1,9 @@
 package net.mklew.hotelms.inhouse.web.rest;
 
+import com.google.common.base.Optional;
 import com.sun.jersey.spi.resource.Singleton;
 import net.mklew.hotelms.domain.booking.GuestRepository;
+import net.mklew.hotelms.domain.booking.Id;
 import net.mklew.hotelms.domain.booking.reservation.*;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.booking.reservation.rates.RateRepository;
@@ -88,8 +90,23 @@ public class ReservationResource
     @POST
     public Response checkInReservation(@PathParam("id") String reservationId)
     {
-        // TODO do actual checkIn
-        return Response.ok("checkIn worked, reservationId was " + reservationId).status(Response.Status.OK).build();
+        Id id = Id.of(reservationId);
+        final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
+        if (reservationOptional.isPresent())
+        {
+            final Reservation reservation = reservationOptional.get();
+            Session session = hibernateSessionFactory.getCurrentSession();
+            session.beginTransaction();
+            checkInService.checkIn(reservation);
+            session.saveOrUpdate(reservation);
+            session.getTransaction().commit();
+            return Response.ok().status(Response.Status.OK).build();
+        }
+        else
+        {
+            return Response.ok(new ErrorDto("Reservation with id " + reservationId + " has not been found.",
+                    "RESERVATION-NOT-FOUND")).status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     @Path("/{id}/checkOut")
