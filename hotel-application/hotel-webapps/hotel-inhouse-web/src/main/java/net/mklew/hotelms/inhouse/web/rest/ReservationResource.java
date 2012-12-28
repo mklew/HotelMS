@@ -115,12 +115,9 @@ public class ReservationResource
             throw e;
             //return Response.ok(e.getMessage()).build();
         }
-
     }
 
-    @Path("/{id}/checkIn")
-    @POST
-    public Response checkInReservation(@PathParam("id") String reservationId)
+    private Response reservationStatusChange(String reservationId, ReservationStatusChangeAction action)
     {
         Id id = Id.of(reservationId);
         Session session = hibernateSessionFactory.getCurrentSession();
@@ -129,10 +126,10 @@ public class ReservationResource
         if (reservationOptional.isPresent())
         {
             final Reservation reservation = reservationOptional.get();
-            checkInService.checkIn(reservation);
+            final Response response = action.doChange(reservation);
             session.saveOrUpdate(reservation);
             session.getTransaction().commit();
-            return Response.ok().status(Response.Status.OK).build();
+            return response;
         }
         else
         {
@@ -143,20 +140,57 @@ public class ReservationResource
         }
     }
 
+    private static abstract class ReservationStatusChangeAction
+    {
+        abstract Response doChange(final Reservation reservation);
+    }
+
+    @Path("/{id}/checkIn")
+    @POST
+    public Response checkInReservation(@PathParam("id") String reservationId)
+    {
+        return reservationStatusChange(reservationId, new ReservationStatusChangeAction()
+        {
+            @Override
+            Response doChange(Reservation reservation)
+            {
+                checkInService.checkIn(reservation);
+                // place for error handling depending on business conditions and returning different responses.
+                return Response.ok().status(Response.Status.OK).build();
+            }
+        });
+    }
+
     @Path("/{id}/checkOut")
     @POST
     public Response checkOutReservation(@PathParam("id") String reservationId)
     {
-        // TODO do actual checkOut
-        return Response.ok("checkOut worked, reservationId was " + reservationId).status(Response.Status.OK).build();
+        return reservationStatusChange(reservationId, new ReservationStatusChangeAction()
+        {
+            @Override
+            Response doChange(Reservation reservation)
+            {
+                checkOutService.checkOut(reservation);
+                // place for error handling depending on business conditions and returning different responses.
+                return Response.ok().status(Response.Status.OK).build();
+            }
+        });
     }
 
     @Path("/{id}/cancel")
     @POST
     public Response cancelReservation(@PathParam("id") String reservationId)
     {
-        // TODO do actual checkOut
-        return Response.ok("Cancel worked, reservationId was " + reservationId).status(Response.Status.OK).build();
+        return reservationStatusChange(reservationId, new ReservationStatusChangeAction()
+        {
+            @Override
+            Response doChange(Reservation reservation)
+            {
+                cancellationService.cancel(reservation);
+                // place for error handling depending on business conditions and returning different responses.
+                return Response.ok().status(Response.Status.OK).build();
+            }
+        });
     }
 
     @POST
