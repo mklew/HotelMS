@@ -57,7 +57,7 @@ public class ReservationDto
     {
         ReservationDto dto = new ReservationDto();
 
-        dto.reservationId = reservation.getReservationId().toString();
+        dto.reservationId = reservation.getReservationId().getPrintableId();
         dto.reservationType = reservation.getReservationType().getName();
         dto.checkin = DateParser.fromDate(reservation.getCheckIn());
         dto.checkout = DateParser.fromDate(reservation.getCheckOut());
