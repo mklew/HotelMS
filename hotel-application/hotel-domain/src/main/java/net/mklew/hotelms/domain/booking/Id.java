@@ -64,4 +64,9 @@ public class Id implements Serializable
                 .append(id)
                 .toHashCode();
     }
+
+    public String getPrintableId()
+    {
+        return String.valueOf(id);
+    }
 }
