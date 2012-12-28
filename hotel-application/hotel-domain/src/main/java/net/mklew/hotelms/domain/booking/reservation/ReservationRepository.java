@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
+import net.mklew.hotelms.domain.booking.Id;
 import org.joda.time.DateTime;
 
 import java.util.Collection;
@@ -23,4 +24,6 @@ public interface ReservationRepository
     void bookNewReservation(Reservation reservation);
 
     Collection<Reservation> getAll();
+
+    Reservation lookup(Id id);
 }
