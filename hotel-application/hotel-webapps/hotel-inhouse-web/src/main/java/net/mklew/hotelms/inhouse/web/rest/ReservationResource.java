@@ -10,6 +10,7 @@ import net.mklew.hotelms.domain.room.Room;
 import net.mklew.hotelms.domain.room.RoomName;
 import net.mklew.hotelms.domain.room.RoomNotFoundException;
 import net.mklew.hotelms.domain.room.RoomRepository;
+import net.mklew.hotelms.inhouse.web.dto.ErrorDto;
 import net.mklew.hotelms.inhouse.web.dto.GuestDto;
 import net.mklew.hotelms.inhouse.web.dto.MissingGuestInformation;
 import net.mklew.hotelms.inhouse.web.dto.ReservationDto;
@@ -24,6 +25,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import java.util.Collection;
 
 /**
@@ -67,8 +69,8 @@ public class ReservationResource
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public ReservationDto createNewReservation(MultivaluedMap<String, String> formParams,
-                                               @Context HttpServletResponse httpServletResponse)
+    public Response createNewReservation(MultivaluedMap<String, String> formParams,
+                                         @Context HttpServletResponse httpServletResponse)
     {
         Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -121,36 +123,39 @@ public class ReservationResource
             bookingService.bookReservation(reservation);
             ReservationDto bookedDto = ReservationDto.fromReservation(reservation);
 
-
             session.getTransaction().commit();
-            return bookedDto;
+
+            return Response.ok(bookedDto, MediaType.APPLICATION_JSON_TYPE).status(Response.Status.CREATED).build();
         }
         catch (MissingGuestInformation missingGuestInformation)
         {
             logger.error("Reservation owner has no sufficient information", missingGuestInformation);
             httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            // todo return response, setting status does not work
             return null;
         }
         catch (RoomNotFoundException e)
         {
             logger.error("Room not found exception", e);
             httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            // todo return response, setting status does not work
             return null;
         }
         catch (OperationNotSupportedException e)
         {
             logger.error("Operation not supported", e);
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
+            // todo return response, setting status does not work
             return null;
         }
         catch (RoomIsUnavailableException e)
         {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-            httpServletResponse.setHeader("ERROR-MESSAGE", "Room " + e.getRoomName() + " is unavailable between " +
-                    DateParser.fromDate(e.getCheckIn()) + " and " + DateParser.fromDate(e.getCheckOut()));
-            return null;
+            final String message = "Room " + e.getRoomName() + " is unavailable between " +
+                    DateParser.fromDate(e.getCheckIn()) + " and " + DateParser.fromDate(e.getCheckOut());
+            return Response.ok(new ErrorDto(message, "ROOM-UNAVAILABLE"), MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.FORBIDDEN).build();
         }
-//        return null;
     }
 
     private Rate getChosenRate(ReservationDto reservationDto, Collection<Rate> rates)
