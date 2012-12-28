@@ -157,6 +157,7 @@
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.MoneyDtoJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.GuestDtoJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.ReservationDtoJAXBContext"/>
+    <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.ErrorDtoJAXBContext"/>
 
     <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
 
