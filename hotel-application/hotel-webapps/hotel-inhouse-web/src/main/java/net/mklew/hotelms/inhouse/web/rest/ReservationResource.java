@@ -26,6 +26,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -44,10 +45,12 @@ public class ReservationResource
     private final RoomRepository roomRepository;
     private final RateRepository rateRepository;
     private final BookingService bookingService;
+    private final ReservationRepository reservationRepository;
 
     public ReservationResource(Logger logger, ReservationFactory reservationFactory, GuestRepository guestRepository,
                                HibernateSessionFactory hibernateSessionFactory, RoomRepository roomRepository,
-                               RateRepository rateRepository, BookingService bookingService)
+                               RateRepository rateRepository, BookingService bookingService,
+                               ReservationRepository reservationRepository)
     {
         this.logger = logger;
         this.reservationFactory = reservationFactory;
@@ -56,14 +59,22 @@ public class ReservationResource
         this.roomRepository = roomRepository;
         this.rateRepository = rateRepository;
         this.bookingService = bookingService;
+        this.reservationRepository = reservationRepository;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<ReservationDto> getAllReservations()
     {
-        // todo
-        return null;
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        final Collection<Reservation> reservations = reservationRepository.getAll();
+        Collection<ReservationDto> dtos = new ArrayList<>(reservations.size());
+        for (Reservation reservation : reservations)
+        {
+            dtos.add(ReservationDto.fromReservation(reservation));
+        }
+        return dtos;
     }
 
     @POST
