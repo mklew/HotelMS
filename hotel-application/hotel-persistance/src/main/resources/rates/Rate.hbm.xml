@@ -6,7 +6,8 @@
 
 <hibernate-mapping package="net.mklew.hotelms.domain.booking.reservation.rates">
 
-    <class name="Rate" abstract="true" table="RATES" discriminator-value="null" check="(RATE_TYPE = 'S' AND seasonId is not null) OR (RATE_TYPE = 'P' AND packageId is not null)">
+    <class name="Rate" abstract="true" table="RATES" discriminator-value="null"
+           check="(RATE_TYPE = 'S' AND seasonId is not null) OR (RATE_TYPE = 'P' AND packageId is not null) or (RATE_TYPE ='R' and seasonId is null and packageId is null)">
         <id name="id" column="id">
             <generator class="sequence">
                 <param name="sequence">rates_sequence</param>
@@ -17,7 +18,7 @@
         <property name="upchargeExtraPerson"/>
         <property name="upchargeExtraBed"/>
         <many-to-one name="room" not-null="false">
-                      <column name="room"/>
+            <column name="room"/>
         </many-to-one>
 
         <subclass name="SeasonRate" discriminator-value="S">
@@ -28,6 +29,7 @@
             <many-to-one name="pack" column="packageId" lazy="false"/>
         </subclass>
 
+        <subclass name="RackRate" discriminator-value="R"/>
 
     </class>
 
