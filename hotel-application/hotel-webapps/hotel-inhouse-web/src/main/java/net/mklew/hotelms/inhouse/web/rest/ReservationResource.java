@@ -117,7 +117,7 @@ public class ReservationResource
         }
     }
 
-    private Response reservationStatusChange(String reservationId, ReservationStatusChangeAction action)
+    private Response reservationOperationTemplate(String reservationId, ReservationOperationAction action)
     {
         Id id = Id.of(reservationId);
         Session session = hibernateSessionFactory.getCurrentSession();
@@ -126,7 +126,7 @@ public class ReservationResource
         if (reservationOptional.isPresent())
         {
             final Reservation reservation = reservationOptional.get();
-            final Response response = action.doChange(reservation);
+            final Response response = action.doAction(reservation);
             session.saveOrUpdate(reservation);
             session.getTransaction().commit();
             return response;
@@ -140,19 +140,19 @@ public class ReservationResource
         }
     }
 
-    private static abstract class ReservationStatusChangeAction
+    private static abstract class ReservationOperationAction
     {
-        abstract Response doChange(final Reservation reservation);
+        abstract Response doAction(final Reservation reservation);
     }
 
     @Path("/{id}/checkIn")
     @POST
     public Response checkInReservation(@PathParam("id") String reservationId)
     {
-        return reservationStatusChange(reservationId, new ReservationStatusChangeAction()
+        return reservationOperationTemplate(reservationId, new ReservationOperationAction()
         {
             @Override
-            Response doChange(Reservation reservation)
+            Response doAction(Reservation reservation)
             {
                 checkInService.checkIn(reservation);
                 // place for error handling depending on business conditions and returning different responses.
@@ -165,10 +165,10 @@ public class ReservationResource
     @POST
     public Response checkOutReservation(@PathParam("id") String reservationId)
     {
-        return reservationStatusChange(reservationId, new ReservationStatusChangeAction()
+        return reservationOperationTemplate(reservationId, new ReservationOperationAction()
         {
             @Override
-            Response doChange(Reservation reservation)
+            Response doAction(Reservation reservation)
             {
                 checkOutService.checkOut(reservation);
                 // place for error handling depending on business conditions and returning different responses.
@@ -181,10 +181,10 @@ public class ReservationResource
     @POST
     public Response cancelReservation(@PathParam("id") String reservationId)
     {
-        return reservationStatusChange(reservationId, new ReservationStatusChangeAction()
+        return reservationOperationTemplate(reservationId, new ReservationOperationAction()
         {
             @Override
-            Response doChange(Reservation reservation)
+            Response doAction(Reservation reservation)
             {
                 cancellationService.cancel(reservation);
                 // place for error handling depending on business conditions and returning different responses.
