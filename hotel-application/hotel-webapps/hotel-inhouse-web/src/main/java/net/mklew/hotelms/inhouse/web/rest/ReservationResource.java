@@ -258,26 +258,25 @@ public class ReservationResource
         {
             logger.error("Reservation owner has no sufficient information", missingGuestInformation);
             httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            // todo return response, setting status does not work
-            return null;
+            return Response.ok(new ErrorDto("Missing guest information", "GUEST-MISSING-INFO"),
+                    MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.BAD_REQUEST).build();
         }
         catch (RoomNotFoundException e)
         {
             logger.error("Room not found exception", e);
-            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            // todo return response, setting status does not work
-            return null;
+            return Response.ok(new ErrorDto("Room not found", "ROOM-NOT-FOUND"), MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.NOT_FOUND).build();
         }
         catch (OperationNotSupportedException e)
         {
             logger.error("Operation not supported", e);
-            httpServletResponse.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
-            // todo return response, setting status does not work
-            return null;
+            return Response.ok(new ErrorDto("Operation not supported", "OPERATION-NOT-SUPPORTED"),
+                    MediaType.APPLICATION_JSON_TYPE).status
+                    (HttpServletResponse.SC_NOT_IMPLEMENTED).build();
         }
         catch (RoomIsUnavailableException e)
         {
-            httpServletResponse.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
             final String message = "Room " + e.getRoomName() + " is unavailable between " +
                     DateParser.fromDate(e.getCheckIn()) + " and " + DateParser.fromDate(e.getCheckOut());
             return Response.ok(new ErrorDto(message, "ROOM-UNAVAILABLE"), MediaType.APPLICATION_JSON_TYPE).status
