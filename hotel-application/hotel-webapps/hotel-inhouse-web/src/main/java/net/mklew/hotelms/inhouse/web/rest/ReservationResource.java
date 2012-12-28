@@ -83,6 +83,7 @@ public class ReservationResource
         {
             dtos.add(ReservationDto.fromReservation(reservation));
         }
+        session.getTransaction().commit();
         return dtos;
     }
 
@@ -90,19 +91,31 @@ public class ReservationResource
     @Path("/{id}")
     public Response getReservation(@PathParam("id") String reservationId)
     {
-        Id id = Id.of(reservationId);
-        Session session = hibernateSessionFactory.getCurrentSession();
-        session.beginTransaction();
-        final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
-        if (reservationOptional.isPresent())
+        try
         {
-            final ReservationDto dto = ReservationDto.fromReservation(reservationOptional.get());
-            return Response.ok(dto, MediaType.APPLICATION_JSON_TYPE).status(Response.Status.OK).build();
+            Id id = Id.of(reservationId);
+            Session session = hibernateSessionFactory.getCurrentSession();
+            session.beginTransaction();
+            final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
+            if (reservationOptional.isPresent())
+            {
+                final ReservationDto dto = ReservationDto.fromReservation(reservationOptional.get());
+                session.getTransaction().commit();
+                return Response.ok(dto, MediaType.APPLICATION_JSON_TYPE).status(Response.Status.OK).build();
+            }
+            else
+            {
+                session.getTransaction().commit();
+                return Response.ok().status(Response.Status.NOT_FOUND).build();
+            }
+
         }
-        else
+        catch (Exception e)
         {
-            return Response.ok().status(Response.Status.NOT_FOUND).build();
+            throw e;
+            //return Response.ok(e.getMessage()).build();
         }
+
     }
 
     @Path("/{id}/checkIn")
@@ -123,8 +136,10 @@ public class ReservationResource
         }
         else
         {
+            session.getTransaction().commit();
             return Response.ok(new ErrorDto("Reservation with id " + reservationId + " has not been found.",
-                    "RESERVATION-NOT-FOUND")).status(Response.Status.BAD_REQUEST).build();
+                    "RESERVATION-NOT-FOUND"), MediaType.APPLICATION_JSON_TYPE).status(Response.Status.BAD_REQUEST)
+                    .build();
         }
     }
 
