@@ -22,7 +22,7 @@
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">net.mklew.hotelms.domain.room.HousekeepingStatus</param>
                 <param name="type">12</param>
-                <param name="useNamed"></param>
+                <param name="useNamed">true</param>
             </type>
         </property>
 
@@ -30,7 +30,7 @@
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">net.mklew.hotelms.domain.room.RoomAvailability</param>
                 <param name="type">12</param>
-                <param name="useNamed"></param>
+                <param name="useNamed">true</param>
             </type>
         </property>
         <property name="maxExtraBeds"/>

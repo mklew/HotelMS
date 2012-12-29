@@ -25,7 +25,7 @@
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">net.mklew.hotelms.domain.booking.ReservationStatus</param>
                 <param name="type">12</param>
-                <param name="useNamed"></param>
+                <param name="useNamed">true</param>
             </type>
         </property>
     </class>
@@ -40,7 +40,7 @@
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">net.mklew.hotelms.domain.booking.reservation.NightStatus</param>
                 <param name="type">12</param>
-                <param name="useNamed"></param>
+                <param name="useNamed">true</param>
             </type>
         </property>
         <many-to-one name="rate" class="net.mklew.hotelms.domain.booking.reservation.rates.Rate" not-null="true"/>

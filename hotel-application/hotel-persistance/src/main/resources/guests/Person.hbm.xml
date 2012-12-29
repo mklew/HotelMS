@@ -27,14 +27,14 @@
                 <type name="org.hibernate.type.EnumType">
                     <param name="enumClass">net.mklew.hotelms.domain.guests.Gender</param>
                     <param name="type">12</param>
-                    <param name="useNamed"></param>
+                    <param name="useNamed">true</param>
                 </type>
             </property>
             <property name="documentType">
                 <type name="org.hibernate.type.EnumType">
                     <param name="enumClass">net.mklew.hotelms.domain.guests.DocumentType</param>
                     <param name="type">12</param>
-                    <param name="useNamed"></param>
+                    <param name="useNamed">true</param>
                 </type>
             </property>
             <property name="documentId"/>
