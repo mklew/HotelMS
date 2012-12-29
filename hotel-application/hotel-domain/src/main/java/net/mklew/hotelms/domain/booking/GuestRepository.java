@@ -18,9 +18,13 @@ public interface GuestRepository
 
     void saveGuest(Guest guest);
 
+    void updateGuest(Guest guest);
+
     Collection<Guest> findAll();
 
     Collection<Guest> findAllInHouse();
 
     Optional<Guest> lookup(long id);
+
+    void removeGuest(long id) throws GuestNotFoundException;
 }
