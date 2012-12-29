@@ -126,10 +126,7 @@ public class ReservationResource
         if (reservationOptional.isPresent())
         {
             final Reservation reservation = reservationOptional.get();
-            final Response response = action.doAction(reservation);
-            session.saveOrUpdate(reservation);
-            session.getTransaction().commit();
-            return response;
+            return action.doAction(reservation);
         }
         else
         {
@@ -155,6 +152,9 @@ public class ReservationResource
             Response doAction(Reservation reservation)
             {
                 checkInService.checkIn(reservation);
+                final Session session = hibernateSessionFactory.getCurrentSession();
+                session.saveOrUpdate(reservation);
+                session.getTransaction().commit();
                 // place for error handling depending on business conditions and returning different responses.
                 return Response.ok().status(Response.Status.OK).build();
             }
@@ -171,6 +171,9 @@ public class ReservationResource
             Response doAction(Reservation reservation)
             {
                 checkOutService.checkOut(reservation);
+                final Session session = hibernateSessionFactory.getCurrentSession();
+                session.saveOrUpdate(reservation);
+                session.getTransaction().commit();
                 // place for error handling depending on business conditions and returning different responses.
                 return Response.ok().status(Response.Status.OK).build();
             }
@@ -187,6 +190,9 @@ public class ReservationResource
             Response doAction(Reservation reservation)
             {
                 cancellationService.cancel(reservation);
+                final Session session = hibernateSessionFactory.getCurrentSession();
+                session.saveOrUpdate(reservation);
+                session.getTransaction().commit();
                 // place for error handling depending on business conditions and returning different responses.
                 return Response.ok().status(Response.Status.OK).build();
             }
@@ -306,6 +312,57 @@ public class ReservationResource
                     "RESERVATION-NOT-FOUND"), MediaType.APPLICATION_JSON_TYPE).status(Response.Status.BAD_REQUEST)
                     .build();
         }
+    }
+
+    @PUT
+    @Path("/{id}/")
+    public Response modifyReservation(@PathParam("id") String reservationId, final MultivaluedMap<String,
+            String> formParams)
+    {
+        return reservationOperationTemplate(reservationId, new ReservationOperationAction()
+        {
+            @Override
+            Response doAction(Reservation reservation)
+            {
+                final ReservationDto reservationDto = ReservationDto.fromReservationForm(formParams);
+                // Only few things can be changed in edit. Other properties must be changed in a different way
+                if (reservationDto.getCheckinDate().isAfter(reservationDto.getCheckoutDate()))
+                {
+                    hibernateSessionFactory.getCurrentSession().getTransaction().rollback();
+                    return Response.ok(new ErrorDto("CheckIn " + reservationDto.getCheckin() + " date cannot be after" +
+                            " CheckOut date " + reservationDto.getCheckout(), "RESERVATION-WRONG-DATES"),
+                            MediaType.APPLICATION_JSON_TYPE).build();
+                }
+                if (!(reservation.getCheckIn().equals(reservationDto.getCheckinDate())))
+                {
+                    checkInService.changeCheckInDate(reservation, reservationDto.getCheckinDate());
+                }
+                if (!(reservation.getCheckOut().equals(reservationDto.getCheckoutDate())))
+                {
+                    checkOutService.changeCheckOutDate(reservation, reservationDto.getCheckoutDate());
+                }
+                int extraBeds = Integer.valueOf(reservationDto.getRoomExtraBed());
+                if (reservation.getExtraBeds() != extraBeds)
+                {
+                    reservation.setExtraBeds(extraBeds);
+                }
+
+                int numberOfAdults = Integer.valueOf(reservationDto.getNumberOfAdults());
+                if (reservation.getNumberOfAdults() != numberOfAdults)
+                {
+                    reservation.setNumberOfAdults(numberOfAdults);
+                }
+
+                int numberOfChildren = Integer.valueOf(reservationDto.getNumberOfChildren());
+                if (reservation.getNumberOfChildren() != numberOfChildren)
+                {
+                    reservation.setNumberOfChildren(numberOfChildren);
+                }
+                reservationRepository.update(reservation);
+                hibernateSessionFactory.getCurrentSession().getTransaction().commit();
+                return Response.ok().build();
+            }
+        });
     }
 
     private Rate getChosenRate(ReservationDto reservationDto, Collection<Rate> rates)
