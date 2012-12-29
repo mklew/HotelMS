@@ -8,6 +8,7 @@ import net.mklew.hotelms.inhouse.web.dto.ErrorDto;
 import net.mklew.hotelms.inhouse.web.dto.GuestDto;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
+import org.jcontainer.dna.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
@@ -25,11 +26,14 @@ import java.util.Collections;
 @Path("guests")
 public class GuestResource
 {
+    private final Logger logger;
     private final HibernateSessionFactory hibernateSessionFactory;
     private final GuestRepository guestRepository;
 
-    public GuestResource(HibernateSessionFactory hibernateSessionFactory, GuestRepository guestRepository)
+    public GuestResource(Logger logger, HibernateSessionFactory hibernateSessionFactory,
+                         GuestRepository guestRepository)
     {
+        this.logger = logger;
         this.hibernateSessionFactory = hibernateSessionFactory;
         this.guestRepository = guestRepository;
     }
@@ -64,7 +68,30 @@ public class GuestResource
     }
 
     @GET
-    @Path("/{id}")
+    public Response getAllGuests()
+    {
+        final Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        final Collection<Guest> guests = guestRepository.findAll();
+        final Collection<GuestDto> guestDtos = GuestDto.fromGuests(guests);
+        session.getTransaction().commit();
+        return Response.ok(guestDtos, MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_OK).build();
+    }
+
+    @GET
+    @Path("/inhouse")
+    public Response getAllInHouseGuests()
+    {
+        final Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        final Collection<Guest> guests = guestRepository.findAllInHouse();
+        final Collection<GuestDto> guestDtos = GuestDto.fromGuests(guests);
+        session.getTransaction().commit();
+        return Response.ok(guestDtos, MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_OK).build();
+    }
+
+    @GET
+    @Path("/guest/{id}")
     public Response getGuestById(@PathParam("id") String id)
     {
         final Session session = hibernateSessionFactory.getCurrentSession();
