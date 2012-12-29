@@ -284,6 +284,30 @@ public class ReservationResource
         }
     }
 
+    @DELETE
+    @Path("/{id}/")
+    public Response deleteReservation(@PathParam("id") String reservationId)
+    {
+        Id id = Id.of(reservationId);
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
+        if (reservationOptional.isPresent())
+        {
+            final Reservation reservation = reservationOptional.get();
+            reservationRepository.deleteReservation(reservation);
+            session.getTransaction().commit();
+            return Response.ok().status(HttpServletResponse.SC_OK).build();
+        }
+        else
+        {
+            session.getTransaction().commit();
+            return Response.ok(new ErrorDto("Reservation with id " + reservationId + " has not been found.",
+                    "RESERVATION-NOT-FOUND"), MediaType.APPLICATION_JSON_TYPE).status(Response.Status.BAD_REQUEST)
+                    .build();
+        }
+    }
+
     private Rate getChosenRate(ReservationDto reservationDto, Collection<Rate> rates)
     {
         for (Rate rate : rates)
