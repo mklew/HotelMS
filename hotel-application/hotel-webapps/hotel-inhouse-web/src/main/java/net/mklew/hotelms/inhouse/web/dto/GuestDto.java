@@ -144,4 +144,10 @@ public class GuestDto
         dto.id = String.valueOf(guest.getId());
         return dto;
     }
+
+    public static GuestDto fromNewGuestForm(MultivaluedMap<String, String> formParams) throws MissingGuestInformation
+    {
+        // TODO sort these method names out, because probably both will have same data
+        return fromReservationForm(formParams);
+    }
 }
