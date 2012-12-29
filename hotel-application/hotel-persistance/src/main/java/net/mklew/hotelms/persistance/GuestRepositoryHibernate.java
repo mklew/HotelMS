@@ -1,6 +1,7 @@
 package net.mklew.hotelms.persistance;
 
 import com.google.common.base.Optional;
+import net.mklew.hotelms.domain.booking.GuestNotFoundException;
 import net.mklew.hotelms.domain.booking.GuestRepository;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.domain.guests.Person;
@@ -67,6 +68,13 @@ public class GuestRepositoryHibernate extends HibernateRepository implements Gue
     }
 
     @Override
+    public void updateGuest(Guest guest)
+    {
+        final Session session = getCurrentSession();
+        session.update(guest);
+    }
+
+    @Override
     public Collection<Guest> findAll()
     {
         final Session session = getCurrentSession();
@@ -94,6 +102,21 @@ public class GuestRepositoryHibernate extends HibernateRepository implements Gue
         else
         {
             return Optional.absent();
+        }
+    }
+
+    @Override
+    public void removeGuest(long id) throws GuestNotFoundException
+    {
+        final Session session = getCurrentSession();
+        final Optional<Guest> guestOptional = lookup(id);
+        if (guestOptional.isPresent())
+        {
+            session.delete(guestOptional.get());
+        }
+        else
+        {
+            throw new GuestNotFoundException(id);
         }
     }
 }
