@@ -1,7 +1,9 @@
 package net.mklew.hotelms.persistance;
 
+import com.google.common.base.Optional;
 import net.mklew.hotelms.domain.booking.GuestRepository;
 import net.mklew.hotelms.domain.guests.Guest;
+import net.mklew.hotelms.domain.guests.Person;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.jcontainer.dna.Configuration;
@@ -43,8 +45,8 @@ public class GuestRepositoryHibernate extends HibernateRepository implements Gue
         String firstNameLike = firstName + "%";
         @SuppressWarnings("unchecked") final Collection<Guest> guests = session.createQuery(FIND_ALL_WHERE_NAME_LIKE)
                 .setParameter("firstName",
-                firstNameLike).setParameter("surname", surnameLike).setMaxResults
-                (guestLookupByNameLimit).list();
+                        firstNameLike).setParameter("surname", surnameLike).setMaxResults
+                        (guestLookupByNameLimit).list();
         return guests;
 
     }
@@ -62,5 +64,36 @@ public class GuestRepositoryHibernate extends HibernateRepository implements Gue
     {
         final Session session = getCurrentSession();
         session.save(guest);
+    }
+
+    @Override
+    public Collection<Guest> findAll()
+    {
+        final Session session = getCurrentSession();
+        return (Collection<Guest>) session.createQuery("from Person where PERSON_TYPE = 'G'").list();
+    }
+
+    @Override
+    public Collection<Guest> findAllInHouse()
+    {
+        String query = "select person from Reservation reservation join reservation.reservationOwner person where " +
+                "person.PERSON_TYPE = 'G' and reservation.reservationStatus = 'INHOUSE'";
+        final Session session = getCurrentSession();
+        return (Collection<Guest>) session.createQuery(query).list();
+    }
+
+    @Override
+    public Optional<Guest> lookup(long id)
+    {
+        final Session session = getCurrentSession();
+        final Guest guest = (Guest) session.get(Person.class, id);
+        if (guest != null)
+        {
+            return Optional.of(guest);
+        }
+        else
+        {
+            return Optional.absent();
+        }
     }
 }
