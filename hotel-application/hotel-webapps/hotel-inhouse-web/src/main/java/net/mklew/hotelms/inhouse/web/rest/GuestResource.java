@@ -159,6 +159,7 @@ public class GuestResource
         }
         catch (GuestNotFoundException e)
         {
+            session.getTransaction().rollback();
             return Response.ok(new ErrorDto("Guest with id " + id + " has not been found", "GUEST-NOT-FOUND"),
                     MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_NOT_FOUND).build();
         }
@@ -194,6 +195,7 @@ public class GuestResource
             }
             else
             {
+                session.getTransaction().rollback();
                 return Response.ok(new ErrorDto("Guest with id " + id + " has not been found", "GUEST-NOT-FOUND"),
                         MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_NOT_FOUND).build();
             }
