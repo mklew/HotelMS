@@ -80,4 +80,11 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
         final Session session = getCurrentSession();
         session.delete(reservation);
     }
+
+    @Override
+    public void update(Reservation reservation)
+    {
+        final Session session = getCurrentSession();
+        session.update(reservation);
+    }
 }
