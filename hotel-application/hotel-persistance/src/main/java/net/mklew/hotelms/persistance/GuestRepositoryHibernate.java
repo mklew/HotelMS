@@ -76,8 +76,8 @@ public class GuestRepositoryHibernate extends HibernateRepository implements Gue
     @Override
     public Collection<Guest> findAllInHouse()
     {
-        String query = "select person from Reservation reservation join reservation.reservationOwner person where " +
-                "person.PERSON_TYPE = 'G' and reservation.reservationStatus = 'INHOUSE'";
+        String query = "select guest from Reservation reservation join reservation.reservationOwner guest where " +
+                "reservation.reservationStatus = 'INHOUSE'";
         final Session session = getCurrentSession();
         return (Collection<Guest>) session.createQuery(query).list();
     }
