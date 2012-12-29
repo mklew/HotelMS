@@ -2,6 +2,7 @@ package net.mklew.hotelms.inhouse.web.rest;
 
 import com.google.common.base.Optional;
 import com.sun.jersey.spi.resource.Singleton;
+import net.mklew.hotelms.domain.booking.GuestNotFoundException;
 import net.mklew.hotelms.domain.booking.GuestRepository;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.inhouse.web.dto.ErrorDto;
@@ -134,6 +135,68 @@ public class GuestResource
             GuestDto created = GuestDto.fromGuest(guest);
             session.getTransaction().commit();
             return Response.ok(created, MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_CREATED).build();
+        }
+        catch (MissingGuestInformation missingGuestInformation)
+        {
+            session.getTransaction().rollback();
+            return Response.ok(new ErrorDto("Missing guest information", "GUEST-MISSING-INFO"),
+                    MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @DELETE
+    @Path("/guest/{id}")
+    public Response deleteGuest(@PathParam("id") String id)
+    {
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        try
+        {
+            guestRepository.removeGuest(Long.valueOf(id));
+            session.getTransaction().commit();
+            return Response.ok().status(HttpServletResponse.SC_OK).build();
+        }
+        catch (GuestNotFoundException e)
+        {
+            return Response.ok(new ErrorDto("Guest with id " + id + " has not been found", "GUEST-NOT-FOUND"),
+                    MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_NOT_FOUND).build();
+        }
+
+    }
+
+    @PUT
+    @Path("guest/{id}")
+    public Response modifyGuest(@PathParam("id") String id, MultivaluedMap<String, String> formParams)
+    {
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        logger.debug("Modify guest. Form data: " + formParams.toString());
+        try
+        {
+            GuestDto guestDto = GuestDto.fromNewGuestForm(formParams);
+            final Optional<Guest> guestOptional = guestRepository.lookup(Long.valueOf(id));
+            if (guestOptional.isPresent())
+            {
+                final Guest guest = guestOptional.get();
+                guest.setSocialTitle(guestDto.socialTitle);
+                guest.setFirstName(guestDto.firstName);
+                guest.setSurname(guestDto.surname);
+                guest.setGender(guestDto.gender);
+                guest.setDocumentType(guestDto.idType);
+                guest.setDocumentId(guestDto.idNumber);
+                guest.setPhoneNumber(guestDto.phoneNumber);
+                guest.setPreferences(guestDto.preferences);
+                guest.setDateOfBirth(guestDto.dateOfBirthDate);
+                guestRepository.updateGuest(guest);
+                session.getTransaction().commit();
+                return Response.ok().status(HttpServletResponse.SC_OK).build();
+            }
+            else
+            {
+                return Response.ok(new ErrorDto("Guest with id " + id + " has not been found", "GUEST-NOT-FOUND"),
+                        MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_NOT_FOUND).build();
+            }
         }
         catch (MissingGuestInformation missingGuestInformation)
         {
