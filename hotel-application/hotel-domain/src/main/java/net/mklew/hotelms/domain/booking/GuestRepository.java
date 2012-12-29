@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking;
 
+import com.google.common.base.Optional;
 import net.mklew.hotelms.domain.guests.Guest;
 
 import java.util.Collection;
@@ -21,5 +22,5 @@ public interface GuestRepository
 
     Collection<Guest> findAllInHouse();
 
-    Guest lookup(long id);
+    Optional<Guest> lookup(long id);
 }
