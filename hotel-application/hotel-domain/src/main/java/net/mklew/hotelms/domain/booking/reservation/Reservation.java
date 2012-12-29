@@ -252,17 +252,17 @@ public class Reservation implements Serializable
         this.nights = nights;
     }
 
-    private void setNumberOfAdults(int numberOfAdults)
+    public void setNumberOfAdults(int numberOfAdults)
     {
         this.numberOfAdults = numberOfAdults;
     }
 
-    private void setNumberOfChildren(int numberOfChildren)
+    public void setNumberOfChildren(int numberOfChildren)
     {
         this.numberOfChildren = numberOfChildren;
     }
 
-    private void setExtraBeds(int extraBeds)
+    public void setExtraBeds(int extraBeds)
     {
         this.extraBeds = extraBeds;
     }
@@ -279,5 +279,21 @@ public class Reservation implements Serializable
 
     Reservation()
     {
+    }
+
+    public void changeCheckInTo(DateTime checkinDate)
+    {
+        DateTime checkout = getCheckOut();
+        Rate rate = getRate();
+        nights.clear();
+        createNights(checkinDate, checkout, rate);
+    }
+
+    public void changeCheckOutTo(DateTime checkoutDate)
+    {
+        DateTime checkin = getCheckIn();
+        Rate rate = getRate();
+        nights.clear();
+        createNights(checkin, checkoutDate, rate);
     }
 }
