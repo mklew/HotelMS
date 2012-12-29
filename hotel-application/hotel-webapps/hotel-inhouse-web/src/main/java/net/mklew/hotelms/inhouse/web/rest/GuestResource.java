@@ -6,6 +6,7 @@ import net.mklew.hotelms.domain.booking.GuestRepository;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.inhouse.web.dto.ErrorDto;
 import net.mklew.hotelms.inhouse.web.dto.GuestDto;
+import net.mklew.hotelms.inhouse.web.dto.MissingGuestInformation;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.jcontainer.dna.Logger;
@@ -13,6 +14,7 @@ import org.jcontainer.dna.Logger;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.Collections;
@@ -109,6 +111,36 @@ public class GuestResource
             session.getTransaction().commit();
             return Response.ok(new ErrorDto("Guest with id " + id + " has not been found", "GUEST-NOT-FOUND"),
                     MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_NOT_FOUND).build();
+        }
+    }
+
+    @POST
+    @Path("/guest/")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response createNewGuest(MultivaluedMap<String, String> formParams)
+    {
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        logger.debug("Got new reservation with parameters: " + formParams.toString());
+        try
+        {
+            GuestDto guestDto = GuestDto.fromNewGuestForm(formParams);
+            Guest guest = new Guest(guestDto.socialTitle, guestDto.firstName,
+                    guestDto.surname, guestDto.gender, guestDto.idType,
+                    guestDto.idNumber, guestDto.phoneNumber);
+            guest.setPreferences(guestDto.preferences);
+            guest.setDateOfBirth(guestDto.dateOfBirthDate);
+            guestRepository.saveGuest(guest);
+            GuestDto created = GuestDto.fromGuest(guest);
+            session.getTransaction().commit();
+            return Response.ok(created, MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_CREATED).build();
+        }
+        catch (MissingGuestInformation missingGuestInformation)
+        {
+            session.getTransaction().rollback();
+            return Response.ok(new ErrorDto("Missing guest information", "GUEST-MISSING-INFO"),
+                    MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.BAD_REQUEST).build();
         }
     }
 }
