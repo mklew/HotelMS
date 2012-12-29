@@ -1,17 +1,18 @@
 package net.mklew.hotelms.inhouse.web.rest;
 
+import com.google.common.base.Optional;
 import com.sun.jersey.spi.resource.Singleton;
 import net.mklew.hotelms.domain.booking.GuestRepository;
 import net.mklew.hotelms.domain.guests.Guest;
+import net.mklew.hotelms.inhouse.web.dto.ErrorDto;
 import net.mklew.hotelms.inhouse.web.dto.GuestDto;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -60,5 +61,27 @@ public class GuestResource
 
         session.getTransaction().commit();
         return guestDtos;
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getGuestById(@PathParam("id") String id)
+    {
+        final Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        final Optional<Guest> guestOptional = guestRepository.lookup(Long.valueOf(id));
+        if (guestOptional.isPresent())
+        {
+            final Guest guest = guestOptional.get();
+            final GuestDto guestDto = GuestDto.fromGuest(guest);
+            session.getTransaction().commit();
+            return Response.ok(guestDto, MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_OK).build();
+        }
+        else
+        {
+            session.getTransaction().commit();
+            return Response.ok(new ErrorDto("Guest with id " + id + " has not been found", "GUEST-NOT-FOUND"),
+                    MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_NOT_FOUND).build();
+        }
     }
 }
