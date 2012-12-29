@@ -50,13 +50,7 @@ public class GuestDto
         Collection<GuestDto> dtos = new ArrayList<>(guests.size());
         for (Guest guest : guests)
         {
-            GuestDto dto = new GuestDto();
-            dto.firstName = guest.getFirstName();
-            dto.middleName = guest.getMiddleName() != null ? guest.getMiddleName() : "";
-            dto.surname = guest.getSurname();
-            dto.displayed = guest.getFirstName() + " " + guest.getSurname();
-            dto.id = String.valueOf(guest.getId());
-            dtos.add(dto);
+            dtos.add(fromGuest(guest));
         }
         return dtos;
     }
@@ -138,5 +132,16 @@ public class GuestDto
         {
             throw new MissingGuestInformation("Missing id number");
         }
+    }
+
+    public static GuestDto fromGuest(Guest guest)
+    {
+        GuestDto dto = new GuestDto();
+        dto.firstName = guest.getFirstName();
+        dto.middleName = guest.getMiddleName() != null ? guest.getMiddleName() : "";
+        dto.surname = guest.getSurname();
+        dto.displayed = guest.getFirstName() + " " + guest.getSurname();
+        dto.id = String.valueOf(guest.getId());
+        return dto;
     }
 }
