@@ -10,18 +10,48 @@ import java.util.Map;
  */
 public enum Gender
 {
-    MALE, FEMALE, OTHER, REFUSED;
+    MALE
+            {
+                @Override
+                public String getName()
+                {
+                    return "male";
+                }
+            }, FEMALE
+        {
+            @Override
+            public String getName()
+            {
+                return "female";
+            }
+        }, OTHER
+        {
+            @Override
+            public String getName()
+            {
+                return "other";
+            }
+        }, REFUSED
+        {
+            @Override
+            public String getName()
+            {
+                return "refused";
+            }
+        };
 
     private static Map<String, Gender> namesToGender;
 
     static
     {
-        namesToGender = new HashMap<>(4);
-        namesToGender.put("male", MALE);
-        namesToGender.put("female", FEMALE);
-        namesToGender.put("other", OTHER);
-        namesToGender.put("refused", REFUSED);
+        namesToGender = new HashMap<>(Gender.values().length);
+        for (Gender gender : Gender.values())
+        {
+            namesToGender.put(gender.getName(), gender);
+        }
     }
+
+    public abstract String getName();
 
     public static Gender fromName(String name)
     {
