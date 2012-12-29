@@ -27,4 +27,6 @@ public interface ReservationRepository
     Collection<Reservation> getAll();
 
     Optional<Reservation> lookup(Id id);
+
+    void deleteReservation(Reservation reservation);
 }

@@ -73,4 +73,11 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
             return Optional.absent();
         }
     }
+
+    @Override
+    public void deleteReservation(Reservation reservation)
+    {
+        final Session session = getCurrentSession();
+        session.delete(reservation);
+    }
 }
