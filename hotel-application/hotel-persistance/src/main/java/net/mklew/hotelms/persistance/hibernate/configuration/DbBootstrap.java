@@ -163,11 +163,11 @@ public class DbBootstrap implements Startable
 
         Reservation reservation = new Reservation(Id.NO_ID, guest1, L100.rackRate(),
                 new DateTime(new DateMidnight(2012, 12,
-                1)),
-                new DateTime(new DateMidnight(2012, 12, 5)), 2, 0, 0, ReservationStatus.RESERVED);
+                        1)),
+                new DateTime(new DateMidnight(2012, 12, 5)), 2, 0, 0, ReservationStatus.INHOUSE);
         Reservation reservation2 = new Reservation(Id.NO_ID, guest2, L102.rackRate(),
                 new DateTime(new DateMidnight(2012,
-                12, 3)),
+                        12, 3)),
                 new DateTime(new DateMidnight(2012, 12, 8)), 2, 0, 0, ReservationStatus.RESERVED);
         Reservation reservation3 = new Reservation(Id.NO_ID, guest2, rate1_C103, new DateTime(new DateMidnight(2012,
                 12, 2)),
