@@ -1,5 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
+import org.joda.time.DateTime;
+
 /**
  * CheckingOut reservation might involve complex business logic.
  * <p/>
@@ -17,5 +19,10 @@ public class CheckOutService
     public void checkOut(Reservation reservation)
     {
         reservation.checkOut();
+    }
+
+    public void changeCheckOutDate(Reservation reservation, DateTime checkoutDate)
+    {
+        reservation.changeCheckOutTo(checkoutDate);
     }
 }
