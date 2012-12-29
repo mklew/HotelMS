@@ -29,4 +29,6 @@ public interface ReservationRepository
     Optional<Reservation> lookup(Id id);
 
     void deleteReservation(Reservation reservation);
+
+    void update(Reservation reservation);
 }
