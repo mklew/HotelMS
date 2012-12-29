@@ -32,6 +32,9 @@ public class GuestDto
     public String idNumber;
     public String dateOfBirth;
     public String preferences;
+    public String documentType; // TODO need to change naming idType and documentType are meant to be the same,
+    // it should be something like 'documentType' and 'documentTypeEnum' or something
+
 
     @JsonIgnore
     public transient DocumentType idType;
@@ -142,6 +145,16 @@ public class GuestDto
         dto.surname = guest.getSurname();
         dto.displayed = guest.getFirstName() + " " + guest.getSurname();
         dto.id = String.valueOf(guest.getId());
+        dto.socialTitle = guest.getSocialTitle();
+        dto.sex = guest.getGender().getName();
+        dto.phoneNumber = guest.getPhoneNumber();
+        dto.nationality = guest.getNationality();
+        dto.documentType = guest.getDocumentType().getName();
+        dto.idType = guest.getDocumentType(); // this is not needed, just wanna check how it looks in json
+        dto.gender = guest.getGender(); // same as above
+        dto.idNumber = guest.getDocumentId();
+        dto.dateOfBirth = guest.getDateOfBirth() != null ? DateParser.fromDate(guest.getDateOfBirth()) : "";
+        dto.preferences = guest.getPreferences();
         return dto;
     }
 
