@@ -309,7 +309,7 @@ public class ReservationResource
         {
             session.getTransaction().commit();
             return Response.ok(new ErrorDto("Reservation with id " + reservationId + " has not been found.",
-                    "RESERVATION-NOT-FOUND"), MediaType.APPLICATION_JSON_TYPE).status(Response.Status.BAD_REQUEST)
+                    "RESERVATION-NOT-FOUND"), MediaType.APPLICATION_JSON_TYPE).status(Response.Status.NOT_FOUND)
                     .build();
         }
     }
@@ -331,7 +331,7 @@ public class ReservationResource
                     hibernateSessionFactory.getCurrentSession().getTransaction().rollback();
                     return Response.ok(new ErrorDto("CheckIn " + reservationDto.getCheckin() + " date cannot be after" +
                             " CheckOut date " + reservationDto.getCheckout(), "RESERVATION-WRONG-DATES"),
-                            MediaType.APPLICATION_JSON_TYPE).build();
+                            MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_FORBIDDEN).build();
                 }
                 if (!(reservation.getCheckIn().equals(reservationDto.getCheckinDate())))
                 {
