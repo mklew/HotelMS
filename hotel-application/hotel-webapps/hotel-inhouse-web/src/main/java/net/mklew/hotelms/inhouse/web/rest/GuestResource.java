@@ -18,7 +18,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
@@ -43,11 +42,11 @@ public class GuestResource
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<GuestDto> byCommonName(@QueryParam("q") String query)
+    public Response byCommonName(@QueryParam("q") String query)
     {
         if (query == null)
         {
-            return Collections.emptyList();
+            return getAll();
         }
         final Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -67,11 +66,16 @@ public class GuestResource
         final Collection<GuestDto> guestDtos = GuestDto.fromGuests(guests);
 
         session.getTransaction().commit();
-        return guestDtos;
+        return Response.ok(guestDtos).build();
     }
 
     @GET
     public Response getAllGuests()
+    {
+        return getAll();
+    }
+
+    private Response getAll()
     {
         final Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
@@ -91,6 +95,13 @@ public class GuestResource
         final Collection<GuestDto> guestDtos = GuestDto.fromGuests(guests);
         session.getTransaction().commit();
         return Response.ok(guestDtos, MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_OK).build();
+    }
+
+    @GET
+    @Path("/guest/")
+    public Response getMeAllGuests()
+    {
+        return getAll();
     }
 
     @GET
@@ -145,6 +156,37 @@ public class GuestResource
         }
     }
 
+    @POST
+    @Path("/guest/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createNewGuestFromDto(GuestDto guestParam)
+    {
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        try
+        {
+            guestParam.validateRequired();
+            GuestDto guestDto = guestParam.initIgnored();
+            Guest guest = new Guest(guestDto.socialTitle, guestDto.firstName,
+                    guestDto.surname, guestDto.gender, guestDto.idType,
+                    guestDto.idNumber, guestDto.phoneNumber);
+            guest.setPreferences(guestDto.preferences);
+            guest.setDateOfBirth(guestDto.dateOfBirthDate);
+            guest.setNationality(guestDto.nationality);
+            guestRepository.saveGuest(guest);
+            GuestDto created = GuestDto.fromGuest(guest);
+            session.getTransaction().commit();
+            return Response.ok(created, MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_CREATED).build();
+        }
+        catch (MissingGuestInformation missingGuestInformation)
+        {
+            session.getTransaction().rollback();
+            return Response.ok(new ErrorDto("Missing guest information", "GUEST-MISSING-INFO"),
+                    MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.BAD_REQUEST).build();
+        }
+    }
+
     @DELETE
     @Path("/guest/{id}")
     public Response deleteGuest(@PathParam("id") String id)
@@ -168,6 +210,51 @@ public class GuestResource
 
     @PUT
     @Path("guest/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyGuestDto(@PathParam("id") String id, GuestDto dtoParam)
+    {
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        try
+        {
+            dtoParam.validateRequired();
+            GuestDto guestDto = dtoParam.initIgnored();
+            final Optional<Guest> guestOptional = guestRepository.lookup(Long.valueOf(id));
+            if (guestOptional.isPresent())
+            {
+                final Guest guest = guestOptional.get();
+                guest.setSocialTitle(guestDto.socialTitle);
+                guest.setFirstName(guestDto.firstName);
+                guest.setSurname(guestDto.surname);
+                guest.setGender(guestDto.gender);
+                guest.setDocumentType(guestDto.idType);
+                guest.setDocumentId(guestDto.idNumber);
+                guest.setPhoneNumber(guestDto.phoneNumber);
+                guest.setPreferences(guestDto.preferences);
+                guest.setDateOfBirth(guestDto.dateOfBirthDate);
+                guestRepository.updateGuest(guest);
+                session.getTransaction().commit();
+                return Response.ok().status(HttpServletResponse.SC_OK).build();
+            }
+            else
+            {
+                session.getTransaction().rollback();
+                return Response.ok(new ErrorDto("Guest with id " + id + " has not been found", "GUEST-NOT-FOUND"),
+                        MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_NOT_FOUND).build();
+            }
+        }
+        catch (MissingGuestInformation missingGuestInformation)
+        {
+            session.getTransaction().rollback();
+            return Response.ok(new ErrorDto("Missing guest information", "GUEST-MISSING-INFO"),
+                    MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @PUT
+    @Path("guest/{id}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response modifyGuest(@PathParam("id") String id, MultivaluedMap<String, String> formParams)
     {
         Session session = hibernateSessionFactory.getCurrentSession();
