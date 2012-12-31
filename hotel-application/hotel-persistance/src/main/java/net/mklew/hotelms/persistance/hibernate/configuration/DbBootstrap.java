@@ -156,10 +156,25 @@ public class DbBootstrap implements Startable
                 "DRI132511", "898123532");
         Guest guest9 = new Guest("Mr", "Grzegorz", "Brzeczyszczykiewicz", Gender.MALE, DocumentType.PERSONAL_ID,
                 "AAA123123", "342089123");
-        Guest guest10 = new Guest("Mrs", "John", "Smith", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132135",
+        Guest guest10 = new Guest("Mrs", "John", "ToBeRemoved", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132135",
+                "12312353");
+        Guest guest11 = new Guest("Mr", "John", "ToBeRemoved1", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132136",
+                "12312353");
+        Guest guest12 = new Guest("Mr", "John", "ToBeRemoved2", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132137",
+                "12312353");
+        Guest guest13 = new Guest("Mr", "John", "ToBeRemoved3", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132138",
+                "12312353");
+        Guest guest14 = new Guest("Mr", "John", "ToBeRemoved4", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132139",
+                "12312353");
+        Guest guest15 = new Guest("Mr", "John", "ToBeRemoved5", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132110",
                 "12312353");
         Collection<Guest> guests = Arrays.asList(guest1, guest2, guest3, guest4, guest5, guest6, guest7, guest8,
-                guest9, guest10);
+                guest9, guest10, guest11, guest12, guest13, guest14, guest15);
+        for (Guest guest : guests)
+        {
+            guest.setNationality("Polish");
+        }
+
 
         Reservation reservation = new Reservation(Id.NO_ID, guest1, L100.rackRate(),
                 new DateTime(new DateMidnight(2012, 12,
