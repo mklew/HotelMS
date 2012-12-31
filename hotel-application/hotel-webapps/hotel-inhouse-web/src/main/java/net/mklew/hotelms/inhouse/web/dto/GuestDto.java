@@ -137,6 +137,26 @@ public class GuestDto
         }
     }
 
+    public void validateRequired() throws MissingGuestInformation
+    {
+        notEmpty(socialTitle);
+        notEmpty(firstName);
+        notEmpty(surname);
+        notEmpty(sex);
+        notEmpty(phoneNumber);
+        notEmpty(nationality);
+        notEmpty(documentType);
+        notEmpty(idNumber);
+    }
+
+    public static void notEmpty(String property) throws MissingGuestInformation
+    {
+        if (property == null || "".equals(property))
+        {
+            throw new MissingGuestInformation("Missing property");
+        }
+    }
+
     public static GuestDto fromGuest(Guest guest)
     {
         GuestDto dto = new GuestDto();
@@ -162,5 +182,16 @@ public class GuestDto
     {
         // TODO sort these method names out, because probably both will have same data
         return fromReservationForm(formParams);
+    }
+
+    public GuestDto initIgnored()
+    {
+        idType = DocumentType.fromString(documentType);
+        if (dateOfBirth != null && !dateOfBirth.equals(""))
+        {
+            dateOfBirthDate = DateParser.fromString(dateOfBirth);
+        }
+        gender = Gender.fromName(sex);
+        return this;
     }
 }
