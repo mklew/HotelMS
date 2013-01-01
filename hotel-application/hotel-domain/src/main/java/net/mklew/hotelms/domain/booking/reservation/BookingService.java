@@ -31,7 +31,7 @@ public class BookingService
     public boolean isRoomAvailable(Reservation reservation)
     {
         return roomRepository.isRoomAvailableBetweenDates(reservation.getRoom(), reservation.getCheckIn(),
-                reservation.getCheckOut());
+                reservation.getCheckOut(), reservation);
     }
 
 
@@ -70,7 +70,7 @@ public class BookingService
     {
         final Set<Rate> rates = reservation.getRoom().getRates();
         Rate rate = getChosenRate(chosenRate, rates);
-        if (rates.contains(chosenRate))
+        if (rates.contains(rate))
         {
             reservation.changeRate(rate);
         }
@@ -113,7 +113,7 @@ public class BookingService
     private void validateThatRoomIsAvailable(Reservation reservation, DateTime newCheckIn,
                                              DateTime newCheckOut) throws RoomIsUnavailableException
     {
-        if (!(roomRepository.isRoomAvailableBetweenDates(reservation.getRoom(), newCheckIn, newCheckOut)))
+        if (!(roomRepository.isRoomAvailableBetweenDates(reservation.getRoom(), newCheckIn, newCheckOut, reservation)))
         {
             throw new RoomIsUnavailableException(reservation.getRoom().fullRoomName(), newCheckIn,
                     newCheckOut);
