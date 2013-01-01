@@ -92,29 +92,20 @@ public class ReservationResource
     @Path("/{id}")
     public Response getReservation(@PathParam("id") String reservationId)
     {
-        try
+        Id id = Id.of(reservationId);
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+        final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
+        if (reservationOptional.isPresent())
         {
-            Id id = Id.of(reservationId);
-            Session session = hibernateSessionFactory.getCurrentSession();
-            session.beginTransaction();
-            final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
-            if (reservationOptional.isPresent())
-            {
-                final ReservationDto dto = ReservationDto.fromReservation(reservationOptional.get());
-                session.getTransaction().commit();
-                return Response.ok(dto, MediaType.APPLICATION_JSON_TYPE).status(Response.Status.OK).build();
-            }
-            else
-            {
-                session.getTransaction().commit();
-                return Response.ok().status(Response.Status.NOT_FOUND).build();
-            }
-
+            final ReservationDto dto = ReservationDto.fromReservation(reservationOptional.get());
+            session.getTransaction().commit();
+            return Response.ok(dto, MediaType.APPLICATION_JSON_TYPE).status(Response.Status.OK).build();
         }
-        catch (Exception e)
+        else
         {
-            throw e;
-            //return Response.ok(e.getMessage()).build();
+            session.getTransaction().commit();
+            return Response.ok().status(Response.Status.NOT_FOUND).build();
         }
     }
 
@@ -327,9 +318,8 @@ public class ReservationResource
             {
                 reservationParam.validateRequired();
                 reservationParam.init();
-                final ReservationDto reservationDto = reservationParam;
                 // Only few things can be changed in edit. Other properties must be changed in a different way
-                return modify(reservation, reservationDto);
+                return modify(reservation, reservationParam);
             }
         });
     }
@@ -507,7 +497,8 @@ public class ReservationResource
         }
 
         reservationRepository.update(reservation);
-        hibernateSessionFactory.getCurrentSession().getTransaction().commit();
+        final Session session = hibernateSessionFactory.getCurrentSession();
+        session.getTransaction().commit();
         return Response.ok().build();
     }
 
