@@ -20,6 +20,7 @@ import net.mklew.hotelms.inhouse.web.dto.dates.DateParser;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.jcontainer.dna.Logger;
+import org.joda.time.DateTime;
 
 import javax.naming.OperationNotSupportedException;
 import javax.servlet.http.HttpServletResponse;
@@ -352,9 +353,93 @@ public class ReservationResource
         });
     }
 
-    private Response modify(Reservation reservation, ReservationDto reservationDto)
+    private static class ReservationChanges
+    {
+        private final Reservation reservation;
+        private final ReservationDto reservationDto;
+
+        private ReservationChanges(Reservation reservation, ReservationDto reservationDto)
+        {
+            this.reservation = reservation;
+            this.reservationDto = reservationDto;
+        }
+
+        boolean rateChanged()
+        {
+            return !reservation.getRate().getRateName().equals(reservationDto.getRateType());
+        }
+
+        boolean roomChanged()
+        {
+            return !reservation.getRoom().getName().equals(RoomName.getNameWithoutPrefix(reservationDto.getRoomName()));
+        }
+
+        boolean checkInChanged()
+        {
+            return !reservation.getCheckIn().equals(reservationDto.getCheckinDate());
+        }
+
+        boolean checkOutChanged()
+        {
+            return !reservation.getCheckOut().equals(reservationDto.getCheckoutDate());
+        }
+
+        String getNewRate()
+        {
+            return reservationDto.getRateType();
+        }
+
+        public DateTime getNewCheckIn()
+        {
+            return reservationDto.getCheckinDate();
+        }
+
+        public DateTime getNewCheckOut()
+        {
+            return reservationDto.getCheckoutDate();
+        }
+
+        public String getNewRoomName()
+        {
+            return reservationDto.getRoomName();
+        }
+
+        boolean extraBedsChanged()
+        {
+            return reservation.getExtraBeds() != getExtraBeds();
+        }
+
+        int getExtraBeds()
+        {
+            return Integer.valueOf(reservationDto.getRoomExtraBed());
+        }
+
+        int getNumberOfAdults()
+        {
+            return Integer.valueOf(reservationDto.getNumberOfAdults());
+        }
+
+        boolean numberOfAdultsChanged()
+        {
+            return reservation.getNumberOfAdults() != getNumberOfAdults();
+        }
+
+        int getNumberOfChildren()
+        {
+            return Integer.valueOf(reservationDto.getNumberOfChildren());
+        }
+
+        boolean numberOfChildrenChanged()
+        {
+            return reservation.getNumberOfChildren() != getNumberOfChildren();
+        }
+    }
+
+    private Response modify(final Reservation reservation, final ReservationDto reservationDto)
     {
         // Only few things can be changed in edit. Other properties must be changed in a different way
+        final ReservationChanges changes = new ReservationChanges(reservation, reservationDto);
+
         if (reservationDto.getCheckinDate().isAfter(reservationDto.getCheckoutDate()))
         {
             hibernateSessionFactory.getCurrentSession().getTransaction().rollback();
@@ -362,31 +447,65 @@ public class ReservationResource
                     " CheckOut date " + reservationDto.getCheckout(), "RESERVATION-WRONG-DATES"),
                     MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_FORBIDDEN).build();
         }
-        if (!(reservation.getCheckIn().equals(reservationDto.getCheckinDate())))
+        // change in room implies rate change even if rates are named the same.
+        try
         {
-            checkInService.changeCheckInDate(reservation, reservationDto.getCheckinDate());
+            if (changes.roomChanged())
+            {
+                // change room and rate according to new checkin and new checkout
+                final RoomName roomName = RoomName.getNameWithoutPrefix(changes.getNewRoomName());
+                final String newRate = changes.getNewRate();
+                final DateTime newCheckIn = changes.getNewCheckIn();
+                final DateTime newCheckOut = changes.getNewCheckOut();
+
+                bookingService.rebookReservationRoom(reservation, roomName, newRate, newCheckIn, newCheckOut);
+            }
+            else if (changes.rateChanged())
+            {
+                final String newRate = changes.getNewRate();
+                bookingService.changeRate(reservation, newRate);
+            }
+
+            if (changes.checkInChanged() || changes.checkOutChanged())
+            {
+                bookingService.rebookVisit(reservation, changes.getNewCheckIn(), changes.getNewCheckOut());
+            }
         }
-        if (!(reservation.getCheckOut().equals(reservationDto.getCheckoutDate())))
+        catch (RoomNotFoundException e)
         {
-            checkOutService.changeCheckOutDate(reservation, reservationDto.getCheckoutDate());
+            logger.error("Room not found exception", e);
+            return Response.ok(new ErrorDto("Room not found", "ROOM-NOT-FOUND"), MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.NOT_FOUND).build();
         }
-        int extraBeds = Integer.valueOf(reservationDto.getRoomExtraBed());
-        if (reservation.getExtraBeds() != extraBeds)
+        catch (RateNotFoundException e)
         {
-            reservation.setExtraBeds(extraBeds);
+            logger.error("Rate not found exception", e);
+            return Response.ok(new ErrorDto("Rate not found", "RATE-NOT-FOUND"), MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.NOT_FOUND).build();
+        }
+        catch (RoomIsUnavailableException e)
+        {
+            final String message = "Room " + e.getRoomName() + " is unavailable between " +
+                    DateParser.fromDate(e.getCheckIn()) + " and " + DateParser.fromDate(e.getCheckOut());
+            return Response.ok(new ErrorDto(message, "ROOM-UNAVAILABLE"), MediaType.APPLICATION_JSON_TYPE).status
+                    (Response.Status.FORBIDDEN).build();
         }
 
-        int numberOfAdults = Integer.valueOf(reservationDto.getNumberOfAdults());
-        if (reservation.getNumberOfAdults() != numberOfAdults)
+        if (changes.extraBedsChanged())
         {
-            reservation.setNumberOfAdults(numberOfAdults);
+            reservation.setExtraBeds(changes.getExtraBeds());
         }
 
-        int numberOfChildren = Integer.valueOf(reservationDto.getNumberOfChildren());
-        if (reservation.getNumberOfChildren() != numberOfChildren)
+        if (changes.numberOfAdultsChanged())
         {
-            reservation.setNumberOfChildren(numberOfChildren);
+            reservation.setNumberOfAdults(changes.getNumberOfAdults());
         }
+
+        if (changes.numberOfChildrenChanged())
+        {
+            reservation.setNumberOfChildren(changes.getNumberOfChildren());
+        }
+
         reservationRepository.update(reservation);
         hibernateSessionFactory.getCurrentSession().getTransaction().commit();
         return Response.ok().build();
@@ -403,4 +522,5 @@ public class ReservationResource
         }
         throw new RuntimeException("Rate not found");
     }
+
 }
