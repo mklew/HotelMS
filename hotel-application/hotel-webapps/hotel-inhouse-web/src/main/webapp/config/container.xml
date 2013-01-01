@@ -156,6 +156,7 @@
     <component class="net.mklew.hotelms.inhouse.web.rest.GuestResource"/>
     <component class="net.mklew.hotelms.inhouse.web.rest.ReservationResource"/>
     <component class="net.mklew.hotelms.inhouse.web.rest.LoginResource"/>
+    <component class="net.mklew.hotelms.inhouse.web.rest.PermResource"/>
 
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RateDtoJAXBContext"/>
     <component class="net.mklew.hotelms.inhouse.web.dto.jaxb.RoomTypeJAXBContext"/>
