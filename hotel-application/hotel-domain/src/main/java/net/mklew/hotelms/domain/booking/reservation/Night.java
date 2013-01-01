@@ -2,6 +2,8 @@ package net.mklew.hotelms.domain.booking.reservation;
 
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.room.Room;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 
@@ -90,5 +92,36 @@ public class Night implements Chargeable
 
     Night()
     {
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (obj == this)
+        {
+            return true;
+        }
+        if (obj.getClass() != getClass())
+        {
+            return false;
+        }
+        Night rhs = (Night) obj;
+        return new EqualsBuilder()
+                .append(reservation, rhs.reservation)
+                .append(date, rhs.date)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(13, 47)
+                .append(reservation)
+                .append(date)
+                .toHashCode();
     }
 }
