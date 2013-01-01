@@ -42,7 +42,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a class="btn- btn-danger" ng-click="destroy($index)">Delete</a>
+                        <a class="btn- btn-danger" ng-show="canDelete()" ng-click="destroy($index)">Delete</a>
                     </li>
                 </ul>
             </div>
