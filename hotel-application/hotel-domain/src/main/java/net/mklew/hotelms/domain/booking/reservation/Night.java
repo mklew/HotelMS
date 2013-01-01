@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
  */
 public class Night implements Chargeable
 {
+    private long id;
     private Reservation reservation;
     private DateTime date;
     private Money price;
@@ -94,6 +95,16 @@ public class Night implements Chargeable
     {
     }
 
+    long getId()
+    {
+        return id;
+    }
+
+    void setId(long id)
+    {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object obj)
     {
@@ -124,4 +135,6 @@ public class Night implements Chargeable
                 .append(date)
                 .toHashCode();
     }
+
+
 }

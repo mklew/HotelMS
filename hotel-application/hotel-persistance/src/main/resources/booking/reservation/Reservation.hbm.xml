@@ -31,10 +31,17 @@
     </class>
 
     <class name="Night" table="NIGHTS">
-        <composite-id>
-            <key-many-to-one name="reservation" column="reservation"/>
-            <key-property name="date"/>
-        </composite-id>
+        <id name="id" column="id">
+            <generator class="sequence">
+                <param name="sequence">nights_sequence</param>
+            </generator>
+        </id>
+        <many-to-one name="reservation" class="Reservation"></many-to-one>
+        <!--<composite-id>-->
+        <!--<key-many-to-one name="reservation" column="reservation"/>-->
+        <!--<key-property name="date"/>-->
+        <!--</composite-id>-->
+        <property name="date"/>
         <property name="price"/>
         <property name="nightStatus">
             <type name="org.hibernate.type.EnumType">
