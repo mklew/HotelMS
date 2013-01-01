@@ -14,7 +14,7 @@
             </generator>
         </composite-id>
         <many-to-one name="reservationOwner" class="net.mklew.hotelms.domain.guests.Guest"/>
-        <set name="nights" inverse="true" cascade="all">
+        <set name="nights" inverse="true" cascade="all-delete-orphan">
             <key column="reservation"/>
             <one-to-many class="Night"/>
         </set>
