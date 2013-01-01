@@ -1,0 +1,107 @@
+<h2 ng-hide="newreservation"></h2>
+<h2 ng-show="newreservation">Add new reservation</h2>
+<form novalidate name="reservationForm">
+    <div class="control-group">
+        <label>Reservation type</label>
+        <select required name="reservationType" autofocus ng-model="reservation.reservationType">
+            <option value="single">Single</option>
+            <option value="group">Group</option>
+            <option value="corporate">Corporate</option>
+            <option value="agent">Agent</option>
+        </select>
+        <span ng-show="reservationForm.reservationType.$error.required" class="help-inline">Required</span>
+        <span ng-show="reservationForm.reservationType.$error" class="help-inline">Error</span>
+    </div>
+
+    <!-- 	<div class="control-group" required ng-class="{error: reservationForm.firstName.$invalid}">
+         <label>First name</label>
+         <input type="text" name="firstName" ng-model="reservation.firstName" required>
+         <span ng-show="reservationForm.firstName.$error.required" class="help-inline">
+             Required</span>
+       </div> -->
+
+    <fieldset>
+        <legend>Stay details</legend>
+        <div class="control-group">
+            <label>Check-in</label>
+            <input type="text" name="checkin" required ng-model="reservation.checkin"/>
+            <span ng-show="reservationForm.checkin.$error.required" class="help-inline">Required</span>
+            reservationForm.checkin.$error {{ reservationForm.checkin.$error}}
+        </div>
+        <div class="control-group">
+            <label>Check-out</label>
+            <input type="text" name="checkout" required ng-model="reservation.checkout"/>
+            <span ng-show="reservationForm.checkout.$error.required" class="help-inline">Required</span>
+            reservationForm.checkout.$error {{ reservationForm.checkout.$error}}
+        </div>
+        <div class="control-group">
+            <label>Number of adults</label>
+            <input type="number" required name="numberOfAdults" ng-model="reservation.numberOfAdults" min="0" max="20"
+                   step="1" value="{{reservation.numberOfAdults}}">
+            <span ng-show="reservationForm.numberOfAdults.$error.required" class="help-inline">Required</span>
+            <span ng-show="reservationForm.numberOfAdults.$error" class="help-inline">Error</span>
+            reservationForm.numberOfAdults.$error {{ reservationForm.numberOfAdults.$error }} adults
+            {{reservation.numberOfAdults}}
+        </div>
+        <div class="control-group">
+            <label>Number of children</label>
+            <input type="number" required name="numberOfChildren" ng-model="reservation.numberOfChildren" min="0"
+                   max="20" step="1" value="{{reservation.numberOfChildren}}">
+            <span ng-show="reservationForm.numberOfChildren.$error.required" class="help-inline">Required</span>
+            <span ng-show="reservationForm.numberOfChildren.$error" class="help-inline">Error</span>
+            reservationForm.numberOfChildren.$error {{ reservationForm.numberOfChildren.$error }}
+            children
+            {{reservation.numberOfChildren}}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Room</legend>
+        <div class="control-group">
+            <label>Choose room type</label>
+            <select required name="roomType" ng-model="reservation.roomType"
+                    ng-options="roomType.id as roomType.id for roomType in types"></select>
+            <span ng-show="reservationForm.roomType.$error.required" class="help-inline">Required</span>
+            reservationForm.roomType.$error {{ reservationForm.roomType.$error}}
+        </div>
+        <div class="control-group">
+            <label>Choose room</label>
+            <select required name="roomName" ng-model="reservation.roomName"
+                    ng-options="roomName.id as roomName.id for roomName in rooms"></select>
+            <span ng-show="reservationForm.roomName.$error.required" class="help-inline">Required</span>
+            reservationForm.roomName.$error {{ reservationForm.roomName.$error}}
+        </div>
+        <div class="control-group">
+            <label>Extra beds</label>
+            <select required name="roomExtraBed" ng-model="reservation.roomExtraBed"
+                    ng-options="bed.extraBed as bed.extraBed for bed in extraBeds"></select>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Rate</legend>
+        <div class="control-group">
+            <label>Type</label>
+            <input type="text" disabled="true" ng-model="reservation.rateType" required name="rateType"/>
+            <!-- <select
+         <span ng-show="reservationForm.rateType.$error.required" class="help-inline">Required</span> -->
+        </div>
+
+        <button class="btn btn-action" ng-click="calculateCharges()">Calculate charges</button>
+
+        <div ng-show="chargesCalculated">
+            <p>Amount: {{ amount }}</p>
+        </div>
+
+
+        <!-- <div id="${id}-rateCharge" data-dojo-attach-point="rateCharge" name="rate-charge"
+       data-dojo-type="dijit/form/CurrencyTextBox"/> -->
+    </fieldset>
+    <a href="#/" class="btn">Cancel</a>
+    <button ng-click="save()" ng-disabled="isClean() || reservationForm.$invalid"
+            class="btn btn-primary">Save
+    </button>
+    <button ng-click="destroy()"
+            ng-show="reservation.reservationId" class="btn btn-danger">Delete
+    </button>
+</form>
