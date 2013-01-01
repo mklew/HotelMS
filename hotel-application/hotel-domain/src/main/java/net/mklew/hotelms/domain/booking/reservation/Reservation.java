@@ -319,7 +319,7 @@ public class Reservation implements Serializable
         Rate rate = getRate();
         final Set<Night> newNights = createNights(newCheckIn, newCheckOut, rate);
         nights.clear();
-        nights = newNights;
+        nights.addAll(newNights);
     }
 
     public void changeRoom(Room room, Rate rate)
@@ -332,6 +332,6 @@ public class Reservation implements Serializable
         final DateTime checkIn = getCheckIn();
         final DateTime checkOut = getCheckOut();
         nights.clear();
-        nights = createNights(checkIn, checkOut, chosenRate);
+        nights.addAll(createNights(checkIn, checkOut, chosenRate));
     }
 }
