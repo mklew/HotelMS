@@ -321,4 +321,17 @@ public class Reservation implements Serializable
         nights.clear();
         nights = newNights;
     }
+
+    public void changeRoom(Room room, Rate rate)
+    {
+        changeRate(rate);
+    }
+
+    public void changeRate(Rate chosenRate)
+    {
+        final DateTime checkIn = getCheckIn();
+        final DateTime checkOut = getCheckOut();
+        nights.clear();
+        nights = createNights(checkIn, checkOut, chosenRate);
+    }
 }
