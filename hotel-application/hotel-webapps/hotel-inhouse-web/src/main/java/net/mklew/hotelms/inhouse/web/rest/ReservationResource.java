@@ -319,7 +319,6 @@ public class ReservationResource
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modifyReservation(@PathParam("id") String reservationId, final ReservationDto reservationParam)
     {
-        // TODO make it DRY
         return reservationOperationTemplate(reservationId, new ReservationOperationAction()
         {
             @Override
@@ -329,44 +328,11 @@ public class ReservationResource
                 reservationParam.init();
                 final ReservationDto reservationDto = reservationParam;
                 // Only few things can be changed in edit. Other properties must be changed in a different way
-                if (reservationDto.getCheckinDate().isAfter(reservationDto.getCheckoutDate()))
-                {
-                    hibernateSessionFactory.getCurrentSession().getTransaction().rollback();
-                    return Response.ok(new ErrorDto("CheckIn " + reservationDto.getCheckin() + " date cannot be after" +
-                            " CheckOut date " + reservationDto.getCheckout(), "RESERVATION-WRONG-DATES"),
-                            MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_FORBIDDEN).build();
-                }
-                if (!(reservation.getCheckIn().equals(reservationDto.getCheckinDate())))
-                {
-                    checkInService.changeCheckInDate(reservation, reservationDto.getCheckinDate());
-                }
-                if (!(reservation.getCheckOut().equals(reservationDto.getCheckoutDate())))
-                {
-                    checkOutService.changeCheckOutDate(reservation, reservationDto.getCheckoutDate());
-                }
-                int extraBeds = Integer.valueOf(reservationDto.getRoomExtraBed());
-                if (reservation.getExtraBeds() != extraBeds)
-                {
-                    reservation.setExtraBeds(extraBeds);
-                }
-
-                int numberOfAdults = Integer.valueOf(reservationDto.getNumberOfAdults());
-                if (reservation.getNumberOfAdults() != numberOfAdults)
-                {
-                    reservation.setNumberOfAdults(numberOfAdults);
-                }
-
-                int numberOfChildren = Integer.valueOf(reservationDto.getNumberOfChildren());
-                if (reservation.getNumberOfChildren() != numberOfChildren)
-                {
-                    reservation.setNumberOfChildren(numberOfChildren);
-                }
-                reservationRepository.update(reservation);
-                hibernateSessionFactory.getCurrentSession().getTransaction().commit();
-                return Response.ok().build();
+                return modify(reservation, reservationDto);
             }
         });
     }
+
 
     @PUT
     @Path("/{id}/")
@@ -380,44 +346,50 @@ public class ReservationResource
             Response doAction(Reservation reservation)
             {
                 final ReservationDto reservationDto = ReservationDto.fromReservationForm(formParams);
-                // Only few things can be changed in edit. Other properties must be changed in a different way
-                if (reservationDto.getCheckinDate().isAfter(reservationDto.getCheckoutDate()))
-                {
-                    hibernateSessionFactory.getCurrentSession().getTransaction().rollback();
-                    return Response.ok(new ErrorDto("CheckIn " + reservationDto.getCheckin() + " date cannot be after" +
-                            " CheckOut date " + reservationDto.getCheckout(), "RESERVATION-WRONG-DATES"),
-                            MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_FORBIDDEN).build();
-                }
-                if (!(reservation.getCheckIn().equals(reservationDto.getCheckinDate())))
-                {
-                    checkInService.changeCheckInDate(reservation, reservationDto.getCheckinDate());
-                }
-                if (!(reservation.getCheckOut().equals(reservationDto.getCheckoutDate())))
-                {
-                    checkOutService.changeCheckOutDate(reservation, reservationDto.getCheckoutDate());
-                }
-                int extraBeds = Integer.valueOf(reservationDto.getRoomExtraBed());
-                if (reservation.getExtraBeds() != extraBeds)
-                {
-                    reservation.setExtraBeds(extraBeds);
-                }
+                return modify(reservation, reservationDto);
 
-                int numberOfAdults = Integer.valueOf(reservationDto.getNumberOfAdults());
-                if (reservation.getNumberOfAdults() != numberOfAdults)
-                {
-                    reservation.setNumberOfAdults(numberOfAdults);
-                }
-
-                int numberOfChildren = Integer.valueOf(reservationDto.getNumberOfChildren());
-                if (reservation.getNumberOfChildren() != numberOfChildren)
-                {
-                    reservation.setNumberOfChildren(numberOfChildren);
-                }
-                reservationRepository.update(reservation);
-                hibernateSessionFactory.getCurrentSession().getTransaction().commit();
-                return Response.ok().build();
             }
         });
+    }
+
+    private Response modify(Reservation reservation, ReservationDto reservationDto)
+    {
+        // Only few things can be changed in edit. Other properties must be changed in a different way
+        if (reservationDto.getCheckinDate().isAfter(reservationDto.getCheckoutDate()))
+        {
+            hibernateSessionFactory.getCurrentSession().getTransaction().rollback();
+            return Response.ok(new ErrorDto("CheckIn " + reservationDto.getCheckin() + " date cannot be after" +
+                    " CheckOut date " + reservationDto.getCheckout(), "RESERVATION-WRONG-DATES"),
+                    MediaType.APPLICATION_JSON_TYPE).status(HttpServletResponse.SC_FORBIDDEN).build();
+        }
+        if (!(reservation.getCheckIn().equals(reservationDto.getCheckinDate())))
+        {
+            checkInService.changeCheckInDate(reservation, reservationDto.getCheckinDate());
+        }
+        if (!(reservation.getCheckOut().equals(reservationDto.getCheckoutDate())))
+        {
+            checkOutService.changeCheckOutDate(reservation, reservationDto.getCheckoutDate());
+        }
+        int extraBeds = Integer.valueOf(reservationDto.getRoomExtraBed());
+        if (reservation.getExtraBeds() != extraBeds)
+        {
+            reservation.setExtraBeds(extraBeds);
+        }
+
+        int numberOfAdults = Integer.valueOf(reservationDto.getNumberOfAdults());
+        if (reservation.getNumberOfAdults() != numberOfAdults)
+        {
+            reservation.setNumberOfAdults(numberOfAdults);
+        }
+
+        int numberOfChildren = Integer.valueOf(reservationDto.getNumberOfChildren());
+        if (reservation.getNumberOfChildren() != numberOfChildren)
+        {
+            reservation.setNumberOfChildren(numberOfChildren);
+        }
+        reservationRepository.update(reservation);
+        hibernateSessionFactory.getCurrentSession().getTransaction().commit();
+        return Response.ok().build();
     }
 
     private Rate getChosenRate(ReservationDto reservationDto, Collection<Rate> rates)
