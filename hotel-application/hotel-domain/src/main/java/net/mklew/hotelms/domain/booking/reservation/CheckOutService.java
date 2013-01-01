@@ -20,9 +20,4 @@ public class CheckOutService
     {
         reservation.checkOut();
     }
-
-    public void changeCheckOutDate(Reservation reservation, DateTime checkoutDate)
-    {
-        reservation.changeCheckOutTo(checkoutDate);
-    }
 }

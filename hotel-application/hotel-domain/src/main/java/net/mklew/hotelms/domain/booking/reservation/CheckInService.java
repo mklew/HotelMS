@@ -18,11 +18,4 @@ public class CheckInService
     {
         reservation.checkIn();
     }
-
-    public void changeCheckInDate(Reservation reservation, DateTime checkinDate)
-    {
-        // this might require special treatment
-        // current implementation just changes checkInDate
-        reservation.changeCheckInTo(checkinDate);
-    }
 }
