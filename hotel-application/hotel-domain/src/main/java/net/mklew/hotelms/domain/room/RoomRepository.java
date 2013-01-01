@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.room;
 
+import net.mklew.hotelms.domain.booking.reservation.Reservation;
 import org.joda.time.DateTime;
 
 import java.util.Collection;
@@ -17,5 +18,5 @@ public interface RoomRepository
 
     Collection<Room> getAllRooms();
 
-    boolean isRoomAvailableBetweenDates(Room room, DateTime checkIn, DateTime checkOut);
+    boolean isRoomAvailableBetweenDates(Room room, DateTime checkIn, DateTime checkOut, Reservation reservation);
 }

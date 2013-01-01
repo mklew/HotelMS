@@ -54,14 +54,14 @@ public class RoomRepositoryHibernate extends HibernateRepository implements Room
     }
 
     @Override
-    public boolean isRoomAvailableBetweenDates(Room room, DateTime checkIn, DateTime checkOut)
+    public boolean isRoomAvailableBetweenDates(Room room, DateTime checkIn, DateTime checkOut, Reservation res)
     {
         // TODO change it into single exists query
         Collection<Reservation> reservations = reservationRepository
                 .findAllReservationsAroundDates(checkIn, checkOut);
         for (Reservation reservation : reservations)
         {
-            if (reservation.getRoom().equals(room))
+            if (reservation.getRoom().equals(room) && (!reservation.getReservationId().equals(res.getReservationId())))
             {
                 return false;
             }
