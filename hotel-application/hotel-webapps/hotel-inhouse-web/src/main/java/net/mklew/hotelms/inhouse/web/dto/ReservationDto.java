@@ -2,6 +2,7 @@ package net.mklew.hotelms.inhouse.web.dto;
 
 import net.mklew.hotelms.domain.booking.reservation.Reservation;
 import net.mklew.hotelms.inhouse.web.dto.dates.DateParser;
+import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.DateTime;
 
@@ -170,5 +171,11 @@ public class ReservationDto
     {
         checkinDate = DateParser.fromString(checkin);
         checkoutDate = DateParser.fromString(checkout);
+    }
+
+    @JsonAnySetter
+    public void handleUnknown(String key, Object value)
+    {
+        // ignore
     }
 }
