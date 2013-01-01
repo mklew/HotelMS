@@ -7,7 +7,7 @@ config(function($routeProvider) {
       otherwise({redirectTo:'/'});
   });
 
-function ReservationListCtrl($scope, $location, Reservation) {
+function ReservationListCtrl($scope, $location, $http, Reservation) {
   $scope.reservations = Reservation.query();
 
   function currentReservation(index)
@@ -40,6 +40,26 @@ function ReservationListCtrl($scope, $location, Reservation) {
     reservation.destroy(function(){
       $scope.reservations = Reservation.query();
     });
+  }
+
+  $scope.hasPerm = function(perm)
+  {
+      $http.get('/rest/perm', {params : {"perm" : perm}}).success(function (){
+        $scope._canDelete = true;
+      }).error(function (){
+        $scope._canDelete = false;
+      });
+  }
+
+  $scope._canDelete = undefined;
+
+  $scope.canDelete = function()
+  {
+    if(angular.isUndefined($scope._canDelete))
+    {
+      $scope.hasPerm('reservation:delete');      
+    }
+    return $scope._canDelete;
   }
 }
 
