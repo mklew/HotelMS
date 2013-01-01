@@ -144,4 +144,31 @@ public class ReservationDto
     {
         this.reservationStatus = reservationStatus;
     }
+
+    public void validateRequired()
+    {
+        notEmpty(reservationType);
+        notEmpty(checkin);
+        notEmpty(checkout);
+        notEmpty(numberOfAdults);
+        notEmpty(numberOfChildren);
+        notEmpty(roomType);
+        notEmpty(roomName);
+        notEmpty(roomExtraBed);
+        notEmpty(rateType);
+    }
+
+    private static void notEmpty(String string)
+    {
+        if (string == null || "".equals(string))
+        {
+            throw new IllegalArgumentException("Parameter cannot be null nor empty");
+        }
+    }
+
+    public void init()
+    {
+        checkinDate = DateParser.fromString(checkin);
+        checkoutDate = DateParser.fromString(checkout);
+    }
 }
