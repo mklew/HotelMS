@@ -311,6 +311,11 @@ public class Reservation implements Serializable
 
     public void changeCheckInAndCheckOut(DateTime newCheckIn, DateTime newCheckOut)
     {
+        if (newCheckIn.isAfter(newCheckOut))
+        {
+            throw new IllegalArgumentException("Wrong checkin" + newCheckIn + " and checkout " + newCheckOut + " " +
+                    "dates");
+        }
         Rate rate = getRate();
         final Set<Night> newNights = createNights(newCheckIn, newCheckOut, rate);
         nights.clear();
