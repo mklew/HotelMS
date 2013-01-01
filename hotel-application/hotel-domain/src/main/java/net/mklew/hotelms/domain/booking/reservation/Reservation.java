@@ -1,5 +1,6 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
+import com.google.common.collect.Sets;
 import net.mklew.hotelms.domain.booking.Id;
 import net.mklew.hotelms.domain.booking.ReservationStatus;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
@@ -41,16 +42,17 @@ public class Reservation implements Serializable
         this.numberOfChildren = numberOfChildren;
         this.extraBeds = extraBeds;
         this.reservationStatus = reservationStatus;
-        createNights(checkIn, checkOut, rate);
+        this.nights = createNights(checkIn, checkOut, rate);
     }
 
-    private void createNights(DateTime checkIn, DateTime checkOut, Rate rate)
+    private Set<Night> createNights(DateTime checkIn, DateTime checkOut, Rate rate)
     {
-        nights = new HashSet<>();
+        HashSet<Night> nights = new HashSet<>();
         for (int i = 0; !checkIn.plusDays(i).equals(checkOut.plusDays(1)); ++i)
         {
             nights.add(new Night(this, checkIn.plusDays(i), NightStatus.NOT_USED, rate.standardPrice(), rate));
         }
+        return nights;
     }
 
     public void moveToRoom(RoomId roomId)
@@ -281,19 +283,37 @@ public class Reservation implements Serializable
     {
     }
 
-    public void changeCheckInTo(DateTime checkinDate)
+    public void changeCheckInTo(DateTime newCheckIn)
     {
         DateTime checkout = getCheckOut();
-        Rate rate = getRate();
-        nights.clear();
-        createNights(checkinDate, checkout, rate);
+        if (newCheckIn.isAfter(checkout))
+        {
+            throw new IllegalArgumentException("CheckIn" + newCheckIn + "cannot be after CheckOut");
+        }
+        else
+        {
+            changeCheckInAndCheckOut(newCheckIn, checkout);
+        }
     }
 
-    public void changeCheckOutTo(DateTime checkoutDate)
+    public void changeCheckOutTo(DateTime newCheckOut)
     {
         DateTime checkin = getCheckIn();
+        if (newCheckOut.isBefore(checkin))
+        {
+            throw new IllegalArgumentException("CheckOut" + newCheckOut + "cannot be before checkIn");
+        }
+        else
+        {
+            changeCheckInAndCheckOut(checkin, newCheckOut);
+        }
+    }
+
+    public void changeCheckInAndCheckOut(DateTime newCheckIn, DateTime newCheckOut)
+    {
         Rate rate = getRate();
+        final Set<Night> newNights = createNights(newCheckIn, newCheckOut, rate);
         nights.clear();
-        createNights(checkin, checkoutDate, rate);
+        nights = newNights;
     }
 }
