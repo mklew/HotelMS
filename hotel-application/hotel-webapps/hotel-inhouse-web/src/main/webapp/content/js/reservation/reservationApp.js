@@ -99,6 +99,15 @@ function ReservationEditCtrl($scope, $routeParams, $location, $http, Reservation
     }
   }
 
+  $scope.roomChanged = function()
+  {
+    console.log("roomChanged")
+    if ($scope.rooms !== undefined )
+    {
+      $scope.fetchRates();
+    }
+  }
+
   $scope.extraBeds = [{ extraBed: 0 },{extraBed: 1},{extraBed:2}, {extraBed:3},
                  { extraBed: 4 },{extraBed: 5},{extraBed:6}, {extraBed:7},
                  { extraBed: 8 },{extraBed: 9},{extraBed:10}, {extraBed:11}
@@ -110,8 +119,17 @@ function ReservationEditCtrl($scope, $routeParams, $location, $http, Reservation
      reservation.roomExtraBed = parseInt(reservation.roomExtraBed);
      self.original = reservation;
     $scope.original = reservation;
-    $scope.reservation = new Reservation(self.original);
+    $scope.reservation = new Reservation(self.original);    
   });
+
+  $scope.fetchRates = function()
+  {
+    console.log("fetchRates called");
+    var room = getCurrentRoomObject()
+    $http.get("/rest/rates/" + room.number).success(function(data){
+      $scope.rates = data;
+    });
+  }
 
   $http.get("/rest/room/types").success(function(data, status, headers, config){
     $scope.types = data;
@@ -119,6 +137,7 @@ function ReservationEditCtrl($scope, $routeParams, $location, $http, Reservation
 
   $http.get("/rest/room").success(function(data, status, headers, config){
     $scope.rooms = data;
+    $scope.fetchRates();
   });
 
   $scope.isClean = function() {

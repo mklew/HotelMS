@@ -66,7 +66,7 @@
         </div>
         <div class="control-group">
             <label>Choose room</label>
-            <select required name="roomName" ng-model="reservation.roomName"
+            <select ng-change="roomChanged()" required name="roomName" ng-model="reservation.roomName"
                     ng-options="roomName.id as roomName.id for roomName in rooms"></select>
             <span ng-show="reservationForm.roomName.$error.required" class="help-inline">Required</span>
             reservationForm.roomName.$error {{ reservationForm.roomName.$error}}
@@ -83,8 +83,12 @@
         <div class="control-group">
             <label>Type</label>
             <input type="text" disabled="true" ng-model="reservation.rateType" required name="rateType"/>
-            <!-- <select
-         <span ng-show="reservationForm.rateType.$error.required" class="help-inline">Required</span> -->
+
+            <select ng-model="reservation.rateType" required name="rateType"
+                    ng-options="rate.name as rate.name for rate in rates"></select>
+
+
+            <!-- <span ng-show="reservationForm.rateType.$error.required" class="help-inline">Required</span> -->
         </div>
 
         <button class="btn btn-action" ng-click="calculateCharges()">Calculate charges</button>
