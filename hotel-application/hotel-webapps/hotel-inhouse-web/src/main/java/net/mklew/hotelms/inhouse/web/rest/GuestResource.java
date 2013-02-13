@@ -24,7 +24,6 @@ import java.util.Collection;
  * @since 11/30/12
  *        time 7:44 PM
  */
-@Singleton
 @Path("guests")
 public class GuestResource
 {

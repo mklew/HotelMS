@@ -14,7 +14,6 @@ import javax.ws.rs.core.MediaType;
  * @since 10/21/12
  *        Time: 1:27 PM
  */
-@Singleton
 @Path("/hello")
 public class HelloRest
 {

@@ -20,7 +20,6 @@ import java.util.Collection;
  * @since 11/25/12
  *        time 7:14 PM
  */
-@Singleton
 @Path("/room")
 public class RoomResource
 {

@@ -37,7 +37,6 @@ import java.util.Collection;
  * @since 12/24/12
  *        time 3:46 PM
  */
-@Singleton
 @Path("/reservations")
 public class ReservationResource
 {

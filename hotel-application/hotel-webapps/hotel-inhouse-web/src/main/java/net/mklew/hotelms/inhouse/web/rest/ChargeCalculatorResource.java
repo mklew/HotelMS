@@ -30,7 +30,6 @@ import java.util.Collection;
  *        time 3:00 PM
  */
 @Path("charge")
-@Singleton
 public class ChargeCalculatorResource
 {
     private final RateRepository rateRepository;

@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response;
  *        time 3:12 PM
  */
 @Path("login")
-@Singleton
 public class LoginResource
 {
     /**

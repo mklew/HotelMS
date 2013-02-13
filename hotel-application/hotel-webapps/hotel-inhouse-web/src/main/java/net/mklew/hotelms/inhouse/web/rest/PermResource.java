@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
  * @since 1/1/13
  *        time 1:48 AM
  */
-@Singleton
 @Path("perm")
 public class PermResource
 {
