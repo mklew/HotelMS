@@ -1,7 +1,6 @@
 package net.mklew.hotelms.inhouse.web.rest;
 
 import com.google.common.base.Optional;
-import com.sun.jersey.spi.resource.Singleton;
 import net.mklew.hotelms.domain.booking.GuestNotFoundException;
 import net.mklew.hotelms.domain.booking.GuestRepository;
 import net.mklew.hotelms.domain.guests.Guest;
@@ -9,9 +8,10 @@ import net.mklew.hotelms.inhouse.web.dto.ErrorDto;
 import net.mklew.hotelms.inhouse.web.dto.GuestDto;
 import net.mklew.hotelms.inhouse.web.dto.MissingGuestInformation;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.jcontainer.dna.Logger;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -27,14 +27,14 @@ import java.util.Collection;
 @Path("guests")
 public class GuestResource
 {
-    private final Logger logger;
+    private final Logger logger = Logger.getLogger(GuestResource.class);
     private final HibernateSessionFactory hibernateSessionFactory;
     private final GuestRepository guestRepository;
 
-    public GuestResource(Logger logger, HibernateSessionFactory hibernateSessionFactory,
+    @Inject
+    public GuestResource(HibernateSessionFactory hibernateSessionFactory,
                          GuestRepository guestRepository)
     {
-        this.logger = logger;
         this.hibernateSessionFactory = hibernateSessionFactory;
         this.guestRepository = guestRepository;
     }

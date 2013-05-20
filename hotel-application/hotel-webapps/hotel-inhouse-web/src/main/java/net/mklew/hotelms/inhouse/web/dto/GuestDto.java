@@ -1,14 +1,13 @@
 package net.mklew.hotelms.inhouse.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.mklew.hotelms.domain.guests.DocumentType;
 import net.mklew.hotelms.domain.guests.Gender;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.inhouse.web.dto.dates.DateParser;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.DateTime;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,7 +16,6 @@ import java.util.Collection;
  * @since 11/30/12
  *        time 8:14 PM
  */
-@XmlRootElement(name = "guestdto")
 public class GuestDto
 {
     public String id;

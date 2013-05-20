@@ -2,7 +2,6 @@ package net.mklew.hotelms.inhouse.web.rest;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
-import com.sun.jersey.spi.resource.Singleton;
 import net.mklew.hotelms.domain.booking.ChargeCalculatorService;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.booking.reservation.rates.RateRepository;
@@ -18,6 +17,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -38,6 +38,7 @@ public class ChargeCalculatorResource
     private final DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd")
             .toFormatter();
 
+    @Inject
     public ChargeCalculatorResource(RateRepository rateRepository, RoomRepository roomRepository,
                                     HibernateSessionFactory hibernateSessionFactory)
     {

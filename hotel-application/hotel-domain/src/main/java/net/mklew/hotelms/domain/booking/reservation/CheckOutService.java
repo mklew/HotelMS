@@ -1,23 +1,10 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
-import org.joda.time.DateTime;
-
 /**
- * CheckingOut reservation might involve complex business logic.
- * <p/>
- * Example of business rule:
- * check if its not early checkout and do it right according to policy about early checkouts,
- * <p/>
- * This is place for it.
- *
- * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since 12/28/12
- *        time 10:14 PM
+ * @author Marek Lewandowski
+ * @since 5/20/13
  */
-public class CheckOutService
+public interface CheckOutService
 {
-    public void checkOut(Reservation reservation)
-    {
-        reservation.checkOut();
-    }
+    void checkOut(Reservation reservation);
 }

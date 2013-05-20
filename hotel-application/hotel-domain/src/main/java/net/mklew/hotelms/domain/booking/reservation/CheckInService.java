@@ -1,21 +1,10 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
-import org.joda.time.DateTime;
-
 /**
- * CheckIn process might involve some kind of business logic. This is place for it.
- * <p/>
- * Current implementation has no business logic.
- *
- * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since 12/28/12
- *        time 10:11 PM
+ * @author Marek Lewandowski
+ * @since 5/20/13
  */
-public class CheckInService
+public interface CheckInService
 {
-
-    public void checkIn(Reservation reservation)
-    {
-        reservation.checkIn();
-    }
+    void checkIn(Reservation reservation);
 }

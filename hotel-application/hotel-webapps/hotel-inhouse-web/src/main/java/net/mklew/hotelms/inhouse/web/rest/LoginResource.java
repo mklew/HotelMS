@@ -1,7 +1,5 @@
 package net.mklew.hotelms.inhouse.web.rest;
 
-import com.sun.jersey.spi.resource.Singleton;
-
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;

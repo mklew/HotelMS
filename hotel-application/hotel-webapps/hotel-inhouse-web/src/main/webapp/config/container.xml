@@ -1,24 +1,8 @@
 <?xml version="1.0"?>
 <container xmlns="http://objectledge.org/container/1.0">
 
-    <!--<component class="net.mklew.demo.Counter"/>-->
-
-    <!-- Database bootstrap, only for development purposes! -->
+    <!-- Database bootstrap, only for development purposes! Seeds database with sample data -->
     <component class="net.mklew.hotelms.persistance.hibernate.configuration.DbBootstrap"/>
-
-    <!-- Bayeux services and channels -->
-    <!--<component class="net.mklew.hotelms.inhouse.web.cometd.AuthorizerValve"/>-->
-    <component class="net.mklew.hotelms.inhouse.web.cometd.HelloService"/>
-
-    <component class="org.objectledge.cometd.BayeuxServerConfigurator">
-        <parameter/>
-        <sequence>
-            <!--<parameter class-key="net.mklew.hotelms.inhouse.web.cometd.AuthorizerValve"/>-->
-        </sequence>
-        <sequence>
-            <parameter class-key="net.mklew.hotelms.inhouse.web.cometd.HelloService"/>
-        </sequence>
-    </component>
 
     <!-- Hibernate -->
     <component class-key="net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory"
@@ -40,10 +24,14 @@
     <component class-key="net.mklew.hotelms.domain.booking.reservation.ReservationFactory"
                class="net.mklew.hotelms.domain.booking.reservation.ReservationFactoryImpl"/>
 
-    <component class="net.mklew.hotelms.domain.booking.reservation.BookingService"/>
-    <component class="net.mklew.hotelms.domain.booking.reservation.CheckInService"/>
-    <component class="net.mklew.hotelms.domain.booking.reservation.CheckOutService"/>
-    <component class="net.mklew.hotelms.domain.booking.reservation.CancellationService"/>
+    <component class-key="net.mklew.hotelms.domain.booking.reservation.BookingService"
+               class="net.mklew.hotelms.domain.booking.reservation.BookingServiceImpl"/>
+    <component class-key="net.mklew.hotelms.domain.booking.reservation.CheckInService"
+               class="net.mklew.hotelms.domain.booking.reservation.CheckInServiceImpl"/>
+    <component class-key="net.mklew.hotelms.domain.booking.reservation.CheckOutService"
+               class="net.mklew.hotelms.domain.booking.reservation.CheckOutServiceImpl"/>
+    <component class-key="net.mklew.hotelms.domain.booking.reservation.CancellationService"
+               class="net.mklew.hotelms.domain.booking.reservation.CancellationServiceImpl"/>
 
     <!-- // valves ////////////////////////////////////////////////////////////////////// -->
 
@@ -55,8 +43,17 @@
     <component class="org.objectledge.parameters.RequestParametersLoaderValve"/>
     <component class="org.objectledge.web.ShiroSubjectValve"/>
     <component class="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
-    <component class="net.mklew.hotelms.persistance.valve.EmptyValve"/>
     <component class="net.mklew.hotelms.persistance.valve.DelayTillCommittedValve"/>
+    <component class-key="org.objectledge.i18n.I18n" class="org.objectledge.i18n.xml.XMLI18n"/>
+    <component class="org.objectledge.i18n.LocaleLoaderValve"/>
+    <component class="org.objectledge.authentication.AuthenticationValve"/>
+
+    <component class-key="org.objectledge.authentication.UserManager"
+               class="org.objectledge.authentication.DummyUserManager"/>
+
+    <component class="org.objectledge.database.Transaction$GuardValve"/>
+
+    <component class="org.objectledge.database.ThreadDataSource$GuardValve"/>
 
     <component class="org.objectledge.web.mvc.builders.ViewEnclosureManager"/>
 
@@ -97,8 +94,33 @@
         </sequence>
     </component>
 
-    <component class-key="org.objectledge.web.rest.JerseyRestValve"
-               class="org.objectledge.web.rest.JerseyRestValve"/>
+    <container key="forwardMeToParent"/>
+    <component class="org.objectledge.web.rest.JerseyRestValve">
+        <parameter key="forwardMeToParent" />
+        <parameter />
+        <parameter />
+        <parameter />
+        <parameter />
+        <sequence>
+            <!-- Add binders for @Inject -->
+            <component class="org.objectledge.web.rest.I18nLocaleFactoryBinder"/>
+        </sequence>
+        <sequence>
+            <!-- Jersey configuration hooks, register filters, features, properties etc. -->
+        </sequence>
+    </component>
+
+    <component class="org.objectledge.web.rest.CompositeJacksonMapper">
+        <sequence>
+        </sequence>
+        <parameter/>
+    </component>
+
+    <component class-key="org.objectledge.web.json.ObjectMapperProvider"
+               class="org.objectledge.web.json.ObjectMapperProviderImpl"/>
+
+    <component class-key="org.objectledge.i18n.LabelFinder"
+               class="org.objectledge.i18n.impl.LabelFinderImpl"/>
 
     <!-- // pipeline //////////////////////////////////////////////////////////////////////// -->
 
@@ -131,24 +153,28 @@
         </sequence>
     </component>
 
+    <component key="simpleAuthenticationPipeline"
+               class="org.objectledge.pipeline.SimplePipeline">
+        <sequence>
+            <parameter class-key="org.objectledge.web.ContentTypeInitializerValve"/>
+            <parameter class-key="org.objectledge.authentication.AuthenticationValve"/>
+        </sequence>
+    </component>
+
 
     <component class="org.objectledge.pipeline.ErrorHandlingPipeline" key="restErrorHandlingPipeline">
         <parameter class-key="org.jcontainer.dna.Logger"/>
         <sequence>
+            <parameter key="simpleAuthenticationPipeline"/>
+            <parameter class-key="org.objectledge.i18n.LocaleLoaderValve"/>
             <parameter key="restPipeline"/>
         </sequence>
         <sequence>
             <parameter class-key="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
         </sequence>
         <sequence>
-            <parameter class-key="net.mklew.hotelms.persistance.valve.EmptyValve"/>
         </sequence>
     </component>
-
-    <!-- // jersey resources //////////////////////////////////////////////////////////////// -->
-
-    <component class="net.mklew.hotelms.inhouse.web.rest.test.HelloComponent"/>
-    <component class="net.mklew.hotelms.inhouse.web.rest.HelloRest"/>
 
     <!-- // dispatchers ///////////////////////////////////////////////////////////////////// -->
 

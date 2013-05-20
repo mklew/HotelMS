@@ -4,19 +4,6 @@
 <web-app>
     <display-name>Hotel management system</display-name>
 
-    <servlet>
-        <servlet-name>cometd</servlet-name>
-        <servlet-class>org.cometd.server.CometdServlet</servlet-class>
-        <init-param>
-            <param-name>transports</param-name>
-            <param-value>org.cometd.websocket.server.WebSocketTransport</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>cometd</servlet-name>
-        <url-pattern>/cometd/*</url-pattern>
-    </servlet-mapping>
-
     <filter>
         <filter-name>cross-origin</filter-name>
         <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
@@ -33,10 +20,6 @@
 
     <listener>
         <listener-class>org.objectledge.web.LedgeServletContextListener</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.objectledge.cometd.BayeuxServerHookListener</listener-class>
     </listener>
 
     <listener>

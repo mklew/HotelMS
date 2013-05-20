@@ -1,6 +1,5 @@
 package net.mklew.hotelms.inhouse.web.rest;
 
-import com.sun.jersey.spi.resource.Singleton;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.booking.reservation.rates.RateRepository;
 import net.mklew.hotelms.domain.room.Room;
@@ -11,6 +10,7 @@ import net.mklew.hotelms.inhouse.web.dto.RateDto;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -33,6 +33,7 @@ public class RatesResource
     private final RoomRepository roomRepository;
     private final HibernateSessionFactory hibernateSessionFactory;
 
+    @Inject
     public RatesResource(RateRepository rateRepository, RoomRepository roomRepository,
                          HibernateSessionFactory hibernateSessionFactory)
     {

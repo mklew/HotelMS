@@ -1,6 +1,6 @@
 package net.mklew.hotelms.inhouse.web.modules.views;
 
-import org.codehaus.jackson.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerationException;
 import org.jcontainer.dna.Logger;
 import org.objectledge.context.Context;
 import org.objectledge.pipeline.ProcessingException;

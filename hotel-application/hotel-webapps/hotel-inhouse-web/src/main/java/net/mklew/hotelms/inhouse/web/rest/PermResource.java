@@ -1,6 +1,5 @@
 package net.mklew.hotelms.inhouse.web.rest;
 
-import com.sun.jersey.spi.resource.Singleton;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 

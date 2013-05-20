@@ -39,7 +39,7 @@
       <property name="velocimacro.library" value="templates/common/result.vt"/>
       <property name="velocimacro.library" value="templates/common/table.vt"/>
       <property name="velocimacro.library" value="templates/common/dateSelector.vt"/>
-      <property name="velocimacro.library" value="templates/common/sockets.vt"/>
+      <!--<property name="velocimacro.library" value="templates/common/sockets.vt"/>-->
   </properties>
 
 </config>

@@ -42,6 +42,10 @@
         </repository>
     </repositories>
 
+    <properties>
+            <versions.hibernate>4.2.1.Final</versions.hibernate>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -59,13 +63,13 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.1.7.Final</version>
+            <version>${versions.hibernate}</version>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.1.7.Final</version>
+            <version>${versions.hibernate}</version>
         </dependency>
 
 

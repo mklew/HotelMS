@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config>
     <packages>
-        <package>net.mklew.hotelms.inhouse.web.rest</package>
-        <package>net.mklew.hotelms.inhouse.web.dto.provider</package>
+        <package>net.mklew.hotelms.inhouse.web</package>
     </packages>
     <init-parameters>
-        <init-parameter>
-            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-            <param-value>true</param-value>
-        </init-parameter>
     </init-parameters>
 </config>

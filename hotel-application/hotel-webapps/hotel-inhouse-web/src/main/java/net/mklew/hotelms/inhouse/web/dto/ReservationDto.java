@@ -1,20 +1,18 @@
 package net.mklew.hotelms.inhouse.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.mklew.hotelms.domain.booking.reservation.Reservation;
 import net.mklew.hotelms.inhouse.web.dto.dates.DateParser;
-import org.codehaus.jackson.annotate.JsonAnySetter;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.DateTime;
 
 import javax.ws.rs.core.MultivaluedMap;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
  * @since 12/24/12
  *        time 3:48 PM
  */
-@XmlRootElement(name = "reservationdto")
 public class ReservationDto
 {
     private String reservationId;

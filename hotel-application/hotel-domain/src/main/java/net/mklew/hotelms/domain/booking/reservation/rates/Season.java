@@ -9,6 +9,6 @@ import org.joda.time.Interval;
  */
 public interface Season extends AvailableIn, Activated
 {
-    AvailabilityPeriod getSeason();
+    AvailabilityPeriod getSeason();  // should have many availability periods
     String getSeasonName();
 }
