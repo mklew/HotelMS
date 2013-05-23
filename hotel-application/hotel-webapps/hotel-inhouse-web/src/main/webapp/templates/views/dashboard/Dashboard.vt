@@ -1,0 +1,25 @@
+$viewEnclosureTool.top()
+
+<div id="dashboardContainer" class="row">
+    <div class="span2"></div>
+    <div class="span10">
+        <div class="row-fluid">
+            <div class="span6">
+                <canvas id="roomStatusChart" height="400"></canvas>
+                <p class="lead" popover="Available {{ roomStats.available}} Unavailable {{roomStats.unavailable}}"
+                   popover-title="Rooms" >Room availability</p>
+            </div>
+            <div class="span6">
+                <canvas id="reservationChart" height="400"></canvas>
+                <p class="lead">Reservations</p>
+            </div>
+        </div>
+
+        <!--<div class="row-fluid">-->
+            <!--<div class="span6">-->
+                <!--<canvas id="roomOccupancyChart3" height="400"></canvas>-->
+                <!--<p class="lead">Room occupancy 3</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
