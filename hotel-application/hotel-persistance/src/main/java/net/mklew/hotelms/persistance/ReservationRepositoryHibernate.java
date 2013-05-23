@@ -1,27 +1,31 @@
 package net.mklew.hotelms.persistance;
 
-import com.google.common.base.Optional;
-import net.mklew.hotelms.domain.booking.Id;
-import net.mklew.hotelms.domain.booking.reservation.Reservation;
-import net.mklew.hotelms.domain.booking.reservation.ReservationRepository;
-import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
-import org.hibernate.Session;
-import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.joda.time.DateTime;
+
+import net.mklew.hotelms.domain.booking.Id;
+import net.mklew.hotelms.domain.booking.ReservationStatus;
+import net.mklew.hotelms.domain.booking.reservation.Reservation;
+import net.mklew.hotelms.domain.booking.reservation.ReservationRepository;
+import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
+
+import com.google.common.base.Optional;
+
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since 12/25/12
- *        time 9:16 PM
+ * @since 12/25/12 time 9:16 PM
  */
-public class ReservationRepositoryHibernate extends HibernateRepository implements ReservationRepository
+public class ReservationRepositoryHibernate
+    extends HibernateRepository
+    implements ReservationRepository
 {
-    private static final String FIND_ALL_RESERVATIONS_FOR_ROOM_AROUND_DATES_QUERY = "select reservation from " +
-            "Reservation " +
-            "reservation join reservation.nights as night where night.date in (:dates) group by reservation";
+    private static final String FIND_ALL_RESERVATIONS_FOR_ROOM_AROUND_DATES_QUERY = "select reservation from "
+        + "Reservation "
+        + "reservation join reservation.nights as night where night.date in (:dates) group by reservation";
 
     public ReservationRepositoryHibernate(HibernateSessionFactory hibernateSessionFactory)
     {
@@ -29,18 +33,19 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
     }
 
     @Override
-    public Collection<Reservation> findAllReservationsAroundDates(DateTime checkIn, DateTime checkOut)
+    public Collection<Reservation> findAllReservationsAroundDates(DateTime checkIn,
+        DateTime checkOut)
     {
         final Session session = getCurrentSession();
         Collection<DateTime> dates = new ArrayList<>();
-        for (int i = 0; !checkIn.plusDays(i).equals(checkOut.plusDays(1)); ++i)
+        for(int i = 0; !checkIn.plusDays(i).equals(checkOut.plusDays(1)); ++i)
         {
             dates.add(checkIn.plusDays(i));
         }
         @SuppressWarnings("unchecked")
-        List<Reservation> reservations = (List<Reservation>) session.createQuery
-                (FIND_ALL_RESERVATIONS_FOR_ROOM_AROUND_DATES_QUERY).setParameterList("dates",
-                dates).list();
+        List<Reservation> reservations = (List<Reservation>)session
+            .createQuery(FIND_ALL_RESERVATIONS_FOR_ROOM_AROUND_DATES_QUERY)
+            .setParameterList("dates", dates).list();
         return reservations;
     }
 
@@ -56,15 +61,15 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
     {
         final Session session = getCurrentSession();
         final List reservations = session.createQuery("from Reservation").list();
-        return (Collection<Reservation>) reservations;
+        return (Collection<Reservation>)reservations;
     }
 
     @Override
     public Optional<Reservation> lookup(Id id)
     {
         final Session session = getCurrentSession();
-        Reservation reservation = (Reservation) session.get(Reservation.class, id);
-        if (reservation != null)
+        Reservation reservation = (Reservation)session.get(Reservation.class, id);
+        if(reservation != null)
         {
             return Optional.of(reservation);
         }
@@ -72,6 +77,16 @@ public class ReservationRepositoryHibernate extends HibernateRepository implemen
         {
             return Optional.absent();
         }
+    }
+
+    @Override
+    public Collection<Reservation> findWithStatus(ReservationStatus status)
+    {
+        final Session session = getCurrentSession();
+        List<Reservation> reservationsWithStatus = session
+            .createQuery("from Reservation r where r.reservationStatus = :status")
+            .setParameter("status", status).list();
+        return reservationsWithStatus;
     }
 
     @Override
