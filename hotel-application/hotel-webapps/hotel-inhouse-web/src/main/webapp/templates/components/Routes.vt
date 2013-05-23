@@ -1,0 +1,17 @@
+<script>
+    angular.module('hotelms-routes', []).constant('routes', {
+            reservation : {
+                resourceRoot : '$link.rootContent('rest/reservations')',
+                template : '$link.view('reservation.Reservation')',
+                browse : {
+                    template : '$link.view('reservation.Browse')'
+                }
+            },
+            dashboard : {
+                template : '$link.view('dashboard.Dashboard')'
+            },
+            room : {
+                resourceRoot : '$link.rootContent('rest/room')'
+            }
+       });
+</script>
