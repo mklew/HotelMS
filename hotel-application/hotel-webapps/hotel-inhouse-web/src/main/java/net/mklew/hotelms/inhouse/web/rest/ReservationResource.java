@@ -3,6 +3,7 @@ package net.mklew.hotelms.inhouse.web.rest;
 import com.google.common.base.Optional;
 import net.mklew.hotelms.domain.booking.GuestRepository;
 import net.mklew.hotelms.domain.booking.Id;
+import net.mklew.hotelms.domain.booking.ReservationStatus;
 import net.mklew.hotelms.domain.booking.reservation.*;
 import net.mklew.hotelms.domain.booking.reservation.rates.Rate;
 import net.mklew.hotelms.domain.booking.reservation.rates.RateRepository;
@@ -11,10 +12,7 @@ import net.mklew.hotelms.domain.room.Room;
 import net.mklew.hotelms.domain.room.RoomName;
 import net.mklew.hotelms.domain.room.RoomNotFoundException;
 import net.mklew.hotelms.domain.room.RoomRepository;
-import net.mklew.hotelms.inhouse.web.dto.ErrorDto;
-import net.mklew.hotelms.inhouse.web.dto.GuestDto;
-import net.mklew.hotelms.inhouse.web.dto.MissingGuestInformation;
-import net.mklew.hotelms.inhouse.web.dto.ReservationDto;
+import net.mklew.hotelms.inhouse.web.dto.*;
 import net.mklew.hotelms.inhouse.web.dto.dates.DateParser;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.apache.log4j.Logger;
@@ -511,6 +509,22 @@ public class ReservationResource
             }
         }
         throw new RuntimeException("Rate not found");
+    }
+
+    @GET
+    @Path("stats")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ReservationStats getStats()
+    {
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+
+        Collection<Reservation> inhouse = reservationRepository.findWithStatus(ReservationStatus.INHOUSE);
+        Collection<Reservation> checkin = reservationRepository.findWithStatus(ReservationStatus.CHECKIN);
+        Collection<Reservation> checkout = reservationRepository.findWithStatus(ReservationStatus.CHECKOUT);
+
+        session.getTransaction().commit();
+        return new ReservationStats(inhouse.size(), checkin.size(), checkout.size());
     }
 
 }
