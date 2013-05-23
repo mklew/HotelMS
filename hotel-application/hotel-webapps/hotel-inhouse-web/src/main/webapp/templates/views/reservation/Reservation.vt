@@ -1,0 +1,17 @@
+$viewEnclosureTool.top()
+
+<div class="row-fluid">
+    <div class="span2">
+        <!--Sidebar content-->
+        <ul class="nav nav-tabs nav-stacked">
+            <li><a href="#">Open booking sheet</a></li>
+            <li><a href="#">Book new reservation</a></li>
+            <li><a href="#">Show check-ins</a></li>
+            <li><a href="#">Show check-outs</a></li>
+            <li><a href="#/reservations/browse">Browse reservations</a></li>
+        </ul>
+    </div>
+    <div class="span10" ui-view>
+        <!--Body content-->
+    </div>
+</div>
