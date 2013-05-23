@@ -1,0 +1,21 @@
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner"><div class="container-fluid">
+        <a class="brand" href="#">HotelMS</a>
+        <ul class="nav">
+            <li ng-class="{ active: $state.includes('reservations') }"><a href="#/reservations">Reservations</a></li>
+            <li ng-class="{ active: $state.includes('housekeeping') }"><a href="#/housekeeping">Housekeeping</a></li>
+            <li ng-class="{ active: $state.includes('billing') }"><a href="#/billing">Billing</a></li>
+            <li ng-class="{ active: $state.includes('guests') }"><a href="#/guests">Guests</a></li>
+            <li ng-class="{ active: $state.includes('reports') }"><a href="#/reports">Reports</a></li>
+            <li ng-class="{ active: $state.includes('inclusions') }"><a href="#/inclusions">Inclusions</a></li>
+            <li ng-class="{ active: $state.includes('nightaudit') }"><a href="#/nightaudit">Night audit</a></li>
+        </ul>
+        <p class="navbar-text pull-right" ui-view="hint"></p>
+    </div></div>
+</div>
+<div class="container-fluid" style="margin-top:60px" ui-view ng-animate="{enter:'fade-enter'}"></div>
+<hr>
+<pre>
+  $state = {{$state.current.name}}
+  $stateParams = {{$stateParams}}
+</pre>
