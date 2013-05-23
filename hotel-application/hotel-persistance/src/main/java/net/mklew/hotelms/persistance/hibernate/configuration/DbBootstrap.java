@@ -84,7 +84,7 @@ public class DbBootstrap implements Startable
                 upchargeExtraPerson.plus(10),
                 upchargeExtraBed.plus(10));
         Room L102 = new Room("L", new RoomName("102"), luxury, HousekeepingStatus.CLEAN,
-                RoomAvailability.AVAILABLE, 3, new Occupancy(2, 4), standardPrice.plus(30),
+                RoomAvailability.OCCUPIED, 3, new Occupancy(2, 4), standardPrice.plus(30),
                 upchargeExtraPerson.plus(30),
                 upchargeExtraBed.plus(30));
         Room C103 = new Room("C", new RoomName("103"), cheap, HousekeepingStatus.CLEAN,
