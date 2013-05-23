@@ -1,9 +1,12 @@
 package net.mklew.hotelms.inhouse.web.rest;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import net.mklew.hotelms.domain.room.Room;
 import net.mklew.hotelms.domain.room.RoomRepository;
 import net.mklew.hotelms.domain.room.RoomType;
 import net.mklew.hotelms.inhouse.web.dto.RoomDto;
+import net.mklew.hotelms.inhouse.web.dto.RoomStats;
 import net.mklew.hotelms.inhouse.web.dto.RoomTypeDto;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
@@ -64,5 +67,27 @@ public class RoomResource
 
         session.getTransaction().commit();
         return roomTypeDtos;
+    }
+
+    @GET
+    @Path("stats")
+    @Produces(MediaType.APPLICATION_JSON)
+    public RoomStats getRoomStats()
+    {
+        Session session = hibernateSessionFactory.getCurrentSession();
+        session.beginTransaction();
+
+        final Collection<Room> rooms = roomRepository.getAllRooms();
+        Collection<Room> available = Collections2.filter(rooms, new Predicate<Room>()
+        {
+            @Override
+            public boolean apply(Room room)
+            {
+                return room.isAvailable();
+            }
+        });
+
+        session.getTransaction().commit();
+        return new RoomStats(available.size(), rooms.size() - available.size());
     }
 }
