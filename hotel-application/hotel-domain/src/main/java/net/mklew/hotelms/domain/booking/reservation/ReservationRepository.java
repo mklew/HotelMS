@@ -2,6 +2,7 @@ package net.mklew.hotelms.domain.booking.reservation;
 
 import com.google.common.base.Optional;
 import net.mklew.hotelms.domain.booking.Id;
+import net.mklew.hotelms.domain.booking.ReservationStatus;
 import org.joda.time.DateTime;
 
 import java.util.Collection;
@@ -31,4 +32,6 @@ public interface ReservationRepository
     void deleteReservation(Reservation reservation);
 
     void update(Reservation reservation);
+
+    Collection<Reservation> findWithStatus(ReservationStatus status);
 }
