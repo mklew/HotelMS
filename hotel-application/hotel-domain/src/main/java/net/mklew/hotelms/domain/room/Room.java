@@ -147,7 +147,7 @@ public class Room
         return availability;
     }
 
-    private void setAvailability(RoomAvailability availability)
+    public void setAvailability(RoomAvailability availability)
     {
         this.availability = availability;
     }
