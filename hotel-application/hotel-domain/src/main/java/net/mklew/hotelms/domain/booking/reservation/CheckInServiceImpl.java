@@ -1,5 +1,7 @@
 package net.mklew.hotelms.domain.booking.reservation;
 
+import net.mklew.hotelms.domain.room.RoomAvailability;
+
 /**
  * CheckIn process might involve some kind of business logic. This is place for it.
  * <p/>
@@ -16,5 +18,6 @@ public class CheckInServiceImpl implements CheckInService
     public void checkIn(Reservation reservation)
     {
         reservation.checkIn();
+        reservation.getRoom().setAvailability(RoomAvailability.OCCUPIED);
     }
 }
