@@ -47,4 +47,6 @@ var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResou
 hotelms.controller('AppController', ['$scope', 'routes', function($scope, routes){
     console.log('AppController')
     console.log(routes);
+
+    $scope.routes = routes;
 }]);
