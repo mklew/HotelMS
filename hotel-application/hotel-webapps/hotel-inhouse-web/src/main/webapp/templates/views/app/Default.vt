@@ -10,7 +10,16 @@
             <li ng-class="{ active: $state.includes('inclusions') }"><a href="#/inclusions">Inclusions</a></li>
             <li ng-class="{ active: $state.includes('nightaudit') }"><a href="#/nightaudit">Night audit</a></li>
         </ul>
-        <p class="navbar-text pull-right" ui-view="hint"></p>
+        <p class="navbar-text pull-right">
+        <div class="btn-group pull-right">
+            <a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i> $username</a>
+            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-cog icon-white"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="{{routes.logout}}"><i class="icon-off"></i>Logout</a></li>
+            </ul>
+        </div>
+
+        </p>
     </div></div>
 </div>
 <div class="container-fluid" style="margin-top:60px" ui-view ng-animate="{enter:'fade-enter'}"></div>
