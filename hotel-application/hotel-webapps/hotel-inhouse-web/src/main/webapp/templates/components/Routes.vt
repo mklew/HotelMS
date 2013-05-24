@@ -12,6 +12,7 @@
             },
             room : {
                 resourceRoot : '$link.rootContent('rest/room')'
-            }
+            },
+            logout : '$link.rootContent('logout')'
        });
 </script>
