@@ -1,4 +1,4 @@
-var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResource', 'ui.bootstrap'])
+var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResource', 'ui.bootstrap', '$strap'])
 .config(['$stateProvider', '$routeProvider', '$urlRouterProvider', 'routes',
   function ($stateProvider,   $routeProvider,   $urlRouterProvider, routes) {
 
@@ -20,6 +20,28 @@ var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResou
             templateUrl :routes.reservation.browse.template,
             controller :  'ReservationsBrowseList'
         })
+        .state('reservations.sheet', {
+            url : '/sheet',
+            templateUrl : routes.reservation.sheet.template,
+            controller : 'ReservationsSheetCtrl'
+
+        })
+        .state('reservations.checkins', {
+
+        })
+        .state('reservations.checkouts', {
+
+        })
+        .state('reservations.booking', {
+            url : '/booking',
+            templateUrl : routes.reservation.booking.template,
+            controller : 'ReservationsBookingCtrl'
+        })
+        .state('reservations.edit', {
+            url : "/edit/:reservationId",
+            templateUrl : routes.reservation.details.template,
+            controller : 'ReservationEditCtrl'
+        })
         .state('housekeeping', {
             url : "/housekeeping"
         })
@@ -27,7 +49,23 @@ var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResou
             url : "/billing"
         })
         .state('guests', {
-            url : "/guests"
+            url : "/guests",
+            templateUrl : routes.guests.template
+        })
+        .state('guests.list', {
+            url : "/list",
+            templateUrl : routes.guests.list.template,
+            controller : 'GuestsListCtrl'
+        })
+        .state('guests.add', {
+            url : "/add",
+            templateUrl : routes.guests.details.template,
+            controller : 'CreateGuestCtrl'
+        })
+        .state('guests.edit', {
+            url : "/edit/:guestId",
+            templateUrl : routes.guests.details.template,
+            controller : 'GuestEditCtrl'
         })
         .state('reports', {
             url : "/reports"
@@ -36,7 +74,9 @@ var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResou
             url : "/inclusions"
         })
         .state('nightaudit', {
-            url : "/nightaudit"
+            url : "/nightaudit",
+            templateUrl : routes.nightaudit.template,
+            controller : 'NightauditCtrl'
         });
 }])
 .run(['$rootScope', '$state', '$stateParams', function ($rootScope,   $state,   $stateParams) {
@@ -45,8 +85,5 @@ var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResou
 }]);
 
 hotelms.controller('AppController', ['$scope', 'routes', function($scope, routes){
-    console.log('AppController')
-    console.log(routes);
-
     $scope.routes = routes;
 }]);
