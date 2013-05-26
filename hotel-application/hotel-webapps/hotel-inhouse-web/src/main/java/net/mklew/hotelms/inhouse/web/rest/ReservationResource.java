@@ -773,4 +773,30 @@ public class ReservationResource
         return sheetData;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("status/{status}")
+    public Collection<ReservationDto> getWithStatus(@PathParam("status") String status)
+    {
+        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        ThreadLocalSessionContext.bind(session);
+        session.beginTransaction();
+
+        final ReservationStatus reservationStatus = ReservationStatus.fromName(status);
+        final Collection<Reservation> withStatus = reservationRepository.findWithStatus(reservationStatus);
+
+        final Collection<ReservationDto> dtos = Collections2.transform(withStatus, new Function<Reservation, ReservationDto>()
+        {
+            @Override
+            public ReservationDto apply(Reservation reservation)
+            {
+                return ReservationDto.fromReservation(reservation);
+            }
+        });
+
+        session.getTransaction().commit();
+        return dtos;
+    }
+
 }
