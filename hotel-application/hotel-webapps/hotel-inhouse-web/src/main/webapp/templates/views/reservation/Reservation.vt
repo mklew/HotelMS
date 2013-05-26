@@ -6,8 +6,8 @@ $viewEnclosureTool.top()
         <ul class="nav nav-tabs nav-stacked">
             <li ng-class="{ active: $state.includes('reservations.sheet') }"><a href="#/reservations/sheet">Open booking sheet</a></li>
             <li ng-class="{ active: $state.includes('reservations.booking') }"><a href="#/reservations/booking">Book new reservation</a></li>
-            <li ng-class="{ active: $state.includes('reservations.checkins') }"><a href="#">Show check-ins</a></li>
-            <li ng-class="{ active: $state.includes('reservations.checkouts') }"><a href="#">Show check-outs</a></li>
+            <li ng-class="{ active: $state.includes('reservations.checkins') }"><a href="#/reservations/checkins">Show check-ins</a></li>
+            <li ng-class="{ active: $state.includes('reservations.checkouts') }"><a href="#/reservations/checkouts">Show check-outs</a></li>
             <li ng-class="{ active: $state.includes('reservations.browse') }"><a href="#/reservations/browse">Browse reservations</a></li>
         </ul>
     </div>
