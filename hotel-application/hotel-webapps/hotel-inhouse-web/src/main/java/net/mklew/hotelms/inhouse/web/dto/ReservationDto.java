@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.mklew.hotelms.domain.booking.reservation.Reservation;
 import net.mklew.hotelms.inhouse.web.dto.dates.DateParser;
+import org.apache.commons.lang.Validate;
 import org.joda.time.DateTime;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -16,16 +17,98 @@ import javax.ws.rs.core.MultivaluedMap;
 public class ReservationDto
 {
     private String reservationId;
+
     private String reservationType;
+
     private String checkin;
+
     private String checkout;
+
     private String numberOfAdults;
+
     private String numberOfChildren;
+
     private String roomType;
+
     private String roomName;
+
     private String roomExtraBed;
+
     private String rateType;
+
     private String reservationStatus;
+
+    private GuestDto owner;
+
+    public GuestDto getOwner()
+    {
+        return owner;
+    }
+
+    public void setOwner(GuestDto owner)
+    {
+        this.owner = owner;
+    }
+
+    public void setReservationId(String reservationId)
+    {
+        this.reservationId = reservationId;
+    }
+
+    public void setReservationType(String reservationType)
+    {
+        this.reservationType = reservationType;
+    }
+
+    public void setCheckin(String checkin)
+    {
+        this.checkin = checkin;
+    }
+
+    public void setCheckout(String checkout)
+    {
+        this.checkout = checkout;
+    }
+
+    public void setNumberOfAdults(String numberOfAdults)
+    {
+        this.numberOfAdults = numberOfAdults;
+    }
+
+    public void setNumberOfChildren(String numberOfChildren)
+    {
+        this.numberOfChildren = numberOfChildren;
+    }
+
+    public void setRoomType(String roomType)
+    {
+        this.roomType = roomType;
+    }
+
+    public void setRoomName(String roomName)
+    {
+        this.roomName = roomName;
+    }
+
+    public void setRoomExtraBed(String roomExtraBed)
+    {
+        this.roomExtraBed = roomExtraBed;
+    }
+
+    public void setRateType(String rateType)
+    {
+        this.rateType = rateType;
+    }
+
+    public void setCheckinDate(DateTime checkinDate)
+    {
+        this.checkinDate = checkinDate;
+    }
+
+    public void setCheckoutDate(DateTime checkoutDate)
+    {
+        this.checkoutDate = checkoutDate;
+    }
 
     @JsonIgnore
     private transient DateTime checkinDate;
@@ -69,7 +152,7 @@ public class ReservationDto
         // TODO refactor rateType into rateName, changes in markup are needed
         dto.rateType = reservation.getRate().getRateName();
         dto.reservationStatus = reservation.getReservationStatus().getName();
-
+        dto.owner = GuestDto.fromGuest(reservation.getReservationOwner());
         return dto;
     }
 
@@ -116,11 +199,19 @@ public class ReservationDto
 
     public DateTime getCheckinDate()
     {
+        if(checkinDate == null)
+        {
+            checkinDate = DateParser.fromString(checkin);
+        }
         return checkinDate;
     }
 
     public DateTime getCheckoutDate()
     {
+        if(checkoutDate == null)
+        {
+            checkoutDate = DateParser.fromString(checkout);
+        }
         return checkoutDate;
     }
 
@@ -147,6 +238,7 @@ public class ReservationDto
     public void validateRequired()
     {
         notEmpty(reservationType);
+        Validate.isTrue(getCheckinDate().isBefore(getCheckoutDate()));
         notEmpty(checkin);
         notEmpty(checkout);
         notEmpty(numberOfAdults);
@@ -169,6 +261,7 @@ public class ReservationDto
     {
         checkinDate = DateParser.fromString(checkin);
         checkoutDate = DateParser.fromString(checkout);
+        validateRequired();
     }
 
     @JsonAnySetter
@@ -176,4 +269,6 @@ public class ReservationDto
     {
         // ignore
     }
+
+
 }
