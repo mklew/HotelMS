@@ -1,0 +1,287 @@
+$viewEnclosureTool.top()
+                         {{ reservation }}
+<h1>Reservation booking</h1>
+<form name="resForm" novalidate xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <fieldset>
+        <legend>Reservation type</legend>
+        <div>
+            <label for="reservationType">Choose reservation type:</label>
+            <select ng-model="reservation.reservationType" id="reservationType" ng-required name="reservationType" placeholder="Select reservation type" autofocus>
+                <option value="single">Single</option>
+                <option value="group">Group</option>
+                <option value="corporate">Corporate</option>
+                <option value="agent">Agent</option>
+            </select>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Stay details</legend>
+
+        <div class="control-group input-append">
+            <label class="control-label" for="checkin">Check-in:</label>
+            <input type="text" id="checkin" ng-model="reservation.checkin" data-date-format="dd/mm/yyyy" bs-datepicker>
+            <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+        </div>
+
+        <div></div>
+
+        <div class="control-group input-append">
+            <label class="control-label" for="checkout">Check-out:</label>
+            <input type="text" id="checkout" ng-model="reservation.checkout" data-date-format="dd/mm/yyyy" bs-datepicker>
+            <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+        </div>
+
+        <div>
+            <label for="number-of-adults">Number of adults:</label>
+            <input ng-model="reservation.numberOfAdults" id="number-of-adults"
+                   required name="numberOfAdults" type="number" min="0" max="10" ng-pattern="/\d*/">
+
+            <span class="error" ng-show="resForm.numberOfAdults.$error.required">
+                Required!</span>
+            <span class="error" ng-show="resForm.numberOfAdults.$error.number">
+                Not valid number!</span>
+        </div>
+
+        <div>
+            <label for="number-of-children">Number of children:</label>
+            <input type="number" ng-model="reservation.numberOfChildren"
+                   id="number-of-children" required value="0" name="numberOfChildren"
+                   min="0" max="10" ng-pattern="/\d*/">
+
+             <span class="error" ng-show="resForm.numberOfChildren.$error.required">
+                Required!</span>
+            <span class="error" ng-show="resForm.numberOfChildren.$error.number">
+                Not valid number!</span>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Room</legend>
+        <div>
+            <label for="roomTypeChooser">Choose room type:</label>
+            <select id="roomTypeChooser" ng-model="reservation.roomType" ng-change="filterRooms()"
+                    name="roomType" required ng-options="type.id for type in roomTypes">
+            </select>
+            <span class="error" ng-show="resForm.roomType.$error.required">
+                Required!</span>
+        </div>
+
+        <label for="roomChooser">Choose room:</label>
+        <select id="roomChooser" ng-model="reservation.room" name="room" ng-change="filterMaxExtraBeds() || getRates()"
+                required ng-options="room.id for room in rooms">
+        </select>
+        <div>
+            <label for="extraBedChooser">Extra beds:</label>
+            <select id="extraBedChooser" required name="roomExtraBed" ng-model="reservation.extraBeds"
+                    ng-options="bed.extraBed for bed in beds"></select>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Rate</legend>
+        <div>
+            <label for="rateType">Type:</label>
+            <select id="rateType" required name="rate" ng-model="reservation.rate"
+                    ng-options="rate.name for rate in rates" ng-change="calculateCharges()"></select>
+        </div>
+        <div>
+            <p>Amount</p>
+            {{ charges.amount }} {{ charges.currency}}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Reservation owner details</legend>
+
+        <input type="text" class="span3" ng-model="ownerFinderCName" bs-typeahead="ownerTypeahead">
+
+        <div>
+            <p>Guest information</p>
+            <label for="vip">VIP</label>
+            <input id="vip" name="vip" type="checkbox" ng-model="reservation.owner.vip" value="vip">
+
+            <div>
+                <label for="socialTitle">Name</label>
+                <select id="socialTitle" name="socialTitle" class="span1" required ng-model="reservation.owner.socialTitle"
+                        placeholder="title">
+                    <option value="Mr">Mr</option>
+                    <option value="Ms">Ms</option>
+                    <option value="Miss">Miss</option>
+                </select>
+
+                <input id="firstname" type="text" name="firstName" class="span3" required placeholder="first name"
+                       ng-model="reservation.owner.firstName"/>
+                <input id="surname" type="text" name="surname" class="span3" required placeholder="surname"
+                        ng-model="reservation.owner.surname"/>
+
+                <label for="sex">Sex</label>
+                <select id="sex" name="sex" class="span1" required ng-model="reservation.owner.sex">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="refused">refused</option>
+                </select>
+            </div>
+            <div>
+                <label for="phone">Phone</label>
+                <input id="phone" name="phoneNumber" placeholder="phone number" type="tel" required
+                       ng-model="reservation.owner.phoneNumber"/>
+            </div>
+            <div>
+                <label for="nationality">Nationality</label>
+                <input type="text" id="nationality" name="nationality" required ng-model="reservation.owner.nationality"/>
+            </div>
+
+            <div>
+                <label for="id-type">ID type</label>
+                <select id="id-type" name="idType" required ng-model="reservation.owner.idType">
+                    <option value="PASSPORT_ID">Passport</option>
+                    <option value="PERSONAL_ID">Personal ID</option>
+                    <option value="DRIVER_LICENSE">Drivers License</option>
+                    <option value="OTHER">other</option>
+                </select>
+                <div>
+                    <label for="id-number">ID number</label>
+                    <input id="id-number" type="text" name="idNumber" required ng-model="reservation.owner.idNumber"/>
+                </div>
+
+                <div class="control-group input-append">
+                    <label class="control-label" for="dateOfBirth">Date of Birth</label>
+                    <input type="text" id="dateOfBirth" ng-model="reservation.owner.dateOfBirth"
+                           data-date-format="dd/mm/yyyy" bs-datepicker>
+                    <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+                </div>
+            </div>
+
+            <p>Home address</p>
+
+            <label for="address">Address</label>
+            <input id="address" name="address"/>
+
+            <label for="country">Country</label>
+            <select id="country" name="country"/>
+
+            <label for="state">State</label>
+            <select id="state" name="state"/>
+
+            <label for="city">City</label>
+            <select id="city" name="city"/>
+
+            <label for="zipcode">Zip code</label>
+            <input id="zipcode" name="zipcode"placeholder="zipcode"/>
+
+            <div>
+                <label for="preferences">Preferences</label>
+                <textarea id="preferences" cols="50" rows="10" name="preferences"></textarea>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Method of payment</legend>
+
+        <label for="method-of-payment">Choose method</label>
+        <select id="method-of-payment" name="method-of-payment">
+            <option value="creditCard" selected>Credit card</option>
+            <option value="cash">Cash</option>
+            <option value="bankTransfer">Bank transfer</option>
+        </select>
+
+        <div id="credit-card-details" data-dojo-type="dijit/layout/ContentPane"
+             data-dojo-attach-point="creditCardDetails">
+            <p>Credit card details</p>
+            <input id="card-number" name="card-number" placeholder="card number"/>
+            <label for="expiry-month">Expiry</label>
+            <input id="expiry-month" name="expiry-month"placeholder="mm"/>
+            <input id="expiry-year" name="expiry-year" placeholder="yyyy"/>
+            <label for="cvc">CVC</label>
+            <input id="cvc" name="cvc" data-dojo-type="dijit/form/TextBox"/>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Payment summary</legend>
+        <div>
+            <span>Room rate</span>
+                <span id="payment-summary-room-rate"></span>
+        </div>
+        <div>
+            <span>Room tax</span>
+                <span id="payment-summary-room-tax"></span>
+        </div>
+        <div>
+            <span>Inclusions</span>
+                <span id="payment-summary-inclusions"></span>
+        </div>
+        <div>
+            <span>Other taxes</span>
+                <span id="payment-summary-other-taxes"></span>
+        </div>
+        <div>
+            <span>Other charges</span>
+                <span id="payment-summary-other-charges"></span>
+        </div>
+        <div>
+            <span>Total</span>
+                <span id="payment-summary-total"></span>
+        </div>
+        <div>
+            <span>Amount paid</span>
+                <span id="payment-summary-amount-paid"></span>
+        </div>
+        <div>
+            <span>Discount</span>
+                <span id="payment-summary-discount"></span>
+        </div>
+        <div>
+            <span>Balance</span>
+                <span id="payment-summary-balance"></span>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Additional information</legend>
+        <p>Room sharers</p>
+        <button data-dojo-type="dijit/form/Button"
+                data-dojo-attach-point="addRoomSharer">Add room sharer
+        </button>
+
+        <p>Arrival</p>
+        <label for="arrival-mode">Mode</label>
+        <select id="arrival-mode" name="arrivalMode"
+                data-dojo-type="dijit/form/FilteringSelect">
+            <option value="car" selected>Car</option>
+            <option value="flight">Flight</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="arrival-time">Arrival time</label>
+        <input id="arrival-time" name="arrivalTime"
+               data-dojo-type="dijit/form/TimeTextBox"/>
+
+        <p>Departure</p>
+        <label for="departure-mode">Mode</label>
+        <select id="departure-mode" name="departureMode"
+                data-dojo-type="dijit/form/FilteringSelect">
+            <option value="car" selected>Car</option>
+            <option value="flight">Flight</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="departure-time">Departure time</label>
+        <input id="departure-time" name="departureTime"
+               data-dojo-type="dijit/form/TimeTextBox"/>
+
+        <p>Other</p>
+        <label for="stay-purpose">Stay purpose</label>
+        <input id="stay-purpose" name="stayPurpose"
+               data-dojo-type="dijit/form/TextBox"/>
+    </fieldset>
+
+    <button type="submit" ng-click="createNewReservation(reservation)">Create new reservation</button>
+</form>
+
