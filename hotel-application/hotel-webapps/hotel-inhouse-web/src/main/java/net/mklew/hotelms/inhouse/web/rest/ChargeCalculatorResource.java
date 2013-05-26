@@ -12,6 +12,8 @@ import net.mklew.hotelms.domain.room.RoomRepository;
 import net.mklew.hotelms.inhouse.web.dto.MoneyDto;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.context.internal.ThreadLocalSessionContext;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -57,7 +59,9 @@ public class ChargeCalculatorResource
                                                  @Context HttpServletResponse httpServletResponse)
     {
         // TODO implement inclusions because so far they are ignored
-        Session session = hibernateSessionFactory.getCurrentSession();
+        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        ThreadLocalSessionContext.bind(session);
         session.beginTransaction();
 
         RoomName name = new RoomName(roomName);
