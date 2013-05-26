@@ -10,6 +10,8 @@ import net.mklew.hotelms.inhouse.web.dto.RoomStats;
 import net.mklew.hotelms.inhouse.web.dto.RoomTypeDto;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.context.internal.ThreadLocalSessionContext;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -40,7 +42,9 @@ public class RoomResource
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<RoomDto> getRooms()
     {
-        Session session = hibernateSessionFactory.getCurrentSession();
+        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        ThreadLocalSessionContext.bind(session);
         session.beginTransaction();
 
         Collection<Room> rooms = roomRepository.getAllRooms();
@@ -55,7 +59,9 @@ public class RoomResource
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<RoomTypeDto> getRoomTypes()
     {
-        Session session = hibernateSessionFactory.getCurrentSession();
+        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        ThreadLocalSessionContext.bind(session);
         session.beginTransaction();
 
         Collection<RoomType> roomTypes = roomRepository.getAllRoomTypes();
@@ -74,7 +80,9 @@ public class RoomResource
     @Produces(MediaType.APPLICATION_JSON)
     public RoomStats getRoomStats()
     {
-        Session session = hibernateSessionFactory.getCurrentSession();
+        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        ThreadLocalSessionContext.bind(session);
         session.beginTransaction();
 
         final Collection<Room> rooms = roomRepository.getAllRooms();
