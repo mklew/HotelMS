@@ -79,15 +79,15 @@ function ($scope, $location, $http, Reservation) {
             $scope.reservations = Reservation.query();
         });
     }
-//
-//    $scope.hasPerm = function(perm)
-//    {
-//      $http.get('/rest/perm', {params : {"perm" : perm}}).success(function (){
-//        $scope._canDelete = true;
-//      }).error(function (){
-//        $scope._canDelete = false;
-//      });
-//    }
+
+    $scope.hasPerm = function(perm)
+    {
+      $http.get('/rest/perm', {params : {"perm" : perm}}).success(function (){
+        $scope._canDelete = true;
+      }).error(function (){
+        $scope._canDelete = false;
+      });
+    }
 
     $scope._canDelete = undefined;
 
@@ -99,5 +99,14 @@ function ($scope, $location, $http, Reservation) {
         }
         return $scope._canDelete;
     }
+}]);
+
+hotelms.controller('ReservationEditCtrl', ['$scope', '$stateParams', '$http', 'Reservation', '$state',
+function ($scope, $stateParams, $http, Reservation, $state)
+{
+
+//  $scope.chargesCalculated = false;
+
+
 }]);
 
