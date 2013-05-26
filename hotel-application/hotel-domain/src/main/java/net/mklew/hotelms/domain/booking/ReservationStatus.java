@@ -122,7 +122,7 @@ public enum ReservationStatus
 
     public abstract String getName();
 
-    public ReservationStatus fromName(String name)
+    public static ReservationStatus fromName(String name)
     {
         for (ReservationStatus status : values())
         {
