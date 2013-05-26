@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/content/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/content/css/bootstrap-responsive.css">
+    <link rel="stylesheet" type="text/css" href="/content/css/datepicker.css">
     <style type="text/css">
         .fade-enter-setup, .fade-leave-setup {
         transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
@@ -17,6 +18,9 @@
         opacity: 1;
         }
     </style>
+    <link rel="stylesheet/less" href="/content/style/style.less">
+    <script src="/content/less.js"></script>
+
     <!-- could easily use a custom property of the state here instead of 'name' -->
     <title ng-bind="$state.current.name + ' - angular-states'">angular-states</title>
 </head><body ng-controller="AppController">
@@ -27,13 +31,17 @@ $embeddedPlaceholder##
 
 
 <!-- Vendor scripts come first -->
-<!--<script src="/content/js/vendor/jquery-2.0.0.js"></script>-->
+<script src="/content/js/vendor/jquery-2.0.0.js"></script>
 <script src="/content/js/vendor/Chart.js"></script>
-<!--<script src="/content/js/vendor/bootstrap.js"></script>-->
+<script src="/content/js/vendor/bootstrap.js"></script>
 <script src="/content/js/vendor/angular-1.1.4.js"></script>
 <script src="/content/js/vendor/angular-ui-states.js"></script>
 <script src="/content/js/vendor/angular-resource.js"></script>
 <script src="/content/js/vendor/ui-bootstrap-tpls-0.3.0.js"></script>
+<script src="/content/js/vendor/moment.js"></script>
+<script src="/content/js/vendor/underscore.js"></script>
+<script src="/content/js/vendor/bootstrap-datepicker.js"></script>
+<script src="/content/js/vendor/angular-strap.js"></script>
 
 
 <!-- Angular stuff starts here -->
@@ -41,7 +49,13 @@ $embeddedPlaceholder##
 $component.embed('Routes')
 <script src="/content/js/hotelms/app.js"></script>
 <script src="/content/js/hotelms/reservations/reservations.js"></script>
+<script src="/content/js/hotelms/reservations/sheet.js"></script>
+<script src="/content/js/hotelms/reservations/details.js"></script>
+<script src="/content/js/hotelms/reservations/booking.js"></script>
+<script src="/content/js/hotelms/guests/GuestsStore.js"></script>
+<script src="/content/js/hotelms/guests/guests.js"></script>
 <script src="/content/js/hotelms/dashboard.js"></script>
+<script src="/content/js/hotelms/nightaudit/nightaudit.js"></script>
 
 
 </html>
