@@ -110,3 +110,12 @@ function ($scope, $stateParams, $http, Reservation, $state)
 
 }]);
 
+hotelms.controller('ReservationsWithStatusCtrl', ['$scope', '$state', 'RequestWithPromise', 'routes',
+ function($scope, $state, RequestWithPromise, routes){
+
+     $scope.reservations = RequestWithPromise.req({
+        method : "GET",
+        url : routes.reservation.resourceRoot + '/status/' + $state.current.data.status
+     });
+ }]);
+
