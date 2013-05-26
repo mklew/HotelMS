@@ -32,7 +32,7 @@ public class Night implements Chargeable
 
     Room getRoom()
     {
-        return rate.getRoom();
+        return getRate().getRoom();
     }
 
     @Override
