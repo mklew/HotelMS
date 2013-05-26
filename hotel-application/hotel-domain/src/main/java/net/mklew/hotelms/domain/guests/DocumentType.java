@@ -2,53 +2,36 @@ package net.mklew.hotelms.domain.guests;
 
 /**
  * @author Marek Lewandowski <marek.m.lewandowski@gmail.com>
- * @since 11/30/12
- *        time 8:44 PM
+ * @since 11/30/12 time 8:44 PM
  */
 public enum DocumentType
 {
-    DRIVER_LICENSE
-            {
-                @Override
-                public String getName()
-                {
-                    return "driverLicense";
-                }
-            }, PASSPORT_ID
-        {
-            @Override
-            public String getName()
-            {
-                return "passport";
-            }
-        }, PERSONAL_ID
-        {
-            @Override
-            public String getName()
-            {
-                return "personalID";
-            }
-        }, OTHER
-        {
-            @Override
-            public String getName()
-            {
-                return "other";
-            }
-        };
+    DRIVER_LICENSE("driverLicense"), PASSPORT_ID("passport"), PERSONAL_ID("personalID"), OTHER(
+                    "other");
 
-    public abstract String getName();
+    private String name;
+
+    public String getName()
+    {
+        return name;
+    }
+
+    private DocumentType(String name)
+    {
+        this.name = name;
+    }
 
     public static DocumentType fromString(String documentType)
     {
-        for (DocumentType type : DocumentType.values())
+        for(DocumentType type : DocumentType.values())
         {
-            if (type.getName().equals(documentType))
+            if(type.getName().equals(documentType))
             {
                 return type;
             }
         }
-        throw new RuntimeException("DocumentType from string: " + documentType + " cannot be resolved." +
-                " Does not match supported types");
+        throw new RuntimeException("DocumentType from string: " + documentType
+            + " cannot be resolved." + " Does not match supported types");
     }
+
 }
