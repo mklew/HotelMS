@@ -49,6 +49,7 @@
 @history-color: #808080;
 @reserved-color: #89E894;
 @overbooked-color: #FD885C;
+@noshow-color: rgb(194, 105, 10);
 // TODO do not reserve DNR color
 @test2color: #808080;
 
@@ -70,6 +71,7 @@ div {
         &.history {background-color: @history-color; }
         &.reserved {background-color: @reserved-color; }
         &.overbooked {background-color: @overbooked-color; }
+        &.noshow {background-color: @noshow-color; }
     }
 }
 
@@ -161,6 +163,11 @@ table.reservation-table {
         &.overbooked {
             .has-reservation;
             background-color: @overbooked-color;
+        }
+
+        &.noshow {
+            .has-reservation;
+            background-color: @noshow-color;
         }
 
         // if you change name of this class, you need to update TableCell.js
