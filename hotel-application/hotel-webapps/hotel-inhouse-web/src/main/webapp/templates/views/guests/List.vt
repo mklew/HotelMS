@@ -1,0 +1,30 @@
+$viewEnclosureTool.top()
+
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Social title</th>
+        <th>First name</th>
+        <th>Surname</th>
+        <th>Phone number</th>
+        <th>Nationality</th>
+        <th>Document type</th>
+        <th>Document number</th>
+        <th><a href="#/guests/add"><i class="icon-plus-sign"></i></a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="guest in guests">
+        <td>{{ guest.id }}</td>
+        <td>{{ guest.socialTitle}}</td>
+        <td>{{ guest.firstName }}</td>
+        <td>{{ guest.surname }}</td>
+        <td>{{ guest.phoneNumber}}</td>
+        <td>{{ guest.nationality}}</td>
+        <td>{{ guest.documentType | prettyDocumentType }}</td>
+        <td>{{ guest.idNumber}}</td>
+        <td><a href="#/guests/edit/{{guest.id}}"><i class="icon-pencil"></i></a></td>
+    </tr>
+    </tbody>
+</table>
