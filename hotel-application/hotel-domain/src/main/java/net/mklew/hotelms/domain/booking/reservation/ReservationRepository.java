@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import net.mklew.hotelms.domain.booking.Id;
 import net.mklew.hotelms.domain.booking.ReservationStatus;
 import org.joda.time.DateTime;
+import org.joda.time.base.BaseDateTime;
 
 import java.util.Collection;
 
@@ -23,6 +24,8 @@ public interface ReservationRepository
      */
     Collection<Reservation> findAllReservationsAroundDates(DateTime checkIn, DateTime checkOut);
 
+    Collection<Reservation> findReservedForNextDay();
+
     void bookNewReservation(Reservation reservation);
 
     Collection<Reservation> getAll();
@@ -32,6 +35,8 @@ public interface ReservationRepository
     void deleteReservation(Reservation reservation);
 
     void update(Reservation reservation);
+
+    void updateAll(Collection<Reservation> reservations);
 
     Collection<Reservation> findWithStatus(ReservationStatus status);
 }
