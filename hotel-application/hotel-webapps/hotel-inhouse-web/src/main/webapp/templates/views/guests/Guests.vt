@@ -1,0 +1,14 @@
+$viewEnclosureTool.top()
+
+<div class="row-fluid">
+    <div class="span2">
+        <!--Sidebar content-->
+        <ul class="nav nav-tabs nav-stacked">
+            <li ng-class="{ active: $state.includes('guests.list') }"><a href="#/guests/list">List guests</a></li>
+            <li ng-class="{ active: $state.includes('guests.add') }"><a href="#/guests/add">Add guest</a></li>
+        </ul>
+    </div>
+    <div class="span10" ui-view>
+        <!--Body content-->
+    </div>
+</div>
