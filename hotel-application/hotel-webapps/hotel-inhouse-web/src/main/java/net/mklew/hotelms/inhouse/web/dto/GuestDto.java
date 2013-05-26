@@ -19,17 +19,31 @@ import java.util.Collection;
 public class GuestDto
 {
     public String id;
+
     public String firstName;
+
     public String middleName;
+
     public String surname;
+
     public String displayed;
+
     public String socialTitle;
+
     public String sex;
+
     public String phoneNumber;
+
     public String nationality;
+
     public String idNumber;
+
     public String dateOfBirth;
+
     public String preferences;
+
+    private String vip;
+
     public String documentType; // TODO need to change naming idType and documentType are meant to be the same,
     // it should be something like 'documentType' and 'documentTypeEnum' or something
 
@@ -41,6 +55,16 @@ public class GuestDto
     @JsonIgnore
     public transient Gender gender;
 
+
+    public String getVip()
+    {
+        return vip;
+    }
+
+    public void setVip(String vip)
+    {
+        this.vip = vip;
+    }
 
     public GuestDto()
     {
@@ -58,7 +82,58 @@ public class GuestDto
 
     public boolean exists()
     {
-        return !id.equals("");
+        return !"".equals(id);
+    }
+
+    private boolean blank(String str)
+    {
+        return str == null || str.trim().equals("");
+    }
+
+    public void init() throws MissingGuestInformation
+    {
+        validate();
+        if (!blank(dateOfBirth))
+        {
+            dateOfBirthDate = DateParser.fromString(dateOfBirth);
+        }
+    }
+
+    public void validate() throws MissingGuestInformation
+    {
+
+        if (blank(socialTitle))
+        {
+            throw new MissingGuestInformation("Missing socialTitle");
+        }
+        if (blank(firstName))
+        {
+            throw new MissingGuestInformation("Missing first name");
+        }
+        if (blank(surname))
+        {
+            throw new MissingGuestInformation("Missing surname");
+        }
+        if (blank(sex))
+        {
+            throw new MissingGuestInformation("Missing sex");
+        }
+        if (blank(phoneNumber))
+        {
+            throw new MissingGuestInformation("Missing phone number");
+        }
+        if (blank(nationality))
+        {
+            throw new MissingGuestInformation("Missing nationality");
+        }
+        if (idType == null)
+        {
+            throw new MissingGuestInformation("Missing id type");
+        }
+        if (blank(idNumber))
+        {
+            throw new MissingGuestInformation("Missing id number");
+        }
     }
 
     public static GuestDto fromReservationForm(MultivaluedMap<String, String> formData) throws MissingGuestInformation
@@ -191,5 +266,165 @@ public class GuestDto
         }
         gender = Gender.fromName(sex);
         return this;
+    }
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName()
+    {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName)
+    {
+        this.middleName = middleName;
+    }
+
+    public String getSurname()
+    {
+        return surname;
+    }
+
+    public void setSurname(String surname)
+    {
+        this.surname = surname;
+    }
+
+    public String getDisplayed()
+    {
+        return displayed;
+    }
+
+    public void setDisplayed(String displayed)
+    {
+        this.displayed = displayed;
+    }
+
+    public String getSocialTitle()
+    {
+        return socialTitle;
+    }
+
+    public void setSocialTitle(String socialTitle)
+    {
+        this.socialTitle = socialTitle;
+    }
+
+    public String getSex()
+    {
+        return sex;
+    }
+
+    public void setSex(String sex)
+    {
+        this.sex = sex;
+    }
+
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getNationality()
+    {
+        return nationality;
+    }
+
+    public void setNationality(String nationality)
+    {
+        this.nationality = nationality;
+    }
+
+    public String getIdNumber()
+    {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber)
+    {
+        this.idNumber = idNumber;
+    }
+
+    public String getDateOfBirth()
+    {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth)
+    {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPreferences()
+    {
+        return preferences;
+    }
+
+    public void setPreferences(String preferences)
+    {
+        this.preferences = preferences;
+    }
+
+    public String getDocumentType()
+    {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType)
+    {
+        this.documentType = documentType;
+    }
+
+    public DocumentType getIdType()
+    {
+        return idType;
+    }
+
+    public void setIdType(DocumentType idType)
+    {
+        this.idType = idType;
+    }
+
+    public DateTime getDateOfBirthDate()
+    {
+        return dateOfBirthDate;
+    }
+
+    public void setDateOfBirthDate(DateTime dateOfBirthDate)
+    {
+        this.dateOfBirthDate = dateOfBirthDate;
+    }
+
+    public Gender getGender()
+    {
+        return gender;
+    }
+
+    public void setGender(Gender gender)
+    {
+        this.gender = gender;
     }
 }
