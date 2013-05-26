@@ -1,0 +1,104 @@
+$viewEnclosureTool.top()
+<div ng-controller="ReservationDetailsCtrl" xmlns="http://www.w3.org/1999/html">
+    <h1 ng-show="reservation.reservationType == 'single'">Single Reservation#{{reservation.reservationId}}</h1>
+    <h2><a href="#/guests/edit/{{reservation.owner.id}}">{{ reservation.owner.displayed }}</a></h2>
+    <form name="resForm" novalidate xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+        {{ reservation }}
+        <fieldset>
+            <legend>Stay details</legend>
+
+            <div class="control-group input-append">
+                <label class="control-label" for="checkin">Check-in:</label>
+                <input type="text" id="checkin" ng-model="reservation.checkin" data-date-format="dd/mm/yyyy" bs-datepicker>
+                <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+            </div>
+
+            <div></div>
+
+            <div class="control-group input-append">
+                <label class="control-label" for="checkout">Check-out:</label>
+                <input type="text" id="checkout" ng-model="reservation.checkout" data-date-format="dd/mm/yyyy" bs-datepicker>
+                <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+            </div>
+
+            <div>
+                <label for="number-of-adults">Number of adults:</label>
+                <input ng-model="reservation.numberOfAdults" id="number-of-adults"
+                       required name="numberOfAdults" type="number" min="0" max="10" ng-pattern="/\d*/">
+
+            <span class="error" ng-show="resForm.numberOfAdults.$error.required">
+                Required!</span>
+            <span class="error" ng-show="resForm.numberOfAdults.$error.number">
+                Not valid number!</span>
+            </div>
+
+            <div>
+                <label for="number-of-children">Number of children:</label>
+                <input type="number" ng-model="reservation.numberOfChildren"
+                       id="number-of-children" required value="0" name="numberOfChildren"
+                       min="0" max="10" ng-pattern="/\d*/">
+
+             <span class="error" ng-show="resForm.numberOfChildren.$error.required">
+                Required!</span>
+            <span class="error" ng-show="resForm.numberOfChildren.$error.number">
+                Not valid number!</span>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Room</legend>
+            <div>
+                <label for="roomTypeChooser">Choose room type:</label>
+                <select id="roomTypeChooser" ng-model="reservation.roomType" ng-change="filterRooms()"
+                        name="roomType" required >
+                    <option ng-repeat="type in roomTypes" ng-selected="type.id == reservation.roomType">{{type.id}}</option>
+                </select>
+            <span class="error" ng-show="resForm.roomType.$error.required">
+                Required!</span>
+            </div>
+
+            <label for="roomChooser">Choose room:</label>
+            <select id="roomChooser" ng-model="reservation.room" name="room" ng-change="filterMaxExtraBeds() || getRates()"
+                    required>
+                <option ng-repeat="room in rooms" ng-selected="room.id == reservation.roomName">{{room.id}}</option>
+            </select>
+            <div>
+                <label for="extraBedChooser">Extra beds:</label>
+                <select id="extraBedChooser" required name="roomExtraBed" ng-model="reservation.extraBeds">
+                    <option ng-repeat="bed in beds" ng-selected="reservation.roomExtraBed == bed.extraBed">{{bed.extraBed}}</option>
+                </select>
+
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+
+            <legend>Rate</legend>
+            <p ng-hide="changeRate">Current rate: {{reservation.rateType}}</p>
+
+            <div ng-show="changeRate">
+                <label for="rateType">Type:</label>
+                <select id="rateType" required name="rate" ng-model="reservation.rate"
+                        ng-options="rate.name for rate in rates" ng-change="calculateCharges()"></select>
+            </div>
+            <div>
+                <p>Amount</p>
+                {{ charges.amount }} {{ charges.currency}}
+            </div>
+            <button class="btn btn-action" ng-hide="changeRate" ng-click="changeRate = true">Change rate</button>
+        </fieldset>
+
+
+    </form>
+
+    <a href="#/reservations" class="btn">Cancel</a>
+    isClean {{ isClean() }}
+    </br> resForm.$invalid {{ resForm.$invalid }}
+    <button ng-click="save()" ng-disabled="isClean() || resForm.$invalid"
+            class="btn btn-primary">Save
+    </button>
+    <button ng-click="destroy()"
+            ng-show="reservation.reservationId" class="btn btn-danger">Delete
+    </button>
+</div>
