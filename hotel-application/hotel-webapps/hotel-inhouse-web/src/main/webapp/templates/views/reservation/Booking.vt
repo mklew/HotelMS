@@ -1,5 +1,4 @@
 $viewEnclosureTool.top()
-                         {{ reservation }}
 <h1>Reservation booking</h1>
 <form name="resForm" novalidate xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <fieldset>
