@@ -27,10 +27,20 @@ var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResou
 
         })
         .state('reservations.checkins', {
-
+            url : '/checkins',
+            templateUrl : routes.reservation.browse.template,
+            controller : 'ReservationsWithStatusCtrl',
+            data : {
+                status : 'checkin'
+            }
         })
         .state('reservations.checkouts', {
-
+            url : '/checkouts',
+            templateUrl : routes.reservation.browse.template,
+            controller : 'ReservationsWithStatusCtrl',
+            data : {
+                status : 'checkout'
+            }
         })
         .state('reservations.booking', {
             url : '/booking',
