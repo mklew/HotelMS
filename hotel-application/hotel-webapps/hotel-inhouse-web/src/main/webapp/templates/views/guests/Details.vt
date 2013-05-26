@@ -1,0 +1,115 @@
+$viewEnclosureTool.top()
+<h2 ng-hide="newGuest">{{ original.firstName }} {{ original.surname }}'s details</h2>
+<h2 ng-show="newGuest">Add new guest</h2>
+<form name="guestForm">
+    <div class="control-group">
+        <label>VIP</label>
+        <input type="checkbox" name="vip" value="vip" ng-model="guest.vip">
+    </div>
+
+    <!-- 	<div class="control-group" required ng-class="{error: guestForm.firstName.$invalid}">
+         <label>First name</label>
+         <input type="text" name="firstName" ng-model="guest.firstName" required>
+         <span ng-show="guestForm.firstName.$error.required" class="help-inline">
+             Required</span>
+       </div> -->
+
+    <div class="control-group">
+        <label>Social title</label>
+        <select name="guestForm.socialTitle" required ng-model="guest.socialTitle">
+            <option value="Mr">Mr</option>
+            <option value="Ms">Ms</option>
+            <option value="Miss">Miss</option>
+        </select>
+    </div>
+
+    <div class="control-group">
+        <label>First name</label>
+        <input type="text" name="guestForm.firstName" required placeholder="first name" ng-model="guest.firstName">
+    </div>
+
+    <div class="control-group">
+        <label>Surname</label>
+        <input type="text" name="guestForm.surname" required placeholder="surname" ng-model="guest.surname">
+    </div>
+
+    <div class="control-group">
+        <label>sex</label>
+        <select name="sex" required ng-model="guest.sex">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+            <option value="refused">refused</option>
+        </select>
+    </div>
+
+    <div class="control-group">
+        <label>Phone</label>
+        <input type="text" name="phoneNumber" placeholder="phone number" required ng-model="guest.phoneNumber">
+    </div>
+
+    <div class="control-group">
+        <label>Nationality</label>
+        <input type="text" name="nationality" required ng-model="guest.nationality">
+    </div>
+
+    <div class="control-group">
+        <label>Document type</label>
+        <select name="idType" required ng-model="guest.documentType">
+            <option value="passport">Passport</option>
+            <option value="personalID">Personal ID</option>
+            <option value="driverLicense">Drivers License</option>
+            <option value="other">other</option>
+        </select>
+    </div>
+
+    <div class="control-group">
+        <label>Document number</label>
+        <input type="text" name="idNumber" required ng-model="guest.idNumber">
+    </div>
+
+    <div class="control-group">
+        <label>Date of Birth</label>
+        <input type="text" name="dateOfBirth" ng-model="guest.dateOfBirth" placeholder="yyyy-mm-dd">
+    </div>
+
+    <p>Home address</p>
+
+    <div class="control-group">
+        <label>Address</label>
+        <input type="text" name="address" ng-model="guest.address">
+    </div>
+
+    <div class="control-group">
+        <labe>Country</labe>
+        <input type="text" name="country" ng-model="guest.country">
+    </div>
+
+    <div class="control-group">
+        <label>State</label>
+        <input type="text" name="state" ng-model="guest.state">
+    </div>
+
+    <div class="control-group">
+        <label>City</label>
+        <input type="text" name="city" ng-model="guest.city">
+    </div>
+
+    <div class="control-group">
+        <label>Zip-code</label>
+        <input type="text" name="zipcode" ng-model="guest.zipcode">
+    </div>
+
+    <div class="control-group">
+        <label>Preferences</label>
+        <textarea name="preferences" ng-model="guest.preferences"></textarea>
+    </div>
+
+    <a href="#/" class="btn">Cancel</a>
+    <button ng-click="save()" ng-disabled="isClean() || guestForm.$invalid"
+            class="btn btn-primary">Save
+    </button>
+    <button ng-click="destroy()"
+            ng-show="guest.id" class="btn btn-danger">Delete
+    </button>
+</form>
