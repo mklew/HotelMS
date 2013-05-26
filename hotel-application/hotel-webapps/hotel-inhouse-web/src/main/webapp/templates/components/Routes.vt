@@ -5,6 +5,15 @@
                 template : '$link.view('reservation.Reservation')',
                 browse : {
                     template : '$link.view('reservation.Browse')'
+                },
+                sheet : {
+                    template : '$link.view('reservation.Sheet')'
+                },
+                booking : {
+                    template : '$link.view('reservation.Booking')'
+                },
+                details : {
+                    template : '$link.view('reservation.Details')'
                 }
             },
             dashboard : {
@@ -12,6 +21,26 @@
             },
             room : {
                 resourceRoot : '$link.rootContent('rest/room')'
+            },
+            rates : {
+                resourceRoot : '$link.rootContent('rest/rates')'
+            },
+            charges : {
+                resourceRoot : '$link.rootContent('rest/charge')'
+            },
+            guests : {
+                resourceRoot : '$link.rootContent('rest/guests')',
+                template : '$link.view('guests.Guests')',
+                list : {
+                    template : '$link.view('guests.List')'
+                },
+                details : {
+                    template : '$link.view('guests.Details')'
+                }
+            },
+            nightaudit : {
+                resourceRoot : '$link.rootContent('rest/nightaudit')',
+                template : '$link.view('nightaudit.Nightaudit')'
             },
             logout : '$link.rootContent('logout')'
        });
