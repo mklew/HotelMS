@@ -91,6 +91,11 @@ public class Reservation implements Serializable
         throw new NotImplementedException();
     }
 
+    public void changeToCheckIn()
+    {
+        reservationStatus = ReservationStatus.CHECKIN;
+    }
+
     public void checkIn()
     {
         reservationStatus = ReservationStatus.INHOUSE;
@@ -140,7 +145,7 @@ public class Reservation implements Serializable
     // limits it to just one
     public Room getRoom()
     {
-        return nights.iterator().next().getRoom();
+        return getNights().iterator().next().getRoom();
     }
 
     public DateTime getCheckIn()
@@ -274,7 +279,7 @@ public class Reservation implements Serializable
         this.reservationStatus = reservationStatus;
     }
 
-    private Set<Night> getNights()
+    public Set<Night> getNights()
     {
         return nights;
     }
@@ -333,5 +338,10 @@ public class Reservation implements Serializable
         final DateTime checkOut = getCheckOut();
         nights.clear();
         nights.addAll(createNights(checkIn, checkOut, chosenRate));
+    }
+
+    public void noShow()
+    {
+        reservationStatus = ReservationStatus.NOSHOW;
     }
 }
