@@ -3,7 +3,6 @@ $viewEnclosureTool.top()
     <h1 ng-show="reservation.reservationType == 'single'">Single Reservation#{{reservation.reservationId}}</h1>
     <h2><a href="#/guests/edit/{{reservation.owner.id}}">{{ reservation.owner.displayed }}</a></h2>
     <form name="resForm" novalidate xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-        {{ reservation }}
         <fieldset>
             <legend>Stay details</legend>
 
@@ -93,8 +92,6 @@ $viewEnclosureTool.top()
     </form>
 
     <a href="#/reservations" class="btn">Cancel</a>
-    isClean {{ isClean() }}
-    </br> resForm.$invalid {{ resForm.$invalid }}
     <button ng-click="save()" ng-disabled="isClean() || resForm.$invalid"
             class="btn btn-primary">Save
     </button>
