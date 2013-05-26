@@ -87,7 +87,7 @@ hotelms.controller('ReservationDetailsCtrl', ['$scope', 'RoomService', 'RateServ
 
 
         new Reservation(r).update(function(){
-            $state.transitionTo('reservations'});
+            $state.transitionTo('reservations');
         });
 
       };
