@@ -9,6 +9,8 @@ import net.mklew.hotelms.domain.room.RoomRepository;
 import net.mklew.hotelms.inhouse.web.dto.RateDto;
 import net.mklew.hotelms.persistance.hibernate.configuration.HibernateSessionFactory;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.context.internal.ThreadLocalSessionContext;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -47,8 +49,11 @@ public class RatesResource
     public Collection<RateDto> getAllRates(@PathParam("roomName") String roomName,
                                            @Context HttpServletResponse httpServletResponse)
     {
-        Session session = hibernateSessionFactory.getCurrentSession();
+        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        ThreadLocalSessionContext.bind(session);
         session.beginTransaction();
+
         RoomName name = new RoomName(roomName);
         Room room = null;
         try
