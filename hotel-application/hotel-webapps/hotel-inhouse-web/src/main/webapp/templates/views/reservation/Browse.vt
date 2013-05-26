@@ -34,7 +34,7 @@ $viewEnclosureTool.top()
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#/edit/{{reservation.reservationId}}"><span>Edit</span><i class="icon-pencil"></i></a>
+                        <a href="#/reservations/edit/{{reservation.reservationId}}"><span>Edit</span><i class="icon-pencil"></i></a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -46,10 +46,12 @@ $viewEnclosureTool.top()
                     <li>
                         <a href="#" ng-click="cancel($index)">Cancel reservation</a>
                     </li>
+                    #if( $currentUser.isPermitted("reservation:delete") )
                     <li class="divider"></li>
                     <li>
-                        <a class="btn- btn-danger" ng-show="canDelete()" ng-click="destroy($index)">Delete</a>
+                        <a class="btn- btn-danger" ng-click="destroy($index)">Delete</a>
                     </li>
+                    #end
                 </ul>
             </div>
         </td>
