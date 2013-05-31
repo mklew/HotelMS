@@ -344,4 +344,9 @@ public class Reservation implements Serializable
     {
         reservationStatus = ReservationStatus.NOSHOW;
     }
+
+    public void archive()
+    {
+        reservationStatus = ReservationStatus.HISTORY;
+    }
 }

@@ -61,6 +61,9 @@ public class NightauditResource
 
         Collection<Reservation> reservedForNextDay = markReservedForTomorrowAsCheckins();
 
+        final Collection<Reservation> checkedOut = archiveCheckedOut();
+
+
         Function<Reservation, ReservationDto> toDto = new Function<Reservation, ReservationDto>()
             {
                 @Override
@@ -80,10 +83,21 @@ public class NightauditResource
 
         reservationRepository.updateAll(withCheckinStatus);
         reservationRepository.updateAll(reservedForNextDay);
+        reservationRepository.updateAll(checkedOut);
 
         session.getTransaction().commit();
 
         return Response.ok(auditResults).build();
+    }
+
+    private Collection<Reservation> archiveCheckedOut()
+    {
+        final Collection<Reservation> checkedOut = reservationRepository.findWithStatus(ReservationStatus.CHECKED_OUT);
+        for(Reservation reservation : checkedOut)
+        {
+            reservation.archive();
+        }
+        return checkedOut;
     }
 
     private Collection<Reservation> markReservedForTomorrowAsCheckins()
