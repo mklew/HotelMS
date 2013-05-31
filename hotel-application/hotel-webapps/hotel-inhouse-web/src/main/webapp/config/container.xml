@@ -47,6 +47,7 @@
     <component class="org.objectledge.web.ShiroSubjectValve"/>
     <component class="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
     <component class="net.mklew.hotelms.persistance.valve.DelayTillCommittedValve"/>
+    <component class="net.mklew.hotelms.persistance.valve.CloseHibernateThreadLocalSession"/>
     <component class-key="org.objectledge.i18n.I18n" class="org.objectledge.i18n.xml.XMLI18n"/>
     <component class="org.objectledge.i18n.LocaleLoaderValve"/>
     <component class="org.objectledge.authentication.AuthenticationValve"/>
@@ -176,6 +177,8 @@
             <parameter class-key="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
         </sequence>
         <sequence>
+            <parameter class-key="net.mklew.hotelms.persistance.valve.CloseHibernateThreadLocalSession"/>
+
         </sequence>
     </component>
 
