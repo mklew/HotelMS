@@ -46,7 +46,7 @@
     <component class="org.objectledge.parameters.RequestParametersLoaderValve"/>
     <component class="org.objectledge.web.ShiroSubjectValve"/>
     <component class="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
-    <component class="net.mklew.hotelms.persistance.valve.DelayTillCommittedValve"/>
+
     <component class="net.mklew.hotelms.persistance.valve.CloseHibernateThreadLocalSession"/>
 
     <component class="net.mklew.hotelms.persistance.valve.OpenSessionAndBindToCurrentThread"/>
