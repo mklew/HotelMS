@@ -34,9 +34,9 @@ hotelms.factory('Reservation',['$resource', '$http', 'routes', function($resourc
     {
       var url;
       url = routes.reservation.resourceRoot + '/' + that.reservationId + '/' + operation;
-      $http({method: 'POST', url: url}).
-        success(function(data, status, headers, config) {
-          (cb || angular.noop)();
+      $http({method: 'POST', url: url}).success(function() {
+          var f = (cb || angular.noop);
+          f.apply();
         });
     }
 
@@ -44,8 +44,8 @@ hotelms.factory('Reservation',['$resource', '$http', 'routes', function($resourc
 
 }]);
 
-hotelms.controller('ReservationsBrowseList', ['$scope', '$location', '$http', 'Reservation',
-function ($scope, $location, $http, Reservation) {
+hotelms.controller('ReservationsBrowseList', ['$scope', '$location', '$http', 'Reservation', '$state',
+function ($scope, $location, $http, Reservation, $state) {
 
     $scope.reservations = Reservation.query();
 
@@ -54,22 +54,26 @@ function ($scope, $location, $http, Reservation) {
         return $scope.reservations[index];
     }
 
+    function goToReservationsBrowse(){
+        $scope.reservations = Reservation.query();
+    }
+
     $scope.checkIn = function(index)
     {
         var reservation = currentReservation(index);
-        reservation.checkIn();
+        reservation.checkIn(goToReservationsBrowse);
     }
 
     $scope.checkOut = function(index)
     {
         var reservation = currentReservation(index);
-        reservation.checkOut(function(){});
+        reservation.checkOut(goToReservationsBrowse);
     }
 
     $scope.cancel = function(index)
     {
         var reservation = currentReservation(index);
-        reservation.cancel(function(){});
+        reservation.cancel(goToReservationsBrowse);
     }
 
     $scope.destroy = function(index)
