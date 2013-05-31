@@ -1,0 +1,10 @@
+$viewEnclosureTool.top()
+<div class="span6">
+    <h3>Legend</h3>
+    <div class="legend checkin"><p>Checkin</p></div>
+    <div class="legend checkout"><p>Checkout</p></div>
+    <div class="legend inhouse"><p>Inhouse</p></div>
+    <div class="legend history"><p>History</p></div>
+    <div class="legend reserved"><p>Reserved</p></div>
+    <div class="legend overbooked"><p>Overbooked</p></div>
+</div>
