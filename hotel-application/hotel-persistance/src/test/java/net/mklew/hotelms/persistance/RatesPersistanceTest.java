@@ -19,10 +19,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 11/6/12
  *        Time: 11:29 PM
  */
-@Test(groups = {"integration"})
+@Test
 public class RatesPersistanceTest extends IntegrationTest
 {
-    @Test(groups = {"integration"})
+    @Test
     public void should_save_rates_and_retrieve_them_with_success()
     {
         Money standardPrice = Money.parse("USD 85");
@@ -40,7 +40,6 @@ public class RatesPersistanceTest extends IntegrationTest
         session.beginTransaction();
 
         session.save(roomType);
-//        session.save(room);
 
         session.getTransaction().commit();
         session.close();
@@ -49,7 +48,6 @@ public class RatesPersistanceTest extends IntegrationTest
         session = sessionFactory.openSession();
         session.beginTransaction();
 
-        //        session.save(roomType);
         session.save(room);
 
         session.getTransaction().commit();
@@ -73,7 +71,7 @@ public class RatesPersistanceTest extends IntegrationTest
 
     }
 
-    @Test(groups = {"integration"}, expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
+    @Test(expectedExceptions = org.hibernate.exception.ConstraintViolationException.class)
     public void season_rate_should_violate_db_constraints_when_saved_without_season()
     {
         Money standardPrice = Money.parse("USD 85");
@@ -107,12 +105,6 @@ public class RatesPersistanceTest extends IntegrationTest
         session.getTransaction().commit();
         session.close();
     }
-
-//    @Test
-//    public void package_rate_should_violate_db_constraints_when_saved_without_package()
-//    {
-//
-//    }
 
     private RoomType getMeRoomType()
     {

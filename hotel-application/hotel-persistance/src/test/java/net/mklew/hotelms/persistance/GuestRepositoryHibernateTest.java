@@ -5,7 +5,6 @@ import net.mklew.hotelms.domain.booking.GuestRepository;
 import net.mklew.hotelms.domain.guests.DocumentType;
 import net.mklew.hotelms.domain.guests.Gender;
 import net.mklew.hotelms.domain.guests.Guest;
-import net.mklew.hotelms.persistance.hibernate.configuration.StubHibernateSessionFactory;
 import org.hibernate.Session;
 import org.testng.annotations.Test;
 
@@ -19,10 +18,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 12/2/12
  *        time 6:44 PM
  */
-@Test(groups = {"integration"})
+@Test
 public class GuestRepositoryHibernateTest extends IntegrationTest
 {
-    @Test(groups = {"integration"})
+    @Test
     public void should_help_to_find_guests_by_name_and_surname()
     {
         // before

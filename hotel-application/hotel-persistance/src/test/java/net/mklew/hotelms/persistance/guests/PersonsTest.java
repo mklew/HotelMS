@@ -20,10 +20,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 12/2/12
  *        time 5:17 PM
  */
-@Test(groups = {"integration"})
+@Test
 public class PersonsTest extends IntegrationTest
 {
-    @Test(groups = {"integration"})
+    @Test
     public void should_save_and_retrieve_guest_with_basic_information()
     {
         Guest guest = new Guest("Mr", "John", "Doe", Gender.MALE, DocumentType.DRIVER_LICENSE, "123-321", "555123456");

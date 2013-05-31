@@ -23,10 +23,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 12/27/12
  *        time 4:38 PM
  */
-@Test(groups = {"integration"})
+@Test
 public class ReservationRepositoryHibernateTest extends IntegrationTest
 {
-    @Test(groups = {"integration"})
+    @Test
     public void should_find_reservations_around_dates() throws Exception
     {
         // given prepared data and

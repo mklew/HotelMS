@@ -22,10 +22,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 12/26/12
  *        time 9:57 PM
  */
-@Test(groups = {"integration"})
+@Test
 public class ReservationPersistanceTest extends IntegrationTest
 {
-    @Test(groups = {"integration"})
+    @Test
     public void should_save_reservation_and_retrieve_it() throws Exception
     {
         // given

@@ -2,7 +2,6 @@ package net.mklew.hotelms.persistance;
 
 import net.mklew.hotelms.domain.booking.reservation.rates.*;
 import net.mklew.hotelms.domain.room.*;
-import net.mklew.hotelms.persistance.hibernate.configuration.StubHibernateSessionFactory;
 import org.hibernate.Session;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
@@ -17,10 +16,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 11/10/12
  *        Time: 10:51 PM
  */
-@Test(groups = "integration")
+@Test
 public class RateRepositoryHibernateTest extends IntegrationTest
 {
-    @Test(groups = {"integration"})
+    @Test
     public void should_find_all_rates_for_given_room()
     {
         // given

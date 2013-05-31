@@ -17,10 +17,10 @@ import java.util.List;
  * @since 9/30/12
  *        Time: 12:28 PM
  */
-@Test(groups = {"integration"})
+@Test
 public class TimePeriodTest extends IntegrationTest
 {
-    @Test(groups = {"integration"})
+    @Test
     public void should_save_season_and_availability_period_with_unique_identifiers() throws Exception
     {
         // given
@@ -47,12 +47,12 @@ public class TimePeriodTest extends IntegrationTest
         // when
         List results = session.createQuery("from BasicSeason").list();
         List results2 = session.createQuery("from AvailabilityPeriod").list();
-//        assertThat(results).hasSize(1);
+
         //then
         session.getTransaction().commit();
         session.close();
 
-
+        // no exceptions should be thrown
     }
 
 }

@@ -17,10 +17,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 11/4/12
  *        Time: 10:27 PM
  */
-@Test(groups = {"integration"})
+@Test
 public class RoomPersistanceTest extends IntegrationTest
 {
-    @Test(groups = {"integration"})
+    @Test
     public void should_successfully_save_and_retrieve_room() throws Exception
     {
         final RoomName roomName = new RoomName("10623");
