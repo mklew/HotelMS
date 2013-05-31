@@ -48,6 +48,9 @@
     <component class="net.mklew.hotelms.persistance.valve.TransactionRollbackValve"/>
     <component class="net.mklew.hotelms.persistance.valve.DelayTillCommittedValve"/>
     <component class="net.mklew.hotelms.persistance.valve.CloseHibernateThreadLocalSession"/>
+
+    <component class="net.mklew.hotelms.persistance.valve.OpenSessionAndBindToCurrentThread"/>
+
     <component class-key="org.objectledge.i18n.I18n" class="org.objectledge.i18n.xml.XMLI18n"/>
     <component class="org.objectledge.i18n.LocaleLoaderValve"/>
     <component class="org.objectledge.authentication.AuthenticationValve"/>
@@ -152,7 +155,7 @@
     <!-- rest pipeline -->
     <component class="org.objectledge.pipeline.SimplePipeline" key="restPipeline">
         <sequence>
-            <parameter class-key="net.mklew.hotelms.persistance.valve.DelayTillCommittedValve"/>
+            <parameter class-key="net.mklew.hotelms.persistance.valve.OpenSessionAndBindToCurrentThread"/>
             <parameter class-key="org.objectledge.web.rest.JerseyRestValve"/>
         </sequence>
     </component>
