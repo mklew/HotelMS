@@ -92,6 +92,7 @@ var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResou
 .run(['$rootScope', '$state', '$stateParams', function ($rootScope,   $state,   $stateParams) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+        $rootScope.isDebug = false;
 }]);
 
 hotelms.controller('AppController', ['$scope', 'routes', function($scope, routes){
