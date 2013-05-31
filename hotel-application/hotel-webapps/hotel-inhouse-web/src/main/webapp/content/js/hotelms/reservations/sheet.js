@@ -162,7 +162,7 @@ hotelms.controller('ReservationsSheetCtrl', ['$scope', 'BookingSheetService', '$
     {
         if(!day.isEmpty)
         {
-            $state.transitionTo('reservations.view', { reservationNumber: day.reservation.reservationNumber }, true);
+            $state.transitionTo('reservations.edit', { reservationId: day.reservation.reservationNumber }, true);
         }
     }
 
