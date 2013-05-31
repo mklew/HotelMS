@@ -97,7 +97,8 @@ hotelms.service('GuestLookupService', ['routes', '$log', '$http', function(route
 }]);
 
 hotelms.controller('ReservationsBookingCtrl', ['$scope', 'RoomService', 'RateService', 'ChargeService',
-'GuestLookupService', 'Reservation', function($scope, RoomService, RateService, ChargeService, GuestLookupService, Reservation){
+'GuestLookupService', 'Reservation','$state', function($scope, RoomService, RateService, ChargeService,
+GuestLookupService, Reservation, $state){
 
     $scope.roomTypes = RoomService.getRoomTypes();
     var rooms = RoomService.getRooms();
@@ -157,5 +158,7 @@ hotelms.controller('ReservationsBookingCtrl', ['$scope', 'RoomService', 'RateSer
         r.rateType = reservation.rate.name;
 
         Reservation.save(r);
+
+        $state.transitionTo('reservations.sheet')
     }
 }]);
