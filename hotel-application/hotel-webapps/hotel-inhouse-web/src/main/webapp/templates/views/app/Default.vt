@@ -24,7 +24,7 @@
 </div>
 <div class="container-fluid" style="margin-top:60px" ui-view ng-animate="{enter:'fade-enter'}"></div>
 <hr>
-<pre>
+<pre ng-show="isDebug">
   $state = {{$state.current.name}}
   $stateParams = {{$stateParams}}
 </pre>

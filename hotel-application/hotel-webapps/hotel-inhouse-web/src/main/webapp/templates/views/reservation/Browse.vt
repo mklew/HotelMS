@@ -41,13 +41,13 @@ $viewEnclosureTool.top()
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="#" ng-click="checkIn($index)">Check In</a>
+                                    <a href="#/reservations/browse" ng-click="checkIn($index)">Check In</a>
                                 </li>
                                 <li>
-                                    <a href="#" ng-click="checkOut($index)">Check Out</a>
+                                    <a href="#/reservations/browse" ng-click="checkOut($index)">Check Out</a>
                                 </li>
                                 <li>
-                                    <a href="#" ng-click="cancel($index)">Cancel reservation</a>
+                                    <a href="#/reservations/browse" ng-click="cancel($index)">Cancel reservation</a>
                                 </li>
                                 #if( $currentUser.isPermitted("reservation:delete") )
                                 <li class="divider"></li>

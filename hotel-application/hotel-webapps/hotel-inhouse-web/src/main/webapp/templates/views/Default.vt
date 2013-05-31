@@ -22,7 +22,7 @@
     <script src="/content/less.js"></script>
 
     <!-- could easily use a custom property of the state here instead of 'name' -->
-    <title ng-bind="$state.current.name + ' - angular-states'">angular-states</title>
+    <title ng-bind="$state.current.name + ' - hotelms'">hotelms</title>
 </head><body ng-controller="AppController">
 
 $embeddedPlaceholder##

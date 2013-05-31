@@ -2,6 +2,7 @@ $viewEnclosureTool.top()
 <div ng-controller="ReservationDetailsCtrl" xmlns="http://www.w3.org/1999/html">
     <h1 ng-show="reservation.reservationType == 'single'">Single Reservation#{{reservation.reservationId}}</h1>
     <h2><a href="#/guests/edit/{{reservation.owner.id}}">{{ reservation.owner.displayed }}</a></h2>
+    <h3>reservation status: {{reservation.reservationStatus}}</h3>
     <form name="resForm" novalidate xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
         <fieldset>
             <legend>Stay details</legend>
