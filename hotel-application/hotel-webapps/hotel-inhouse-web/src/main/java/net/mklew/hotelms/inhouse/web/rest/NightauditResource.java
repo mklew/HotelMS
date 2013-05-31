@@ -52,9 +52,7 @@ public class NightauditResource
     @Produces(MediaType.APPLICATION_JSON)
     public Response runNightAudit()
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         AuditResults auditResults = new AuditResults();

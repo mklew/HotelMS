@@ -42,9 +42,7 @@ public class RoomResource
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<RoomDto> getRooms()
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         Collection<Room> rooms = roomRepository.getAllRooms();
@@ -59,9 +57,7 @@ public class RoomResource
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<RoomTypeDto> getRoomTypes()
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         Collection<RoomType> roomTypes = roomRepository.getAllRoomTypes();
@@ -80,9 +76,7 @@ public class RoomResource
     @Produces(MediaType.APPLICATION_JSON)
     public RoomStats getRoomStats()
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         final Collection<Room> rooms = roomRepository.getAllRooms();

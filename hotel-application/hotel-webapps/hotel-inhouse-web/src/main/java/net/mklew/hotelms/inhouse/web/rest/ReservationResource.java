@@ -97,9 +97,7 @@ public class ReservationResource
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<ReservationDto> getAllReservations()
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
         final Collection<Reservation> reservations = reservationRepository.getAll();
         Collection<ReservationDto> dtos = new ArrayList<>(reservations.size());
@@ -116,9 +114,7 @@ public class ReservationResource
     public Response getReservation(@PathParam("id") String reservationId)
     {
         Id id = Id.of(reservationId);
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
         final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
         if(reservationOptional.isPresent())
@@ -139,9 +135,7 @@ public class ReservationResource
         ReservationOperationAction action)
     {
         Id id = Id.of(reservationId);
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
         final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
         if(reservationOptional.isPresent())
@@ -229,9 +223,7 @@ public class ReservationResource
     @Consumes(MediaType.APPLICATION_JSON)
     public Response bookNewReservation(ReservationDto reservationDto)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         try
@@ -330,9 +322,7 @@ public class ReservationResource
     public Response createNewReservation(MultivaluedMap<String, String> formParams,
         @Context HttpServletResponse httpServletResponse)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
         logger.debug("Got new reservation with parameters: " + formParams.toString());
         try
@@ -430,9 +420,7 @@ public class ReservationResource
     public Response deleteReservation(@PathParam("id") String reservationId)
     {
         Id id = Id.of(reservationId);
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
         final Optional<Reservation> reservationOptional = reservationRepository.lookup(id);
         if(reservationOptional.isPresent())
@@ -678,9 +666,7 @@ public class ReservationResource
     @Produces(MediaType.APPLICATION_JSON)
     public ReservationStats getStats()
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         Collection<Reservation> inhouse = reservationRepository
@@ -703,9 +689,7 @@ public class ReservationResource
         Date fromDate = new Date(from);
         Date toDate = new Date(to);
 
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         final Collection<Room> allRooms = roomRepository.getAllRooms();
@@ -778,9 +762,7 @@ public class ReservationResource
     @Path("status/{status}")
     public Collection<ReservationDto> getWithStatus(@PathParam("status") String status)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         final ReservationStatus reservationStatus = ReservationStatus.fromName(status);

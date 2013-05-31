@@ -49,9 +49,7 @@ public class GuestResource
         {
             return getAll();
         }
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         String commonName = query;
@@ -80,9 +78,7 @@ public class GuestResource
 
     private Response getAll()
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         final Collection<Guest> guests = guestRepository.findAll();
@@ -95,9 +91,7 @@ public class GuestResource
     @Path("/inhouse")
     public Response getAllInHouseGuests()
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         final Collection<Guest> guests = guestRepository.findAllInHouse();
@@ -117,9 +111,7 @@ public class GuestResource
     @Path("/guest/{id}")
     public Response getGuestById(@PathParam("id") String id)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         final Optional<Guest> guestOptional = guestRepository.lookup(Long.valueOf(id));
@@ -143,9 +135,7 @@ public class GuestResource
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response createNewGuest(MultivaluedMap<String, String> formParams)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         logger.debug("Got new reservation with parameters: " + formParams.toString());
@@ -176,9 +166,7 @@ public class GuestResource
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNewGuestFromDto(GuestDto guestParam)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         try
@@ -209,9 +197,7 @@ public class GuestResource
     @Path("/guest/{id}")
     public Response deleteGuest(@PathParam("id") String id)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         try
@@ -234,9 +220,7 @@ public class GuestResource
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modifyGuestDto(@PathParam("id") String id, GuestDto dtoParam)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         try
@@ -281,9 +265,7 @@ public class GuestResource
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response modifyGuest(@PathParam("id") String id, MultivaluedMap<String, String> formParams)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         logger.debug("Modify guest. Form data: " + formParams.toString());

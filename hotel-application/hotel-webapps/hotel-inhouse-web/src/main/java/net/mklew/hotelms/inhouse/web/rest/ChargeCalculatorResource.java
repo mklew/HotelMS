@@ -59,9 +59,7 @@ public class ChargeCalculatorResource
                                                  @Context HttpServletResponse httpServletResponse)
     {
         // TODO implement inclusions because so far they are ignored
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         RoomName name = new RoomName(roomName);

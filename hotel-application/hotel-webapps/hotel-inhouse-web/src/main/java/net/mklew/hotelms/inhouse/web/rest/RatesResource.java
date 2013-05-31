@@ -49,9 +49,7 @@ public class RatesResource
     public Collection<RateDto> getAllRates(@PathParam("roomName") String roomName,
                                            @Context HttpServletResponse httpServletResponse)
     {
-        SessionFactory sessionFactory = hibernateSessionFactory.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        ThreadLocalSessionContext.bind(session);
+        Session session = hibernateSessionFactory.getCurrentSession();
         session.beginTransaction();
 
         RoomName name = new RoomName(roomName);
