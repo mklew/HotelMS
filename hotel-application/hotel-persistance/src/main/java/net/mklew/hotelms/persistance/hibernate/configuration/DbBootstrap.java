@@ -193,7 +193,7 @@ public class DbBootstrap implements Startable
         Reservation reservation5 = new Reservation(Id.NO_ID, guest5, rate2_C104, new DateTime(new DateMidnight(2012,
                 12, 20)),
                 new DateTime(new DateMidnight(2012, 12, 28)), 1, 0, 0, ReservationStatus.RESERVED);
-        Reservation reservation6 = new Reservation(Id.NO_ID, guest5, rate2_C104, new DateTime(DateMidnight.now()),
+        Reservation reservation6 = new Reservation(Id.NO_ID, guest5, rate2_C104, new DateTime(DateMidnight.now().plusDays(1)),
                 new DateTime(DateMidnight.now().plusDays(5)), 1, 0, 0, ReservationStatus.RESERVED);
 
         Collection<Reservation> reservations = Arrays.asList(reservation, reservation2, reservation3, reservation4,
