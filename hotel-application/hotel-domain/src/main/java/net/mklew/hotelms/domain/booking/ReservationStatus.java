@@ -107,7 +107,7 @@ public enum ReservationStatus
                 @Override
                 public String getName()
                 {
-                    return "checkedout";
+                    return "checked out";
                 }
             },
 
