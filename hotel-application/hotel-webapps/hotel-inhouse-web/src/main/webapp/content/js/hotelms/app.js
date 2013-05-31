@@ -22,8 +22,16 @@ var hotelms = angular.module('hotelms', ['ui.compat', 'hotelms-routes', 'ngResou
         })
         .state('reservations.sheet', {
             url : '/sheet',
-            templateUrl : routes.reservation.sheet.template,
-            controller : 'ReservationsSheetCtrl'
+
+            views : {
+                '' : {
+                     templateUrl : routes.reservation.sheet.template,
+                     controller : 'ReservationsSheetCtrl'
+                },
+                'legend' : {
+                    templateUrl : routes.reservation.sheet.legend.template
+                }
+            }
 
         })
         .state('reservations.checkins', {
