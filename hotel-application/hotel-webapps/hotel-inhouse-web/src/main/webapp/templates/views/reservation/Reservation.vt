@@ -10,6 +10,7 @@ $viewEnclosureTool.top()
             <li ng-class="{ active: $state.includes('reservations.checkouts') }"><a href="#/reservations/checkouts">Show check-outs</a></li>
             <li ng-class="{ active: $state.includes('reservations.browse') }"><a href="#/reservations/browse">Browse reservations</a></li>
         </ul>
+        <div ui-view="legend"></div>
     </div>
     <div class="span10" ui-view>
         <!--Body content-->
