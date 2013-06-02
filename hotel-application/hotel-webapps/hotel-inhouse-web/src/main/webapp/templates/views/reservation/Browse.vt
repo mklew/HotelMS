@@ -1,7 +1,7 @@
 $viewEnclosureTool.top()
 <!-- reservation.browse -->
         <div class="row-fluid">
-            <div class="span10">
+            <div class="span11">
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>

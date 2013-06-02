@@ -281,6 +281,6 @@ $viewEnclosureTool.top()
                data-dojo-type="dijit/form/TextBox"/>
     </fieldset>
 
-    <button type="submit" ng-click="createNewReservation(reservation)">Create new reservation</button>
+    <button class="btn btn-primary" type="submit" ng-click="createNewReservation(reservation)">Create new reservation</button>
 </form>
 

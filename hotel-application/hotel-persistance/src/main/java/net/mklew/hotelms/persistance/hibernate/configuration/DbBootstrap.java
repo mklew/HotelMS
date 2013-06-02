@@ -196,8 +196,27 @@ public class DbBootstrap implements Startable
         Reservation reservation6 = new Reservation(Id.NO_ID, guest5, rate2_C104, new DateTime(DateMidnight.now().plusDays(1)),
                 new DateTime(DateMidnight.now().plusDays(5)), 1, 0, 0, ReservationStatus.RESERVED);
 
+        Reservation reservation7 = new Reservation(Id.NO_ID, guest1, rate1_C103, new DateTime(DateMidnight.now()),
+                new DateTime(DateMidnight.now().plusDays(5)), 1, 0, 0, ReservationStatus.CHECKIN);
+
+        Reservation reservation71 = new Reservation(Id.NO_ID, guest6, rate1_N105, new DateTime(DateMidnight.now().minusDays(3)),
+                new DateTime(DateMidnight.now()), 1, 0, 0, ReservationStatus.CHECKOUT);
+
+        Reservation reservation8 = new Reservation(Id.NO_ID, guest7, L102.rackRate(), new DateTime(DateMidnight.now().minusDays(5)),
+                new DateTime(DateMidnight.now().minusDays(2)), 1, 0, 0, ReservationStatus.HISTORY);
+
+        Reservation reservation9 = new Reservation(Id.NO_ID, guest8, rate2_C104, new DateTime(DateMidnight.now().plusDays(6)),
+                new DateTime(DateMidnight.now().plusDays(9)), 1, 0, 0, ReservationStatus.RESERVED);
+
+        Reservation reservation10 = new Reservation(Id.NO_ID, guest3, L100.rackRate(), new DateTime(DateMidnight.now().minusDays(2)),
+                new DateTime(DateMidnight.now().plusDays(9)), 1, 0, 0, ReservationStatus.INHOUSE);
+
         Collection<Reservation> reservations = Arrays.asList(reservation, reservation2, reservation3, reservation4,
-                reservation5, reservation6);
+                reservation5, reservation6, reservation7, reservation8,reservation9, reservation71, reservation10);
+
+        L100.setAvailability(RoomAvailability.OCCUPIED);
+        N105.setAvailability(RoomAvailability.OCCUPIED);
+        C103.setAvailability(RoomAvailability.OCCUPIED);
 
         // bootstrapping data
         session.beginTransaction();
