@@ -18,6 +18,7 @@ import org.picocontainer.Startable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Populates database with some data upon startup.
@@ -84,7 +85,7 @@ public class DbBootstrap implements Startable
                 upchargeExtraPerson.plus(10),
                 upchargeExtraBed.plus(10));
         Room L102 = new Room("L", new RoomName("102"), luxury, HousekeepingStatus.CLEAN,
-                RoomAvailability.OCCUPIED, 3, new Occupancy(2, 4), standardPrice.plus(30),
+                RoomAvailability.AVAILABLE, 3, new Occupancy(2, 4), standardPrice.plus(30),
                 upchargeExtraPerson.plus(30),
                 upchargeExtraBed.plus(30));
         Room C103 = new Room("C", new RoomName("103"), cheap, HousekeepingStatus.CLEAN,
@@ -104,119 +105,39 @@ public class DbBootstrap implements Startable
 
         Collection<Rate> rates;
 
-        Season season = new BasicSeason("winter special", new AvailabilityPeriod(DateTime.now(),
-                DateTime.now().plusDays(90), true));
-        Season season2 = new BasicSeason("christmas special", new AvailabilityPeriod(DateTime.now(),
-                DateTime.now().plusDays(30), true));
+        Season season = new BasicSeason("all time special", new AvailabilityPeriod(DateTime.now(),
+                DateTime.now().plusDays(600), true));
+
 
         Rate rate1_L100 = new SeasonRate(Money.parse("USD 50"), Money.parse("USD 60"), Money.parse("USD 70"), L100,
                 season);
-        Rate rate2_L100 = new SeasonRate(Money.parse("USD 20"), Money.parse("USD 60"), Money.parse("USD 70"), L100,
-                season2);
+
         Rate rate1_L101 = new SeasonRate(Money.parse("USD 60"), Money.parse("USD 70"), Money.parse("USD 60"), L101,
                 season);
-        Rate rate2_L101 = new SeasonRate(Money.parse("USD 20"), Money.parse("USD 70"), Money.parse("USD 60"), L101,
-                season2);
+
         Rate rate1_L102 = new SeasonRate(Money.parse("USD 60"), Money.parse("USD 70"), Money.parse("USD 60"), L102,
                 season);
-        Rate rate2_L102 = new SeasonRate(Money.parse("USD 20"), Money.parse("USD 70"), Money.parse("USD 60"), L102,
-                season2);
+
         Rate rate1_C103 = new SeasonRate(Money.parse("USD 40"), Money.parse("USD 70"), Money.parse("USD 60"), C103,
                 season);
-        Rate rate2_C103 = new SeasonRate(Money.parse("USD 30"), Money.parse("USD 70"), Money.parse("USD 60"), C103,
-                season2);
+
         Rate rate1_C104 = new SeasonRate(Money.parse("USD 70"), Money.parse("USD 70"), Money.parse("USD 60"), C104,
                 season);
-        Rate rate2_C104 = new SeasonRate(Money.parse("USD 50"), Money.parse("USD 70"), Money.parse("USD 60"), C104,
-                season2);
+
         Rate rate1_N105 = new SeasonRate(Money.parse("USD 80"), Money.parse("USD 70"), Money.parse("USD 60"), N105,
                 season);
-        Rate rate2_N105 = new SeasonRate(Money.parse("USD 90"), Money.parse("USD 70"), Money.parse("USD 60"), N105,
-                season2);
-
-        Collection<Season> seasons = Arrays.asList(season, season2);
-        rates = Arrays.asList(rate1_L100, rate2_L100, rate1_L101, rate2_L101, rate1_L102, rate2_L102, rate1_C103,
-                rate2_C103, rate1_C104, rate2_C104, rate1_N105, rate2_N105);
 
 
-        Guest guest1 = new Guest("Mr", "John", "Doe", Gender.MALE, DocumentType.DRIVER_LICENSE, "Drivers123",
-                "555123123");
-        Guest guest2 = new Guest("Mr", "Johnson", "Donnel", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI123",
-                "555555123");
-        Guest guest3 = new Guest("Mr", "Johnathan", "Doougles", Gender.MALE, DocumentType.DRIVER_LICENSE, "DDRI1555",
-                "555123123");
-        Guest guest4 = new Guest("Miss", "Joana", "Dooues", Gender.FEMALE, DocumentType.PERSONAL_ID, "APK132555",
-                "819238923");
-        Guest guest5 = new Guest("Ms", "Kate", "Hudson", Gender.FEMALE, DocumentType.PERSONAL_ID, "DSA123889",
-                "534098123");
-        Guest guest6 = new Guest("Mr", "Jack", "Hack", Gender.MALE, DocumentType.PERSONAL_ID, "LKK123555", "123589124");
-        Guest guest7 = new Guest("Ms", "Ewa", "Kowalska", Gender.FEMALE, DocumentType.PERSONAL_ID, "PAS123553",
-                "123985332");
-        Guest guest8 = new Guest("Ms", "Karolina", "Iksinska", Gender.FEMALE, DocumentType.DRIVER_LICENSE,
-                "DRI132511", "898123532");
-        Guest guest9 = new Guest("Mr", "Grzegorz", "Brzeczyszczykiewicz", Gender.MALE, DocumentType.PERSONAL_ID,
-                "AAA123123", "342089123");
-        Guest guest10 = new Guest("Mrs", "John", "ToBeRemoved", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132135",
-                "12312353");
-        Guest guest11 = new Guest("Mr", "John", "ToBeRemoved1", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132136",
-                "12312353");
-        Guest guest12 = new Guest("Mr", "John", "ToBeRemoved2", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132137",
-                "12312353");
-        Guest guest13 = new Guest("Mr", "John", "ToBeRemoved3", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132138",
-                "12312353");
-        Guest guest14 = new Guest("Mr", "John", "ToBeRemoved4", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132139",
-                "12312353");
-        Guest guest15 = new Guest("Mr", "John", "ToBeRemoved5", Gender.MALE, DocumentType.DRIVER_LICENSE, "DRI132110",
-                "12312353");
-        Collection<Guest> guests = Arrays.asList(guest1, guest2, guest3, guest4, guest5, guest6, guest7, guest8,
-                guest9, guest10, guest11, guest12, guest13, guest14, guest15);
+        Collection<Season> seasons = Arrays.asList(season);
+        rates = Arrays.asList(rate1_L100, rate1_L101, rate1_L102, rate1_C103, rate1_C104, rate1_N105);
+
+
+
+        Collection<Guest> guests = Collections.EMPTY_LIST;
         for (Guest guest : guests)
         {
             guest.setNationality("Polish");
         }
-
-
-        Reservation reservation = new Reservation(Id.NO_ID, guest1, L100.rackRate(),
-                new DateTime(new DateMidnight(2012, 12,
-                        1)),
-                new DateTime(new DateMidnight(2012, 12, 5)), 2, 0, 0, ReservationStatus.INHOUSE);
-        Reservation reservation2 = new Reservation(Id.NO_ID, guest2, L102.rackRate(),
-                new DateTime(new DateMidnight(2012,
-                        12, 3)),
-                new DateTime(new DateMidnight(2012, 12, 8)), 2, 0, 0, ReservationStatus.RESERVED);
-        Reservation reservation3 = new Reservation(Id.NO_ID, guest2, rate1_C103, new DateTime(new DateMidnight(2012,
-                12, 2)),
-                new DateTime(new DateMidnight(2012, 12, 15)), 3, 0, 0, ReservationStatus.RESERVED);
-        Reservation reservation4 = new Reservation(Id.NO_ID, guest3, rate1_N105, new DateTime(new DateMidnight(2012,
-                12, 10)),
-                new DateTime(new DateMidnight(2012, 12, 14)), 2, 0, 0, ReservationStatus.RESERVED);
-        Reservation reservation5 = new Reservation(Id.NO_ID, guest5, rate2_C104, new DateTime(new DateMidnight(2012,
-                12, 20)),
-                new DateTime(new DateMidnight(2012, 12, 28)), 1, 0, 0, ReservationStatus.RESERVED);
-        Reservation reservation6 = new Reservation(Id.NO_ID, guest5, rate2_C104, new DateTime(DateMidnight.now().plusDays(1)),
-                new DateTime(DateMidnight.now().plusDays(5)), 1, 0, 0, ReservationStatus.RESERVED);
-
-        Reservation reservation7 = new Reservation(Id.NO_ID, guest1, rate1_C103, new DateTime(DateMidnight.now()),
-                new DateTime(DateMidnight.now().plusDays(5)), 1, 0, 0, ReservationStatus.CHECKIN);
-
-        Reservation reservation71 = new Reservation(Id.NO_ID, guest6, rate1_N105, new DateTime(DateMidnight.now().minusDays(3)),
-                new DateTime(DateMidnight.now()), 1, 0, 0, ReservationStatus.CHECKOUT);
-
-        Reservation reservation8 = new Reservation(Id.NO_ID, guest7, L102.rackRate(), new DateTime(DateMidnight.now().minusDays(5)),
-                new DateTime(DateMidnight.now().minusDays(2)), 1, 0, 0, ReservationStatus.HISTORY);
-
-        Reservation reservation9 = new Reservation(Id.NO_ID, guest8, rate2_C104, new DateTime(DateMidnight.now().plusDays(6)),
-                new DateTime(DateMidnight.now().plusDays(9)), 1, 0, 0, ReservationStatus.RESERVED);
-
-        Reservation reservation10 = new Reservation(Id.NO_ID, guest3, L100.rackRate(), new DateTime(DateMidnight.now().minusDays(2)),
-                new DateTime(DateMidnight.now().plusDays(9)), 1, 0, 0, ReservationStatus.INHOUSE);
-
-        Collection<Reservation> reservations = Arrays.asList(reservation, reservation2, reservation3, reservation4,
-                reservation5, reservation6, reservation7, reservation8,reservation9, reservation71, reservation10);
-
-        L100.setAvailability(RoomAvailability.OCCUPIED);
-        N105.setAvailability(RoomAvailability.OCCUPIED);
-        C103.setAvailability(RoomAvailability.OCCUPIED);
 
         // bootstrapping data
         session.beginTransaction();
@@ -255,11 +176,6 @@ public class DbBootstrap implements Startable
         }
 
         logger.debug("adding reservations");
-        for (Reservation res : reservations)
-        {
-            logger.debug("reservation: " + res.toString());
-            session.save(res);
-        }
 
         session.getTransaction().commit();
         logger.debug("Finished bootstrapping database");
