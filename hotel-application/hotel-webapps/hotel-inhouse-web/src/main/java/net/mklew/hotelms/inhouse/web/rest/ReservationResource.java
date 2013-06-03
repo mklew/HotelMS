@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import net.mklew.hotelms.domain.guests.Gender;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -240,10 +241,11 @@ public class ReservationResource
             else
             {
                 owner = new Guest(reservationOwner.socialTitle, reservationOwner.firstName,
-                    reservationOwner.surname, reservationOwner.gender, reservationOwner.idType,
+                    reservationOwner.surname, Gender.fromName(reservationOwner.getSex()), reservationOwner.idType,
                     reservationOwner.idNumber, reservationOwner.phoneNumber);
                 owner.setPreferences(reservationOwner.preferences);
                 owner.setDateOfBirth(reservationOwner.dateOfBirthDate);
+                owner.setNationality(reservationOwner.getNationality());
                 // owner.setEmailAddress(); // todo add field to form, dto, and set it here
                 // todo nationality, address and other
                 guestRepository.saveGuest(owner);

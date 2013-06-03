@@ -82,7 +82,7 @@ public class GuestDto
 
     public boolean exists()
     {
-        return !"".equals(id);
+        return !("".equals(id) || id == null);
     }
 
     private boolean blank(String str)
