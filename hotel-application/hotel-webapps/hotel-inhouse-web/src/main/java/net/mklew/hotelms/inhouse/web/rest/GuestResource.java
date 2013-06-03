@@ -3,6 +3,7 @@ package net.mklew.hotelms.inhouse.web.rest;
 import com.google.common.base.Optional;
 import net.mklew.hotelms.domain.booking.GuestNotFoundException;
 import net.mklew.hotelms.domain.booking.GuestRepository;
+import net.mklew.hotelms.domain.guests.Gender;
 import net.mklew.hotelms.domain.guests.Guest;
 import net.mklew.hotelms.inhouse.web.dto.ErrorDto;
 import net.mklew.hotelms.inhouse.web.dto.GuestDto;
@@ -174,7 +175,7 @@ public class GuestResource
             guestParam.validateRequired();
             GuestDto guestDto = guestParam.initIgnored();
             Guest guest = new Guest(guestDto.socialTitle, guestDto.firstName,
-                    guestDto.surname, guestDto.gender, guestDto.idType,
+                    guestDto.surname, Gender.fromName(guestDto.sex), guestDto.idType,
                     guestDto.idNumber, guestDto.phoneNumber);
             guest.setPreferences(guestDto.preferences);
             guest.setDateOfBirth(guestDto.dateOfBirthDate);
